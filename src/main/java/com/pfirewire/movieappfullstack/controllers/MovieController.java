@@ -28,8 +28,14 @@ public class MovieController {
         return "movie/my-movies";
     }
 
+    @GetMapping("/health")
+    public void healthCheck() {
+        System.out.println("test");
+    }
+
     @PostMapping("/movie/add")
     public void addMovie (@RequestBody Movie movie) {
+        System.out.println("made it inside addMovie post mapper");
         System.out.println(movie.getTitle());
     }
 

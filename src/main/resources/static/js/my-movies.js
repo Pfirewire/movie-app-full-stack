@@ -1,6 +1,8 @@
 // Initialize jQuery
 $(function() {
     console.log("Inside My Movies JS");
+    // Testing my restful api in spring boot
+    fetch("http://localhost:8080/health");
 
     // MovieApp Object and Methods
     const MovieApp = {
@@ -220,7 +222,7 @@ $(function() {
                 // Print.addMovie(movie);
                 Print.allMovies(Get.allMovies());
             });
-            fetch("/movie/add", postOptions).then(res => console.log("Movie Added"));
+            fetch("http://localhost:8080/movie/add", postOptions).then(res => console.log("Movie Added"));
         },
         // Deletes movie from database
         async deleteMovie(id, button) {
