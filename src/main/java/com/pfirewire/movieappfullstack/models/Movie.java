@@ -46,4 +46,60 @@ public class Movie {
         this.tmdbId = tmdbId;
         this.title = title;
     }
+
+    public Long getTmdbId() {
+        return tmdbId;
+    }
+
+    public void setTmdbId(Long tmdbId) {
+        this.tmdbId = tmdbId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
+    }
+
+    public String getPlot() {
+        return plot;
+    }
+
+    public void setPlot(String plot) {
+        this.plot = plot;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }
