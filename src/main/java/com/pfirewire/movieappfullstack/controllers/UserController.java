@@ -1,6 +1,7 @@
 package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.User;
+import com.pfirewire.movieappfullstack.repositories.MovieRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +18,13 @@ public class UserController {
 
     // Repositories and Services
     private UserRepository userDao;
+    private MovieRepository movieDao;
     private PasswordEncoder passwordEncoder;
 
     // Constructor
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userDao, MovieRepository movieDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.movieDao = movieDao;
         this.passwordEncoder = passwordEncoder;
     }
 

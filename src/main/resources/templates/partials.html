@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <!--Meta Tags Fragment-->
+    <div th:fragment="metaTags" th:remove="tag">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+    </div>
+
+    <!--Links Fragment-->
+    <div th:fragment="links" th:remove="tag">
+        <link rel="shortcut icon" type="images/png" th:href="@{/megamanicon.png}">
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    </div>
+
+
+</head>
+<body>
+<!--Sitebar Fragment-->
+<nav id="site-bar" th:fragment="siteBar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand ps-3" th:href="@{/}">Pfirewire's Movies</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#site-bar-content">
+        <img th:src="@{/megamanicon.png}" style="max-height: 3em; max-width: 3em;">
+    </button>
+
+    <div class="collapse navbar-collapse" id="site-bar-content">
+        <div class="d-flex justify-content-between">
+            <span sec:authorize="isAuthenticated()">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a id="nav-my-lists" class="nav-link" href="#">My Movie Lists</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="nav-create-list" class="nav-link" href="#">Create Movie List</a>
+                    </li>
+                    <li>
+                        <a id="nav-logout" class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </span>
+            <span sec:authorize="isAnonymous()">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/signup}">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                </ul>
+            </span>
+        </div>
+    </div>
+</nav>
+
+
+<!--Forms-->
+<!--Signup Form Fragment-->
+<form th:fragment="signupForm" class="text-light" th:action="@{/signup}" method="POST" th:object="${user}">
+    <div class="mb-3">
+        <label for="signupEmailAddress" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="signupEmailAddress" th:field="*{email}" autocomplete="off">
+    </div>
+    <div class="mb-3">
+        <label for="signupUsername" class="form-label">Username</label>
+        <input type="text" class="form-control" id="signupUsername" th:field="*{username}" autocomplete="off">
+    </div>
+    <div class="mb-3">
+        <label for="signupPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="signupPassword" th:field="*{password}" autocomplete="off">
+        <div id="signupPasswordHelpLength" class="form-text">Must be at least 8 characters long</div>
+        <div id="signupPasswordHelpUppercaseLetter" class="form-text">Must contain at least 1 uppercase letter</div>
+        <div id="signupPasswordHelpLowercaseLetter" class="form-text">Must contain at least 1 lowercase letter</div>
+        <div id="signupPasswordHelpNumber" class="form-text">Must contain at least 1 number</div>
+        <div id="signupPasswordHelpSpecialCharacters" class="form-text">Must contain at least 1 special character: !@#$%^&*()-=_+</div>
+    </div>
+    <div class="mb-3">
+        <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="signupConfirmPassword">
+        <div id="passwordsMustMatch" class="form-text d-none" style="color: #F00;">Passwords must match</div>
+    </div>
+    <button id="signupPasswordSubmit" type="submit" class="btn btn-primary" disabled>Signup</button>
+</form>
+<!--Login Form Fragment-->
+<form th:fragment="loginForm" class="text-light" th:action="@{/login}" method="POST">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" autocomplete="off">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" autocomplete="off">
+    </div>
+    <button id="loginPasswordSubmit" type="submit" class="btn btn-primary">Login</button>
+</form>
+
+
+<!--Scripts Fragment-->
+<div th:fragment="scripts" th:remove="tag">
+    <!-- jQuery CDN-->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <!-- Bootstrap Masonry CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

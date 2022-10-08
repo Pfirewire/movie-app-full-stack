@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:replace="partials :: metaTags" />
+    <div th:replace="partials :: links" />
+
+    <title>Signup</title>
+</head>
+<body>
+<nav th:replace="partials :: siteBar" />
+
+
+<h1 class="text-center my-5">Sign Up to Build a Character</h1>
+
+<div class="container bg-dark rounded-3 p-5">
+    <div th:replace="partials :: signupForm" />
+</div>
+
+<div th:replace="partials :: scripts" />
+
+<script th:src="@{/js/signup-form.js}" />
+<script src="../../static/js/signup-form.js"></script>
+
+</body>
+</html>
