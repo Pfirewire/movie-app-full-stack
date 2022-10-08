@@ -220,6 +220,7 @@ $(function() {
                 // Print.addMovie(movie);
                 Print.allMovies(Get.allMovies());
             });
+            fetch("/movie/add", postOptions).then(res => console.log("Movie Added"));
         },
         // Deletes movie from database
         async deleteMovie(id, button) {
