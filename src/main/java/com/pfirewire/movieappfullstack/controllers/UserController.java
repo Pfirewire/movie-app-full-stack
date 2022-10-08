@@ -1,7 +1,7 @@
 package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.User;
-import com.pfirewire.movieappfullstack.repositories.MovieRepository;
+//import com.pfirewire.movieappfullstack.repositories.MovieRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +18,13 @@ public class UserController {
 
     // Repositories and Services
     private UserRepository userDao;
-    private MovieRepository movieDao;
+//    private MovieRepository movieDao;
     private PasswordEncoder passwordEncoder;
 
     // Constructor
-    public UserController(UserRepository userDao, MovieRepository movieDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
-        this.movieDao = movieDao;
+//        this.movieDao = movieDao;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -33,24 +33,18 @@ public class UserController {
     public String showSignupForm(Model model) {
         // Sending empty user to template
         model.addAttribute("user", new User());
-        return "users/signup";
+        return "user/signup";
     }
 
     // Saves user to users table
     @PostMapping("/signup")
-    public String saveUser(@ModelAttribute User user, @RequestParam(value = "confirmPassword") String confirmPassword) {
+    public String saveUser(@ModelAttribute User user) {
         // Hashing password
         String hash = passwordEncoder.encode(user.getPassword());
-        // Checking if password and confirm password are the same
-        if(passwordEncoder.matches(confirmPassword, hash)) {
-            // Setting user password to the hash and saving user to table
-            user.setPassword(hash);
-            userDao.save(user);
-            return "redirect:/login";
-        } else {
-            // Redirecting user back to signup form
-            return "users/signup";
-        }
+        // Setting user password to the hash and saving user to table
+        user.setPassword(hash);
+        userDao.save(user);
+        return "redirect:/";
     }
 
 }

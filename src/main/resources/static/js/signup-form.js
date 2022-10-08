@@ -1,4 +1,5 @@
 $(() => {
+    console.log("Signup Form Javascript started");
 
     // Local variables and requirements
     let passwordFulfillsRequirements = false;
