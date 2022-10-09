@@ -46,4 +46,9 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/my-movies")
+    public String showMyMoviesIndex(Model model) {
+        return "movie/my-movies";
+    }
+
 }

@@ -1,8 +1,6 @@
 // Initialize jQuery
 $(function() {
     console.log("Inside My Movies JS");
-    // Testing my restful api in spring boot
-    fetch("http://localhost:8080/health");
 
     // MovieApp Object and Methods
     const MovieApp = {
@@ -19,6 +17,8 @@ $(function() {
         },
         // String that holds user input for secret code
         hiddenString: "",
+        // CSRF Token
+        csrfToken: $("meta[name='_csrf']").attr("content"),
         // Prints current movie database on screen and initializes all event listeners
         initialize() {
             // setTimeout just to show the loading screen for more than a split second. It can be removed for production
@@ -211,8 +211,10 @@ $(function() {
             let movie = await Get.scrapeSingleMovieData(tmdbId);
             const postOptions = {
                 method: 'POST',
+                mode: 'cors',
                 headers: {
-                    'Content-Type' : 'application/json'
+                    'Content-Type' : 'application/json',
+                    'X-CSRF-TOKEN' : MovieApp.csrfToken
                 },
                 body: JSON.stringify(movie)
             }

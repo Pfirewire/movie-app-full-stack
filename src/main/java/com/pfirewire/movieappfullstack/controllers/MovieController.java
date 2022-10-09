@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Controller
+@RestController
 public class MovieController {
 
     private MovieRepository movieDao;
@@ -23,20 +23,20 @@ public class MovieController {
         this.movieDao = movieDao;
     }
 
-    @GetMapping("/my-movies")
-    public String showMyMoviesIndex(Model model) {
-        return "movie/my-movies";
-    }
+
 
     @GetMapping("/health")
-    public void healthCheck() {
-        System.out.println("test");
+    @ResponseBody
+    public String healthCheck() {
+        return "health check complete";
     }
 
     @PostMapping("/movie/add")
-    public void addMovie (@RequestBody Movie movie) {
+    @ResponseBody
+    public String addMovie (@RequestBody Movie movie) {
         System.out.println("made it inside addMovie post mapper");
         System.out.println(movie.getTitle());
+        return "completed addMovie";
     }
 
 
