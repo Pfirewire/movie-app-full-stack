@@ -18,9 +18,11 @@ import java.util.Objects;
 public class MovieController {
 
     private MovieRepository movieDao;
+    private UserRepository userDao;
 
-    public MovieController(MovieRepository movieDao) {
+    public MovieController(MovieRepository movieDao, UserRepository userDao) {
         this.movieDao = movieDao;
+        this.userDao = userDao;
     }
 
 
@@ -30,13 +32,18 @@ public class MovieController {
         return "health check complete";
     }
 
+    @GetMapping("/movies.json")
+    public List<Movie> getAllMovies() {
+        System.out.println("Inside getAllMovies");
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("User set");
+        return movieDao.findByUser(user);
+    }
+
     @PostMapping("/movie/add")
     public String addMovie (@RequestBody Movie movie) {
-        System.out.println("inside addMovie");
         movie.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        System.out.println("movie.setUser complete");
         movieDao.save(movie);
-        System.out.println("save movie complete");
         return "completed addMovie";
     }
 

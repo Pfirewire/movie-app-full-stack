@@ -22,9 +22,9 @@ $(function() {
         // Prints current movie database on screen and initializes all event listeners
         initialize() {
             // setTimeout just to show the loading screen for more than a split second. It can be removed for production
-            setTimeout(() => {
+            // setTimeout(() => {
             Print.allMovies(Get.allMovies());
-            }, 5000);
+            // }, 5000);
             Events.initialize();
         },
         // Function to change TMDB search to allow adult results
@@ -58,8 +58,10 @@ $(function() {
         // Gets all movies from our database
         async allMovies() {
             try {
-                let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-                let data = await response.json();
+                // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
+                let data = await fetch("http://localhost:8080/movies.json");
+                // let data = await response.json();
+                console.log(data);
                 return data;
             } catch (err) {
                 console.log(err);
@@ -218,23 +220,33 @@ $(function() {
                 },
                 body: JSON.stringify(movie)
             }
-            fetch(MovieApp.GlobalURLs.moviesURL, postOptions).then(() => {
+            // fetch(MovieApp.GlobalURLs.moviesURL, postOptions).then(() => {
+            //     $("#add-movie-text").val('');
+            //     $("#movie-list").empty();
+            //     // Print.addMovie(movie);
+            //     Print.allMovies(Get.allMovies());
+            // });
+            let addData = await fetch("http://localhost:8080/movie/add", postOptions).then(res => {
                 $("#add-movie-text").val('');
                 $("#movie-list").empty();
                 // Print.addMovie(movie);
                 Print.allMovies(Get.allMovies());
+                return res;
             });
-            fetch("http://localhost:8080/movie/add", postOptions).then(res => console.log("Movie Added"));
         },
         // Deletes movie from database
         async deleteMovie(id, button) {
             let deleteOptions = {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type' : 'application/json'
+                    'Content-Type' : 'application/json',
+                    'X-CSRF-TOKEN' : MovieApp.csrfToken
                 }
             }
-            let deleteData = await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, deleteOptions).then(results => results);
+            // let deleteData = await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, deleteOptions).then(results => results);
+            // Print.allMovies(Get.allMovies());
+            // button.removeAttr("disabled");
+            let deleteData = await fetch(`http://localhost:8080/movie/delete/${id}`, deleteOptions).then (results => results);
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
         },

@@ -2,6 +2,7 @@ package com.pfirewire.movieappfullstack.models;
 
 import com.pfirewire.movieappfullstack.models.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.*;
@@ -31,12 +32,13 @@ public class Movie {
     private int year;
 
     @Column
-    private String genres;
+    private String genre;
 
     @Column(columnDefinition = "TEXT")
     private String plot;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name="user_id")
     private User user;
 
@@ -84,12 +86,12 @@ public class Movie {
         this.year = year;
     }
 
-    public String getGenres() {
-        return genres;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setGenres(String genres) {
-        this.genres = genres;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getPlot() {

@@ -23,6 +23,7 @@ public class User {
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonBackReference
     private List<Movie> movies;
 
     // Constructor functions
