@@ -22,12 +22,7 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name="users_movies",
-            joinColumns = {@JoinColumn(name="user_id")},
-            inverseJoinColumns = {@JoinColumn(name="movie_id")}
-    )
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Movie> movies;
 
     // Constructor functions

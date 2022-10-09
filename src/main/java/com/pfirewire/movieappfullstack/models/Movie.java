@@ -18,7 +18,7 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Long tmdbId;
 
     @Column(nullable = false)
@@ -36,8 +36,9 @@ public class Movie {
     @Column(columnDefinition = "TEXT")
     private String plot;
 
-    @ManyToMany(mappedBy="movies")
-    private List<User> users;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     // Constructor functions
     public Movie() {}
@@ -45,6 +46,10 @@ public class Movie {
     public Movie(Long tmdbId, String title) {
         this.tmdbId = tmdbId;
         this.title = title;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Long getTmdbId() {
@@ -95,11 +100,11 @@ public class Movie {
         this.plot = plot;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

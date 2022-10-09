@@ -26,16 +26,17 @@ public class MovieController {
 
 
     @GetMapping("/health")
-    @ResponseBody
     public String healthCheck() {
         return "health check complete";
     }
 
     @PostMapping("/movie/add")
-    @ResponseBody
     public String addMovie (@RequestBody Movie movie) {
-        System.out.println("made it inside addMovie post mapper");
-        System.out.println(movie.getTitle());
+        System.out.println("inside addMovie");
+        movie.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        System.out.println("movie.setUser complete");
+        movieDao.save(movie);
+        System.out.println("save movie complete");
         return "completed addMovie";
     }
 
