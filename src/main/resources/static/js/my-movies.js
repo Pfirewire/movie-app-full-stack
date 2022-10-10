@@ -220,6 +220,7 @@ $(function() {
                 },
                 body: JSON.stringify(movie)
             }
+            console.log(JSON.stringify(movie));
             // fetch(MovieApp.GlobalURLs.moviesURL, postOptions).then(() => {
             //     $("#add-movie-text").val('');
             //     $("#movie-list").empty();
@@ -246,7 +247,7 @@ $(function() {
             // let deleteData = await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, deleteOptions).then(results => results);
             // Print.allMovies(Get.allMovies());
             // button.removeAttr("disabled");
-            let deleteData = await fetch(`http://localhost:8080/movie/delete/${id}`, deleteOptions).then (results => results);
+            let deleteData = await fetch(`http://localhost:8080/movie/${id}/delete`, deleteOptions).then (results => results);
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
         },

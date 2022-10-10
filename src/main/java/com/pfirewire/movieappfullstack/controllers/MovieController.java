@@ -40,9 +40,25 @@ public class MovieController {
         return userMovies;
     }
 
+    @PostMapping("/movie/{id}/delete")
+    public String deleteMovie(@PathVariable Long id) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Movie movie = movieDao.getById(id);
+        User moviesUser = movie.getUser();
+        if(user.equals(moviesUser)) {
+            movieDao.delete(movie);
+            return "movie deleted";
+        } else {
+            return "unable to delete, user does not match";
+        }
+    }
+
     @PostMapping("/movie/add")
     public String addMovie (@RequestBody Movie movie) {
-        movie.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        System.out.println("inside addMovie");
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        movie.setUser(user);
+        System.out.println(user.getUsername());
         movieDao.save(movie);
         return "completed addMovie";
     }
