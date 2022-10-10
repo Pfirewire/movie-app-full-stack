@@ -53,7 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/my-movies"
+                        "/my-movies",
+                        "/movies"
                 )
                 .authenticated()
         ;

@@ -39,7 +39,9 @@
                         <a id="nav-create-list" class="nav-link" href="#">Create Movie List</a>
                     </li>
                     <li>
-                        <a id="nav-logout" class="nav-link" href="#">Logout</a>
+                        <form th:action="@{/logout}" th:method="post">
+                            <button class="btn nav-link fs-5">Logout</button>
+                        </form>
                     </li>
                 </ul>
             </span>
