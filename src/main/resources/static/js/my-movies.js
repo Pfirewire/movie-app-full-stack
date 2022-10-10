@@ -59,8 +59,8 @@ $(function() {
         async allMovies() {
             try {
                 // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-                let data = await fetch("http://localhost:8080/movies.json");
-                // let data = await response.json();
+                let response = await fetch("http://localhost:8080/movies");
+                let data = await response.json();
                 console.log(data);
                 return data;
             } catch (err) {

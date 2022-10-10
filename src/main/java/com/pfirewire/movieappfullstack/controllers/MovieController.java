@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import ch.qos.logback.core.util.CloseUtil;
 import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
@@ -32,12 +33,11 @@ public class MovieController {
         return "health check complete";
     }
 
-    @GetMapping("/movies.json")
+    @GetMapping("/movies")
     public List<Movie> getAllMovies() {
-        System.out.println("Inside getAllMovies");
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("User set");
-        return movieDao.findByUser(user);
+        List<Movie> userMovies = movieDao.findAllByUser(user);
+        return userMovies;
     }
 
     @PostMapping("/movie/add")
@@ -46,7 +46,5 @@ public class MovieController {
         movieDao.save(movie);
         return "completed addMovie";
     }
-
-
 
 }

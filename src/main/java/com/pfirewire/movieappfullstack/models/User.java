@@ -54,4 +54,12 @@ public class User {
 
     public String getPassword () { return this.password; }
     public void setPassword(String password) { this.password = password; }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
 }
