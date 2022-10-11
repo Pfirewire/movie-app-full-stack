@@ -2,6 +2,8 @@ package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
+import com.pfirewire.movieappfullstack.services.Url;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ public class UserController {
     private UserRepository userDao;
 //    private MovieRepository movieDao;
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private Url url;
 
     // Constructor
     public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
@@ -48,7 +52,7 @@ public class UserController {
 
     @GetMapping("/my-movies")
     public String showMyMoviesIndex(Model model) {
-        model.addAttribute("user", (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        model.addAttribute("url", url);
         return "movie/my-movies";
     }
 }

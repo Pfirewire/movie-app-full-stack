@@ -5,6 +5,8 @@ import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
+import com.pfirewire.movieappfullstack.services.Url;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;

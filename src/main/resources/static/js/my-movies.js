@@ -6,7 +6,8 @@ $(function() {
         GlobalURLs: {
             moviesURL: "https://liberating-military-cyclone.glitch.me/movies",
             searchTMDBURL: "https://api.themoviedb.org/3/search/movie",
-            findTMDBURL: "https://api.themoviedb.org/3/movie/"
+            findTMDBURL: "https://api.themoviedb.org/3/movie/",
+            backendURLPath: $("#base-url").text(),
         },
         // Paths for NSFW search results from TMDB
         TMDBPaths: {
@@ -17,7 +18,6 @@ $(function() {
         hiddenString: "",
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
-        // userId: $("#logged-in-user").text(),
         // Prints current movie database on screen and initializes all event listeners
         async initialize() {
             // setTimeout just to show the loading screen for more than a split second. It can be removed for production
@@ -58,7 +58,7 @@ $(function() {
         async allMovies() {
             try {
                 // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-                let response = await fetch("http://localhost:8080/movies");
+                let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies`);
                 let data = await response.json();
                 return data;
             } catch (err) {
@@ -119,13 +119,13 @@ $(function() {
         },
         // gets api key
         async tmdbKey() {
-            let response = await fetch("http://localhost:8080/keys");
+            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
             let data = await response.json();
             return data.tmdbKey;
         },
         // gets api key
         async backRoomKey() {
-            let response = await fetch("http://localhost:8080/keys");
+            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
             let data = await response.json();
             return data.backRoomKey;
         }
@@ -238,7 +238,7 @@ $(function() {
             //     // Print.addMovie(movie);
             //     Print.allMovies(Get.allMovies());
             // });
-            let addData = await fetch("http://localhost:8080/movie/add", postOptions).then(res => {
+            let addData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/add`, postOptions).then(res => {
                 $("#add-movie-text").val('');
                 $("#movie-list").empty();
                 // Print.addMovie(movie);
@@ -258,7 +258,7 @@ $(function() {
             // let deleteData = await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, deleteOptions).then(results => results);
             // Print.allMovies(Get.allMovies());
             // button.removeAttr("disabled");
-            let deleteData = await fetch(`http://localhost:8080/movie/${id}/delete`, deleteOptions).then(results => results);
+            let deleteData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${id}/delete`, deleteOptions).then(results => results);
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
         },
@@ -280,7 +280,7 @@ $(function() {
             }
 
             // let editData =await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, editOptions).then(results => results);
-            let editData = await fetch(`http://localhost:8080/movie/${id}/edit`, editOptions).then(results => results);
+            let editData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${id}/edit`, editOptions).then(results => results);
 
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");

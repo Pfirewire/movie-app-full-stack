@@ -1,7 +1,6 @@
 package com.pfirewire.movieappfullstack.services;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Service
