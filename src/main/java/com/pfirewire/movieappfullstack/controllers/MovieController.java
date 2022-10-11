@@ -27,8 +27,6 @@ public class MovieController {
         this.userDao = userDao;
     }
 
-
-
     @GetMapping("/health")
     public String healthCheck() {
         return "health check complete";
@@ -41,12 +39,12 @@ public class MovieController {
         return userMovies;
     }
 
-    @PostMapping("/movie/{id}/delete")
+    @DeleteMapping("/movie/{id}/delete")
     public String deleteMovie(@PathVariable Long id) {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Movie movie = movieDao.getById(id);
         User moviesUser = movie.getUser();
-        if(user.equals(moviesUser)) {
+        if(user.getId().equals(moviesUser.getId())) {
             movieDao.delete(movie);
             return "movie deleted";
         } else {
@@ -56,12 +54,20 @@ public class MovieController {
 
     @PostMapping("/movie/add")
     public String addMovie (@RequestBody Movie movie) {
-        System.out.println("inside addMovie");
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         movie.setUser(user);
-        System.out.println(user.getUsername());
         movieDao.save(movie);
         return "completed addMovie";
+    }
+
+    @PatchMapping("/movie/{id}/edit")
+    public String editMovie(@RequestBody Movie movie, @PathVariable Long id) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(movieDao.getById(id).getUser().getId().equals(user.getId())){
+            movie.setUser(user);
+            movieDao.save(movie);
+        }
+        return "completed editMovie";
     }
 
 }

@@ -23,7 +23,7 @@ public class Movie {
     @Column(nullable = false)
     private Long tmdbId;
 
-    @Column(nullable = false)
+    @Column
     private String title;
 
     @Column(columnDefinition = "TEXT")

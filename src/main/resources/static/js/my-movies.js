@@ -221,8 +221,6 @@ $(function() {
                 },
                 body: JSON.stringify(movie)
             }
-            console.log(postOptions);
-            console.log(JSON.stringify(movie));
             // fetch(MovieApp.GlobalURLs.moviesURL, postOptions).then(() => {
             //     $("#add-movie-text").val('');
             //     $("#movie-list").empty();
@@ -249,28 +247,30 @@ $(function() {
             // let deleteData = await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, deleteOptions).then(results => results);
             // Print.allMovies(Get.allMovies());
             // button.removeAttr("disabled");
-            let deleteData = await fetch(`http://localhost:8080/movie/${id}/delete`, deleteOptions).then (results => results);
+            let deleteData = await fetch(`http://localhost:8080/movie/${id}/delete`, deleteOptions).then(results => results);
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
         },
         // Edits movie in database
         async editMovie(id, button) {
-            let newMovie = {
-                title: $("#title-input").val(),
-                genre: $("#genre-input").val(),
-                plot: $("#plot-input").val(),
-                year: $("#year-input").val()
-            }
+            let newMovie = await Get.movieById(id);
+            newMovie.title = $("#title-input").val();
+            newMovie.genre = $("#genre-input").val();
+            newMovie.plot =  $("#plot-input").val();
+            newMovie.year =  $("#year-input").val();
+            console.log(newMovie);
 
             let editOptions = {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type' : 'application/json'
+                    'Content-Type' : 'application/json',
+                    'X-CSRF-TOKEN' : MovieApp.csrfToken
                 },
                 body : JSON.stringify(newMovie)
             }
 
-            let editData =await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, editOptions).then(results => results);
+            // let editData =await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, editOptions).then(results => results);
+            let editData = await fetch(`http://localhost:8080/movie/${id}/edit`, editOptions).then(results => results);
 
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
@@ -366,7 +366,7 @@ $(function() {
             });
             // Listens for click of the save edit button
             $(document.body).on("click", "#save-edit-btn", function() {
-                User.editMovie($("#single-movie").attr("data-movie-id"));
+                User.editMovie($("#single-movie").attr("data-movie-id"), $(this));
                 $(this).attr("disabled", "");
                 Utils.Hide.modal($("#single-movie-modal"), $(this));
             });
