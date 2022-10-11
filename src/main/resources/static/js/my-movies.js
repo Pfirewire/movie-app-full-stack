@@ -26,31 +26,31 @@ $(function() {
             // }, 5000);
             Events.initialize();
         },
-        // Function to change TMDB search to allow adult results
-        enterBackRoom() {
-            User.overEighteen = true;
-            // Changes background of page to represent that the user is in NSFW mode
-            $("#page-wrapper").toggleClass("normal-bg back-room-bg");
-            // Setting back room timer to 30 seconds
-            let backRoomTimer = 30;
-            $("#back-room-timer").html(`0.${backRoomTimer.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`);
-            // Decrementing timer every second
-            let intervalId = setInterval(() => {
-                backRoomTimer--;
-                $("#back-room-timer").html(`0.${backRoomTimer.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`);
-            }, 1000);
-            // After 30 seconds runs function to turn off NSFW mode
-            setTimeout(() => {
-                MovieApp.leaveBackRoom()
-                clearInterval(intervalId);
-            }, 30000);
-        },
-        // Sets TMDB search back to SFW
-        leaveBackRoom() {
-            User.overEighteen = false;
-            $("#page-wrapper").toggleClass("normal-bg back-room-bg");
-            $("#back-room-timer").html("");
-        }
+        // // Function to change TMDB search to allow adult results
+        // enterBackRoom() {
+        //     User.overEighteen = true;
+        //     // Changes background of page to represent that the user is in NSFW mode
+        //     $("#page-wrapper").toggleClass("normal-bg back-room-bg");
+        //     // Setting back room timer to 30 seconds
+        //     let backRoomTimer = 30;
+        //     $("#back-room-timer").html(`0.${backRoomTimer.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`);
+        //     // Decrementing timer every second
+        //     let intervalId = setInterval(() => {
+        //         backRoomTimer--;
+        //         $("#back-room-timer").html(`0.${backRoomTimer.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`);
+        //     }, 1000);
+        //     // After 30 seconds runs function to turn off NSFW mode
+        //     setTimeout(() => {
+        //         MovieApp.leaveBackRoom()
+        //         clearInterval(intervalId);
+        //     }, 30000);
+        // },
+        // // Sets TMDB search back to SFW
+        // leaveBackRoom() {
+        //     User.overEighteen = false;
+        //     $("#page-wrapper").toggleClass("normal-bg back-room-bg");
+        //     $("#back-room-timer").html("");
+        // }
     }
     // Get Object and Methods
     const Get = {
@@ -380,18 +380,18 @@ $(function() {
                 $(this).attr("disabled", "");
                 Utils.Hide.modal($("#single-movie-modal"), $(this));
             });
-            // Listens for any keyup on the screen
-            $("body").on("keyup", function(e) {
-                if(e.key === "Enter") {
-                    MovieApp.hiddenString = "";
-                } else {
-                    MovieApp.hiddenString += e.key;
-                }
-                if(!User.overEighteen && MovieApp.hiddenString.toUpperCase().includes(BACK_ROOM)) {
-                    MovieApp.hiddenString = "";
-                    MovieApp.enterBackRoom();
-                }
-            })
+            // // Listens for any keyup on the screen
+            // $("body").on("keyup", function(e) {
+            //     if(e.key === "Enter") {
+            //         MovieApp.hiddenString = "";
+            //     } else {
+            //         MovieApp.hiddenString += e.key;
+            //     }
+            //     if(!User.overEighteen && MovieApp.hiddenString.toUpperCase().includes(BACK_ROOM)) {
+            //         MovieApp.hiddenString = "";
+            //         MovieApp.enterBackRoom();
+            //     }
+            // });
             // Listens for change in sort select
             $("#sort-select").change(function() {
                 Print.allMovies(Get.allMovies());
