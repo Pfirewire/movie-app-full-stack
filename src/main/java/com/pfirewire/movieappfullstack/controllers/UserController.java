@@ -51,5 +51,4 @@ public class UserController {
         model.addAttribute("user", (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "movie/my-movies";
     }
-
 }

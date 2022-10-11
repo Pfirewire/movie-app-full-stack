@@ -1,7 +1,5 @@
 // Initialize jQuery
 $(function() {
-    console.log("Inside My Movies JS");
-
     // MovieApp Object and Methods
     const MovieApp = {
         // Storing all the URL const variablers
@@ -21,7 +19,7 @@ $(function() {
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // userId: $("#logged-in-user").text(),
         // Prints current movie database on screen and initializes all event listeners
-        initialize() {
+        async initialize() {
             // setTimeout just to show the loading screen for more than a split second. It can be removed for production
             // setTimeout(() => {
             Print.allMovies(Get.allMovies());
@@ -62,7 +60,6 @@ $(function() {
                 // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
                 let response = await fetch("http://localhost:8080/movies");
                 let data = await response.json();
-                console.log(data);
                 return data;
             } catch (err) {
                 console.log(err);
@@ -99,7 +96,8 @@ $(function() {
             // uses TMDB id
             // returns data inside a promise
             try {
-                let response = await fetch(`${MovieApp.GlobalURLs.findTMDBURL}${id}${TMDB_KEY}`);
+                let tmdbKey = await Get.tmdbKey();
+                let response = await fetch(`${MovieApp.GlobalURLs.findTMDBURL}${id}${tmdbKey}`);
                 let data = await response.json();
                 return data;
             } catch(err) {
@@ -111,12 +109,25 @@ $(function() {
             // inputs string with movie title
             // returns data array inside a promise
             try {
-                let response = await fetch(`${MovieApp.GlobalURLs.searchTMDBURL}${TMDB_KEY}&query=${title}${User.overEighteen? MovieApp.TMDBPaths.nsfw : MovieApp.TMDBPaths.sfw}`);
+                let tmdbKey = await Get.tmdbKey();
+                let response = await fetch(`${MovieApp.GlobalURLs.searchTMDBURL}${tmdbKey}&query=${title}${User.overEighteen? MovieApp.TMDBPaths.nsfw : MovieApp.TMDBPaths.sfw}`);
                 let data = await response.json();
                 return data;
             } catch(err) {
                 console.log(err);
             }
+        },
+        // gets api key
+        async tmdbKey() {
+            let response = await fetch("http://localhost:8080/keys");
+            let data = await response.json();
+            return data.tmdbKey;
+        },
+        // gets api key
+        async backRoomKey() {
+            let response = await fetch("http://localhost:8080/keys");
+            let data = await response.json();
+            return data.backRoomKey;
         }
     }
     // Print Object and Methods
@@ -258,7 +269,6 @@ $(function() {
             newMovie.genre = $("#genre-input").val();
             newMovie.plot =  $("#plot-input").val();
             newMovie.year =  $("#year-input").val();
-            console.log(newMovie);
 
             let editOptions = {
                 method: 'PATCH',
