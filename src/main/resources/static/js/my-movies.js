@@ -19,6 +19,7 @@ $(function() {
         hiddenString: "",
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
+        // userId: $("#logged-in-user").text(),
         // Prints current movie database on screen and initializes all event listeners
         initialize() {
             // setTimeout just to show the loading screen for more than a split second. It can be removed for production
@@ -75,10 +76,11 @@ $(function() {
             let movieToAdd = {
                 title: movieData.title,
                 poster: `https://image.tmdb.org/t/p/original/${movieData.poster_path}`,
-                year: movieData.release_date.substring(0,4),
+                year: parseInt(movieData.release_date.substring(0,4)),
                 genre: Utils.Convert.genreArrayToString(movieData.genres),
                 plot: movieData.overview,
-                tmdbId: movieData.id
+                tmdbId: movieData.id,
+                // user_id: MovieApp.userId
             }
             // returns movie object that matches the information stored in our project
             return movieToAdd;
@@ -213,13 +215,13 @@ $(function() {
             let movie = await Get.scrapeSingleMovieData(tmdbId);
             const postOptions = {
                 method: 'POST',
-                mode: 'cors',
                 headers: {
                     'Content-Type' : 'application/json',
                     'X-CSRF-TOKEN' : MovieApp.csrfToken
                 },
                 body: JSON.stringify(movie)
             }
+            console.log(postOptions);
             console.log(JSON.stringify(movie));
             // fetch(MovieApp.GlobalURLs.moviesURL, postOptions).then(() => {
             //     $("#add-movie-text").val('');

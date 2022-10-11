@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pfirewire.movieappfullstack.models.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
@@ -38,12 +39,14 @@ public class Movie {
     private String plot;
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name="user_id")
     private User user;
 
     // Constructor functions
-    public Movie() {}
+    public Movie() {
+        super();
+    }
 
     public Movie(Long tmdbId, String title) {
         this.tmdbId = tmdbId;

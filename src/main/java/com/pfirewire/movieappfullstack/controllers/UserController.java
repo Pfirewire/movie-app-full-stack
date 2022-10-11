@@ -48,6 +48,7 @@ public class UserController {
 
     @GetMapping("/my-movies")
     public String showMyMoviesIndex(Model model) {
+        model.addAttribute("user", (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "movie/my-movies";
     }
 

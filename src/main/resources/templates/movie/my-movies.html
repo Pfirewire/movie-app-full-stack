@@ -32,6 +32,9 @@
 </head>
 <body>
 
+<div hidden th:object="${user}">
+    <div id="logged-in-user" th:text="*{id}"></div>
+</div>
 <!-- Page Wrapper Div to easily change full background-->
 <div id="page-wrapper" class="normal-bg">
 
