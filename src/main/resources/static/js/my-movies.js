@@ -170,7 +170,7 @@ $(function() {
             modalBodyDiv.attr("data-movie-id", movie.id);
             modalBodyDiv.append(`
              <p>Genre: ${movie.genre}</p>
-             <p>Plot :${movie.plot}</p>
+             <p>Plot: ${movie.plot}</p>
              <p>Year: ${movie.year}</p>
              <div class="d-flex justify-content-between">
                  <button class="edit-btn btn btn-primary">Edit Movie</button>
