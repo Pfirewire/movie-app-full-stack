@@ -55,15 +55,15 @@ body {
     background-color: #622929;
 }
 
-/*Styling for the add movie button*/
-#add-movie-btn {
-    margin-left: 8em;
-}
+/*!*Styling for the add movie button*!*/
+/*#add-movie-btn {*/
+/*    margin-left: 8em;*/
+/*}*/
 
-/*Styling sort select div*/
-#nav-sort-div {
-    margin-right: 8em;
-}
+/*!*Styling sort select div*!*/
+/*#nav-sort-div {*/
+/*    margin-right: 8em;*/
+/*}*/
 
 /*Changes cursor to a pointer finger when over a movie list image*/
 #movie-list img {
