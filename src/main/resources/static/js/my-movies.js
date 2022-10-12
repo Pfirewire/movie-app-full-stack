@@ -148,7 +148,7 @@ $(function() {
         // prints single movie card from our database to be inserted into the all movies list
         async singleMovie(div, movie) {
             div.prepend(`
-                <div class="div-card col-xl-4 col-md-6 col-12 d-flex justify-content-center" data-movie-id="${movie.id}">
+                <div class="div-card col-xl-3 col-lg-4 col-md-6 col-12 d-flex justify-content-center" data-movie-id="${movie.id}">
                     <div class="card movie-card border-0">
                         <a role="button" href="#single-movie-modal" data-bs-toggle="modal">
                             <img src=${movie.poster} class="card-img all-movie-img">

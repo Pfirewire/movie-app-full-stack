@@ -1,0 +1,22 @@
+body {
+    color: #FFF;
+    text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+}
+
+#page-wrapper {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    /*align-items: flex-start;*/
+    min-height: 100vh;
+    margin: 0;
+    background-image: url('https://source.unsplash.com/1920x1080/?cinema');
+    /*font-family: 'Open Sans', sans-serif;*/
+    position: relative;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

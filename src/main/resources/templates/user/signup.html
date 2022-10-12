@@ -6,17 +6,19 @@
     <div th:replace="partials :: links" />
 
     <title>Signup</title>
+    <link rel="stylesheet" th:href="@{css/index.css}">
 </head>
 <body>
-<nav th:replace="partials :: siteBar" />
+<div id="page-wrapper">
+    <nav th:replace="partials :: siteBar" />
 
 
-<h1 class="text-center my-5">Sign Up to Build a Character</h1>
+    <h1 class="text-center my-5">Sign Up to create your first Movie List!</h1>
 
-<div class="container bg-dark rounded-3 p-5">
-    <div th:replace="partials :: signupForm" />
+    <div class="container bg-dark rounded-3 p-5">
+        <div th:replace="partials :: signupForm" />
+    </div>
 </div>
-
 <div th:replace="partials :: scripts" />
 
 <script th:src="@{/js/signup-form.js}" />

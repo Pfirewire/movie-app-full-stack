@@ -7,22 +7,26 @@
     <div th:replace="partials :: links" />
 
     <title>Pfirewire's Movie App</title>
+
+    <link rel="stylesheet" th:href="@{css/index.css}">
 </head>
 <body>
-<nav th:replace="partials :: siteBar" />
+<div id="page-wrapper">
+    <nav th:replace="partials :: siteBar" />
 
-<h1 class="text-center my-5">Pfirewire's Movies Splash Page</h1>
-<h2 class="text-center">To do:</h2>
-<ul class="text-center my-5" style="list-style: none;">
-    <li>Update navbar in movie list</li>
-    <li>Add ability to add multiple lists</li>
-    <li>Add ratings</li>
-    <li>Better Splash Page</li>
-    <li style="text-decoration-line: line-through;">Mobile View (only fullscreen desktop will look ok right now)</li>
-    <li>Upload profile picture</li>
-    <li>A whole bunch of other stuff...</li>
-</ul>
-<h2 class="text-center">Let me know if you have any ideas for me to implement!</h2>
+    <h1 class="text-center my-5">Pfirewire's Movies Splash Page</h1>
+    <h2 class="text-center">To do:</h2>
+    <ul class="text-center my-5" style="list-style: none;">
+        <li>Update navbar in movie list</li>
+        <li>Add ability to add multiple lists</li>
+        <li>Add ratings</li>
+        <li>Better Splash Page</li>
+        <li style="text-decoration-line: line-through;">Mobile View (only fullscreen desktop will look ok right now)</li>
+        <li>Upload profile picture</li>
+        <li>A whole bunch of other stuff...</li>
+    </ul>
+    <h2 class="text-center">Let me know if you have any ideas for me to implement!</h2>
+</div>
 
 <div th:replace="partials :: scripts" />
 </body>

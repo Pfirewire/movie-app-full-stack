@@ -1,12 +1,26 @@
 /*Normal background for full body*/
-body {
-    background-color: #8096AD;
-}
+/*body {*/
+/*    background-color: #8096AD;*/
+/*}*/
 
 /*Styling to make page wrapper dive take up whole screen*/
+/*#page-wrapper {*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*}*/
+
 #page-wrapper {
-    height: 100%;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    /*align-items: flex-start;*/
+    min-height: 100vh;
+    margin: 0;
+    background-image: url('https://source.unsplash.com/1920x1080/?cinema');
+    /*font-family: 'Open Sans', sans-serif;*/
+    position: relative;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 /*Offset the top navbar*/
@@ -47,22 +61,12 @@ body {
     animation-timing-function: ease-in-out;
 }
 
-/*Background colors to toggle between for back room*/
-.normal-bg {
-    background-color: #8096AD;
-}
-.back-room-bg {
-    background-color: #622929;
-}
-
-/*!*Styling for the add movie button*!*/
-/*#add-movie-btn {*/
-/*    margin-left: 8em;*/
+/*!*Background colors to toggle between for back room*!*/
+/*.normal-bg {*/
+/*    background-color: #8096AD;*/
 /*}*/
-
-/*!*Styling sort select div*!*/
-/*#nav-sort-div {*/
-/*    margin-right: 8em;*/
+/*.back-room-bg {*/
+/*    background-color: #622929;*/
 /*}*/
 
 /*Changes cursor to a pointer finger when over a movie list image*/
@@ -92,7 +96,7 @@ body {
 .movie-card {
     border-radius: 2em;
     overflow: hidden;
-    box-shadow: 6px 12px 12px #254895;
+    box-shadow: 6px 12px 12px #000;
 }
 .search-card {
     box-shadow: 0 0 3px 3px #8096AD;
