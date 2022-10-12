@@ -148,7 +148,7 @@ $(function() {
         // prints single movie card from our database to be inserted into the all movies list
         async singleMovie(div, movie) {
             div.prepend(`
-                <div class="div-card col-3" data-movie-id="${movie.id}">
+                <div class="div-card col-xl-4 col-md-6 col-12 d-flex justify-content-center" data-movie-id="${movie.id}">
                     <div class="card movie-card border-0">
                         <a role="button" href="#single-movie-modal" data-bs-toggle="modal">
                             <img src=${movie.poster} class="card-img all-movie-img">
@@ -207,7 +207,7 @@ $(function() {
             movieList.results.forEach((movie, index) => {
                 if(index < 6) {
                     $("#movie-list").append(`
-                    <div class="col-2">
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex justify-content-center">
                         <div class="card search-card border-0" data-movie-tmdb-id="${movie.id}">
                             <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}" class="card-img search-card-img">
                         </div>

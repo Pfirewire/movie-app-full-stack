@@ -102,9 +102,11 @@ body {
 
 /*Making set height for images and cards*/
 .all-movie-img {
+    width: 300px;
     height: 429px;
 }
 .search-card, .search-card-img {
+    width: 160px;
     height: 240px;
 }
 
