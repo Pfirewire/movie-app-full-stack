@@ -14,6 +14,8 @@ $(function() {
             sfw: "&include_adult=false",
             nsfw: "&include_adult=true"
         },
+        // List id
+        listId: $("#list-id").text(),
         // String that holds user input for secret code
         hiddenString: "",
         // CSRF Token
@@ -58,7 +60,7 @@ $(function() {
         async allMovies() {
             try {
                 // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-                let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/5`);
+                let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${MovieApp.listId}`);
                 console.log(response);
                 let data = await response.json();
                 console.log(data);
@@ -123,6 +125,12 @@ $(function() {
             let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
             let data = await response.json();
             return data.tmdbKey;
+        },
+        // gets movie list
+        async movieList() {
+            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}list`);
+            let data = await response.json();
+            return data.id;
         },
         // gets api key
         async backRoomKey() {
@@ -233,7 +241,7 @@ $(function() {
                 },
                 body: JSON.stringify(movie)
             }
-            let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/5/add`, postOptions).then(res => {
+            let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${MovieApp.listId}/add`, postOptions).then(res => {
                 // $("#add-movie-text").val('');
                 // $("#movie-list").empty();
                 // Print.allMovies(Get.allMovies());
@@ -258,7 +266,7 @@ $(function() {
                     'X-CSRF-TOKEN' : MovieApp.csrfToken
                 }
             }
-            let deleteData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${movieId}/5/delete`, deleteOptions).then(results => results);
+            let deleteData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${movieId}/${MovieApp.listId}/delete`, deleteOptions).then(results => results);
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
         },
@@ -280,7 +288,7 @@ $(function() {
             }
 
             // let editData =await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, editOptions).then(results => results);
-            let editData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${id}/edit`, editOptions).then(results => results);
+            // let editData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${id}/edit`, editOptions).then(results => results);
 
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");

@@ -39,14 +39,9 @@ public class Movie {
     @Column(columnDefinition = "TEXT")
     private String plot;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "lists_movies",
-            joinColumns = {@JoinColumn(name = "movie_id")},
-            inverseJoinColumns = {@JoinColumn(name = "list_id")}
-    )
+    @ManyToMany(mappedBy = "movies")
+    @JsonBackReference(value = "listMovies")
     private Set<MovieList> lists;
-
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     @JsonManagedReference(value = "movieRating")

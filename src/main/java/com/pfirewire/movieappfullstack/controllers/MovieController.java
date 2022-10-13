@@ -50,8 +50,10 @@ public class MovieController {
             System.out.println(listMember.getId());
             System.out.println("user id: ");
             System.out.println(user.getId());
-            if(user.getId().equals(listMember.getId())) userIsMemberOfList = true;
+            if(user.getId() == listMember.getId()) userIsMemberOfList = true;
         }
+        System.out.println("userIsMemberOfList is: ");
+        System.out.println(userIsMemberOfList);
         return userIsMemberOfList;
     }
 
@@ -81,19 +83,21 @@ public class MovieController {
 
     @PostMapping("/movie/{listId}/add")
     public Movie addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
-        System.out.println("inside add movie");
+        System.out.println("inside addMovie");
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
-            System.out.println("movie is not in the list, it will be saved");
             movieDao.save(movie);
+        } else {
+            movie = movieDao.getByTmdbId(movie.getTmdbId());
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.printf("Current user id is: %s%n", user.getId());
         MovieList list = listDao.getById(listId);
-        System.out.println("List has been saved. it's id is: ");
-        System.out.println(list.getId());
+
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
         if(userIsMemberOfList){
-            System.out.println("inside add movie if statement");
-            list.addMovie(movie);
+            System.out.println("inside if statement");
+            list.getMovies().add(movie);
+            listDao.save(list);
         }
         return movieDao.getByTmdbId(movie.getTmdbId());
     }
@@ -134,9 +138,4 @@ public class MovieController {
         reviewDao.save(oldReview);
         return "completed editReview";
     }
-
-
-
-
-
 }

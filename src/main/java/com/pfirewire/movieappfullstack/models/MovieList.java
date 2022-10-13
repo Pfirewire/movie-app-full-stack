@@ -1,6 +1,7 @@
 package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -26,7 +27,13 @@ public class MovieList {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "lists")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "lists_movies",
+            joinColumns = {@JoinColumn(name = "list_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
+    @JsonManagedReference(value = "listMovies")
     private Set<Movie> movies;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -35,6 +42,7 @@ public class MovieList {
             joinColumns = {@JoinColumn(name = "list_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
+    @JsonManagedReference(value = "listMembers")
     private Set<User> members;
 
     public MovieList() {

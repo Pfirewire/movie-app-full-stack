@@ -71,6 +71,7 @@ public class UserController {
         list.setOwner(user);
         list.getMembers().add(user);
         listDao.save(list);
+        model.addAttribute("list", list);
         model.addAttribute("url", url);
         return "movie/list/my-movies";
     }
@@ -78,5 +79,13 @@ public class UserController {
     @GetMapping("/reviews")
     public String showMovieReviews() {
         return "movie/reviews";
+    }
+
+    @GetMapping("movie/list/{listId}")
+    public String showMovieList(@PathVariable Long listId, Model model) {
+        MovieList list = listDao.getById(listId);
+        model.addAttribute("list", list);
+        model.addAttribute("url", url);
+        return "movie/list/my-movies";
     }
 }
