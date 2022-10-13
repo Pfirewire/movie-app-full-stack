@@ -38,10 +38,13 @@ public class Movie {
     @Column(columnDefinition = "TEXT")
     private String plot;
 
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name="user_id")
-    private User user;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "lists_movies",
+            joinColumns = {@JoinColumn(name = "movie_id")},
+            inverseJoinColumns = {@JoinColumn(name = "list_id")}
+    )
+    private List<MovieList> lists;
 
     // Constructor functions
     public Movie() {
@@ -105,11 +108,11 @@ public class Movie {
         this.plot = plot;
     }
 
-    public User getUser() {
-        return user;
+    public List<MovieList> getLists() {
+        return lists;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setLists(List<MovieList> lists) {
+        this.lists = lists;
     }
 }

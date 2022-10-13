@@ -60,4 +60,9 @@ public class UserController {
     public String showMovieLists(Model model) {
         return "movie/movie-lists";
     }
+
+    @GetMapping("/reviews")
+    public String showMovieReviews() {
+        return "movie/reviews";
+    }
 }

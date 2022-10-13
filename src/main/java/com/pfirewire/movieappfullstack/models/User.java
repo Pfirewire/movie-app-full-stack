@@ -23,10 +23,17 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     @JsonManagedReference
-    private List<Movie> movies;
+    private List<MovieList> listsOwned;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "lists_users",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "list_id")}
+    )
+    private List<MovieList> lists;
     // Constructor functions
     public User () {}
     public User (String email, String username, String password) {
@@ -56,11 +63,19 @@ public class User {
     public String getPassword () { return this.password; }
     public void setPassword(String password) { this.password = password; }
 
-    public List<Movie> getMovies() {
-        return movies;
+    public List<MovieList> getListsOwned() {
+        return listsOwned;
     }
 
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
+    public void setListsOwned(List<MovieList> listsOwned) {
+        this.listsOwned = listsOwned;
+    }
+
+    public List<MovieList> getLists() {
+        return lists;
+    }
+
+    public void setLists(List<MovieList> lists) {
+        this.lists = lists;
     }
 }
