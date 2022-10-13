@@ -55,4 +55,9 @@ public class UserController {
         model.addAttribute("url", url);
         return "movie/my-movies";
     }
+
+    @GetMapping("/movie-lists")
+    public String showMovieLists(Model model) {
+        return "movie/movie-lists";
+    }
 }

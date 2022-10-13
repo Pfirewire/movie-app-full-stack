@@ -29,7 +29,7 @@
         <img th:src="@{/megamanicon.png}" style="max-height: 3em; max-width: 3em;">
     </button>
 
-    <div class="collapse navbar-collapse" id="site-bar-content">
+    <div class="collapse navbar-collapse ms-3" id="site-bar-content">
         <div class="d-flex justify-content-between">
             <span sec:authorize="isAuthenticated()">
                 <ul class="navbar-nav">
@@ -37,7 +37,7 @@
                         <a id="nav-my-lists" class="nav-link" th:href="@{/my-movies}">My Movie Lists</a>
                     </li>
                     <li class="nav-item">
-                        <a id="nav-create-list" class="nav-link" href="#">Create Movie List</a>
+                        <a id="nav-create-list" class="nav-link" th:href="@{/movie-lists}">Create Movie List</a>
                     </li>
                     <li>
                         <form id="site-bar-logout-form" th:action="@{/logout}" th:method="post">

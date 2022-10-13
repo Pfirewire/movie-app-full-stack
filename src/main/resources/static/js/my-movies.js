@@ -164,14 +164,14 @@ $(function() {
             let modalBodyDiv = $("#single-movie");
             modalHeaderDiv.empty();
             modalHeaderDiv.append(`
-                <h5 class="modal-title text-light">${movie.title}</h5>
+                <h5 class="modal-title text-light modal-overflow-wrap">${movie.title}</h5>
             `);
             modalBodyDiv.empty();
             modalBodyDiv.attr("data-movie-id", movie.id);
             modalBodyDiv.append(`
-             <p>Genre: ${movie.genre}</p>
-             <p>Plot: ${movie.plot}</p>
-             <p>Year: ${movie.year}</p>
+             <p class="modal-overflow-wrap">Genre: ${movie.genre}</p>
+             <p class="modal-overflow-wrap">Plot: ${movie.plot}</p>
+             <p class="modal-overflow-wrap">Year: ${movie.year}</p>
              <div class="d-flex justify-content-between">
                  <button class="edit-btn btn btn-primary">Edit Movie</button>
                  <button class="delete-btn btn btn-danger">Delete Movie</button>
