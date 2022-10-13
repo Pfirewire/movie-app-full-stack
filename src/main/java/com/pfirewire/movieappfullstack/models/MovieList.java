@@ -29,7 +29,12 @@ public class MovieList {
     @ManyToMany(mappedBy = "lists")
     private Set<Movie> movies;
 
-    @ManyToMany(mappedBy = "lists")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "lists_users",
+            joinColumns = {@JoinColumn(name = "list_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
     private Set<User> members;
 
     public MovieList() {

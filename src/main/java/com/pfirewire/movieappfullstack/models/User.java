@@ -30,12 +30,7 @@ public class User {
     @JsonManagedReference
     private List<MovieList> listsOwned;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "lists_users",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "list_id")}
-    )
+    @ManyToMany(mappedBy = "members")
     private Set<MovieList> lists = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

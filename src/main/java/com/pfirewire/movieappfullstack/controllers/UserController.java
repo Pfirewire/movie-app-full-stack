@@ -69,9 +69,8 @@ public class UserController {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         listDao.save(list);
         list.setOwner(user);
+        list.getMembers().add(user);
         listDao.save(list);
-        user.getLists().add(list);
-        userDao.save(user);
         model.addAttribute("url", url);
         return "movie/list/my-movies";
     }
