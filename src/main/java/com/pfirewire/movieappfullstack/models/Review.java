@@ -23,7 +23,7 @@ public class Review {
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name="movie_id")
-    private User movie;
+    private Movie movie;
 
     public Review() {}
 

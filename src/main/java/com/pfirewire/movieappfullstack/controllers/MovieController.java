@@ -2,9 +2,10 @@ package com.pfirewire.movieappfullstack.controllers;
 
 import ch.qos.logback.core.util.CloseUtil;
 import com.pfirewire.movieappfullstack.models.Movie;
+import com.pfirewire.movieappfullstack.models.MovieList;
+import com.pfirewire.movieappfullstack.models.Rating;
 import com.pfirewire.movieappfullstack.models.User;
-import com.pfirewire.movieappfullstack.repositories.MovieRepository;
-import com.pfirewire.movieappfullstack.repositories.UserRepository;
+import com.pfirewire.movieappfullstack.repositories.*;
 import com.pfirewire.movieappfullstack.services.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,10 +24,22 @@ public class MovieController {
 
     private MovieRepository movieDao;
     private UserRepository userDao;
+    private MovieListRepository listDao;
+    private RatingRepository ratingDao;
+    private ReviewRepository reviewDao;
 
-    public MovieController(MovieRepository movieDao, UserRepository userDao) {
+    public MovieController(
+            MovieRepository movieDao,
+            UserRepository userDao,
+            MovieListRepository listDao,
+            RatingRepository ratingDao,
+            ReviewRepository reviewDao)
+    {
         this.movieDao = movieDao;
         this.userDao = userDao;
+        this.listDao = listDao;
+        this.ratingDao = ratingDao;
+        this.reviewDao = reviewDao;
     }
 
     @GetMapping("/health")
@@ -41,35 +54,46 @@ public class MovieController {
         return userMovies;
     }
 
-    @DeleteMapping("/movie/{id}/delete")
-    public String deleteMovie(@PathVariable Long id) {
+    @DeleteMapping("/movie/{movieId}/{listId}/delete")
+    public String deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Movie movie = movieDao.getById(id);
-        User moviesUser = movie.getUser();
-        if(user.getId().equals(moviesUser.getId())) {
+        Movie movie = movieDao.getById(movieId);
+        MovieList list = listDao.getById(listId);
+        Boolean userIsMemberOfList = isMember(list.getMembers(), user);
+        if(userIsMemberOfList) {
             movieDao.delete(movie);
             return "movie deleted";
-        } else {
-            return "unable to delete, user does not match";
-        }
+        } else return "you are not a member of this list";
     }
 
-    @PostMapping("/movie/add")
-    public String addMovie (@RequestBody Movie movie) {
+    @PostMapping("/movie/{listId}/add")
+    public String addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        movie.setUser(user);
-        movieDao.save(movie);
+        MovieList list = listDao.getById(listId);
+        Boolean userIsMemberOfList = isMember(list.getMembers(), user);
+        if(userIsMemberOfList) movieDao.save(movie);
         return "completed addMovie";
     }
 
-    @PatchMapping("/movie/{id}/edit")
-    public String editMovie(@RequestBody Movie movie, @PathVariable Long id) {
+    @PatchMapping("/movie/{movieId}/rating/edit")
+    public String editMovie(@RequestBody Movie movie, @PathVariable Long movieId) {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Rating rating = ratingDao
+        Boolean userIsMember = isMember(list.getMembers(), user);
+        if()
         if(movieDao.getById(id).getUser().getId().equals(user.getId())){
             movie.setUser(user);
             movieDao.save(movie);
         }
         return "completed editMovie";
+    }
+
+    private Boolean isMember(List<User> listMembers, User user) {
+        Boolean userIsMemberOfList = false;
+        for(User listMember : listMembers) {
+            if(user.getId().equals(listMember.getId())) userIsMemberOfList = true;
+        }
+        return userIsMemberOfList;
     }
 
 

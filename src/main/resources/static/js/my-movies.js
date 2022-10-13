@@ -232,22 +232,15 @@ $(function() {
                 },
                 body: JSON.stringify(movie)
             }
-            // fetch(MovieApp.GlobalURLs.moviesURL, postOptions).then(() => {
-            //     $("#add-movie-text").val('');
-            //     $("#movie-list").empty();
-            //     // Print.addMovie(movie);
-            //     Print.allMovies(Get.allMovies());
-            // });
-            let addData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/add`, postOptions).then(res => {
+            let addData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/1/add`, postOptions).then(res => {
                 $("#add-movie-text").val('');
                 $("#movie-list").empty();
-                // Print.addMovie(movie);
                 Print.allMovies(Get.allMovies());
                 return res;
             });
         },
         // Deletes movie from database
-        async deleteMovie(id, button) {
+        async deleteMovie(movieId, button) {
             let deleteOptions = {
                 method: 'DELETE',
                 headers: {
@@ -255,10 +248,7 @@ $(function() {
                     'X-CSRF-TOKEN' : MovieApp.csrfToken
                 }
             }
-            // let deleteData = await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, deleteOptions).then(results => results);
-            // Print.allMovies(Get.allMovies());
-            // button.removeAttr("disabled");
-            let deleteData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${id}/delete`, deleteOptions).then(results => results);
+            let deleteData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${movieId}/1/delete`, deleteOptions).then(results => results);
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
         },

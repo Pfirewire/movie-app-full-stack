@@ -4,15 +4,10 @@ import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import com.pfirewire.movieappfullstack.services.Url;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class UserController {
@@ -50,15 +45,15 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/my-movies")
+    @GetMapping("/movie/list/1")
     public String showMyMoviesIndex(Model model) {
         model.addAttribute("url", url);
-        return "movie/my-movies";
+        return "movie/list/my-movies";
     }
 
-    @GetMapping("/movie-lists")
+    @GetMapping("/movie/list")
     public String showMovieLists(Model model) {
-        return "movie/movie-lists";
+        return "movie/list/movie-lists";
     }
 
     @GetMapping("/reviews")

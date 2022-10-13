@@ -22,7 +22,7 @@ public class MovieList {
     private List<Movie> movies;
 
     @ManyToMany(mappedBy = "lists")
-    private List<User> users;
+    private List<User> members;
 
     public MovieList() {}
 
@@ -50,11 +50,11 @@ public class MovieList {
         this.movies = movies;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<User> getMembers() {
+        return members;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setMembmers(List<User> members) {
+        this.members = members;
     }
 }
