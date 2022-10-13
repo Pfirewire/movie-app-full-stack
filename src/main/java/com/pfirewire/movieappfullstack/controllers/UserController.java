@@ -1,28 +1,35 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
+import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import com.pfirewire.movieappfullstack.services.Url;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class UserController {
 
     // Repositories and Services
     private UserRepository userDao;
+    private MovieListRepository listDao;
 //    private MovieRepository movieDao;
     private PasswordEncoder passwordEncoder;
     @Autowired
     private Url url;
 
     // Constructor
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userDao, MovieListRepository listDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
-//        this.movieDao = movieDao;
+        this.listDao = listDao;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -45,7 +52,7 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/movie/list/1")
+    @GetMapping("/movie/list/5")
     public String showMyMoviesIndex(Model model) {
         model.addAttribute("url", url);
         return "movie/list/my-movies";
@@ -53,7 +60,20 @@ public class UserController {
 
     @GetMapping("/movie/list")
     public String showMovieLists(Model model) {
+        model.addAttribute("list", new MovieList());
         return "movie/list/movie-lists";
+    }
+
+    @PostMapping("/movie/list")
+    public String saveMovieList(@ModelAttribute MovieList list, Model model) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        listDao.save(list);
+        list.setOwner(user);
+        listDao.save(list);
+        user.getLists().add(list);
+        userDao.save(user);
+        model.addAttribute("url", url);
+        return "movie/list/my-movies";
     }
 
     @GetMapping("/reviews")

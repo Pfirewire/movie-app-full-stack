@@ -1,9 +1,14 @@
 package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "lists")
@@ -18,13 +23,19 @@ public class MovieList {
     @JoinColumn(name="owner_id")
     private User owner;
 
-    @ManyToMany(mappedBy = "lists")
-    private List<Movie> movies;
+    @Column(nullable = false)
+    private String name;
 
     @ManyToMany(mappedBy = "lists")
-    private List<User> members;
+    private Set<Movie> movies;
 
-    public MovieList() {}
+    @ManyToMany(mappedBy = "lists")
+    private Set<User> members;
+
+    public MovieList() {
+        this.movies = new HashSet<>();
+        this.members = new HashSet<>();
+    }
 
     public Long getId() {
         return id;
@@ -42,19 +53,27 @@ public class MovieList {
         this.owner = owner;
     }
 
-    public List<Movie> getMovies() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Movie> getMovies() {
         return movies;
     }
 
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(Set<Movie> movies) {
         this.movies = movies;
     }
 
-    public List<User> getMembers() {
+    public Set<User> getMembers() {
         return members;
     }
 
-    public void setMembmers(List<User> members) {
+    public void setMembers(Set<User> members) {
         this.members = members;
     }
 
@@ -64,5 +83,17 @@ public class MovieList {
 
     public void deleteMovie(Movie movie) {
         this.movies.remove(movie);
+    }
+
+    public void addMember(User user) {
+        System.out.println("adding member to a list. user id is: ");
+        System.out.println(user.getId());
+        this.members.add(user);
+        System.out.println("member has been added. new member list: ");
+        System.out.println(this.members.toString());
+    }
+
+    public void deleteMember(User user) {
+        this.members.remove(user);
     }
 }

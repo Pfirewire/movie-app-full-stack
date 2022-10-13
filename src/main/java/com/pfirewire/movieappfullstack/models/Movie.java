@@ -11,6 +11,7 @@ import javax.validation.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "movies")
@@ -44,7 +45,16 @@ public class Movie {
             joinColumns = {@JoinColumn(name = "movie_id")},
             inverseJoinColumns = {@JoinColumn(name = "list_id")}
     )
-    private List<MovieList> lists;
+    private Set<MovieList> lists;
+
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    @JsonManagedReference(value = "movieRating")
+    private Set<Rating> ratings;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    @JsonManagedReference(value = "movieReview")
+    private Set<Review> reviews;
 
     // Constructor functions
     public Movie() {
@@ -108,11 +118,27 @@ public class Movie {
         this.plot = plot;
     }
 
-    public List<MovieList> getLists() {
+    public Set<MovieList> getLists() {
         return lists;
     }
 
-    public void setLists(List<MovieList> lists) {
+    public void setLists(Set<MovieList> lists) {
         this.lists = lists;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }

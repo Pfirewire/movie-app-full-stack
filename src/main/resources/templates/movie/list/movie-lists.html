@@ -8,14 +8,34 @@
 
     <title>Movie Lists</title>
 
-    <link rel="stylesheet" th:href="@{css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
 <div id="page-wrapper">
     <nav th:replace="partials :: siteBar" />
 
-    <h1 class="text-center pt-5 my-5">Create a Movie List</h1>
-    <h2 class="text-center">Coming Soon!</h2>
+    <h1 class="text-center pt-5 my-5">Movie Lists</h1>
+
+    <div class="container pt-5 my-5">
+        <div class="row g-5">
+            <div class="col-12 col-lg-5">
+                <div class="container bg-dark rounded-3 p-5">
+                    <h1 class="text-center text-light">Create a New List</h1>
+                    <form class="text-light" th:action="@{/movie/list}" method="POST" th:object="${list}">
+                        <div class="mb-3">
+                            <label for="list-name" class="form-label">Name your List</label>
+                            <input type="text" class="form-control" id="list-name" name="list-name" th:field="*{name}" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                            <p>Add others to your list (Coming Soon)</p>
+                        </div>
+                        <button id="add-list-submit-btn" type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div th:replace="partials :: scripts" />

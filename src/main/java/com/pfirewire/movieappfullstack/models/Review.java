@@ -16,12 +16,12 @@ public class Review {
     private String review;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "userReview")
     @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "movieReview")
     @JoinColumn(name="movie_id")
     private Movie movie;
 

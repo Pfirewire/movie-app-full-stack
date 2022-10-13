@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -33,9 +36,18 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "list_id")}
     )
-    private List<MovieList> lists;
+    private Set<MovieList> lists = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference(value = "userRating")
+    private Set<Rating> ratings = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference(value = "userReview")
+    private Set<Review> reviews = new HashSet<>();
     // Constructor functions
-    public User () {}
+    public User () {
+    }
     public User (String email, String username, String password) {
         this.email = email;
         this.username = username;
@@ -47,6 +59,9 @@ public class User {
         this.email = copy.email;
         this.username = copy.username;
         this.password = copy.password;
+//        this.lists = copy.lists;
+//        this.ratings = copy.ratings;
+//        this.reviews = copy.reviews;
     }
 
 
@@ -71,11 +86,31 @@ public class User {
         this.listsOwned = listsOwned;
     }
 
-    public List<MovieList> getLists() {
+    public Set<MovieList> getLists() {
         return lists;
     }
 
-    public void setLists(List<MovieList> lists) {
+    public void setLists(Set<MovieList> lists) {
         this.lists = lists;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void addList(MovieList list) {
+        this.lists.add(list);
     }
 }

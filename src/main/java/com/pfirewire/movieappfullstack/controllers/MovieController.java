@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @RestController
 public class MovieController {
@@ -39,15 +41,29 @@ public class MovieController {
         this.reviewDao = reviewDao;
     }
 
+    private Boolean isMember(Set<User> listMembers, User user) {
+        System.out.println("inside ismember");
+        Boolean userIsMemberOfList = false;
+        for(User listMember : listMembers) {
+            System.out.println("inside for list member loop in isMember");
+            System.out.println("listmember id: ");
+            System.out.println(listMember.getId());
+            System.out.println("user id: ");
+            System.out.println(user.getId());
+            if(user.getId().equals(listMember.getId())) userIsMemberOfList = true;
+        }
+        return userIsMemberOfList;
+    }
+
     @GetMapping("/health")
     public String healthCheck() {
         return "health check complete";
     }
 
     @GetMapping("/movies/{listId}")
-    public List<Movie> getAllMovies(@PathVariable Long listId) {
+    public Set<Movie> getAllMovies(@PathVariable Long listId) {
         MovieList list = listDao.getById(listId);
-        List<Movie> userMovies = list.getMovies();
+        Set<Movie> userMovies = list.getMovies();
         return userMovies;
     }
 
@@ -65,16 +81,26 @@ public class MovieController {
 
     @PostMapping("/movie/{listId}/add")
     public Movie addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
-        if(!movieDao.existsByTmdbId(movie.getTmdbId())) movieDao.save(movie);
+        System.out.println("inside add movie");
+        if(!movieDao.existsByTmdbId(movie.getTmdbId())){
+            System.out.println("movie is not in the list, it will be saved");
+            movieDao.save(movie);
+        }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MovieList list = listDao.getById(listId);
+        System.out.println("List has been saved. it's id is: ");
+        System.out.println(list.getId());
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
-        if(userIsMemberOfList) list.addMovie(movie);
+        if(userIsMemberOfList){
+            System.out.println("inside add movie if statement");
+            list.addMovie(movie);
+        }
         return movieDao.getByTmdbId(movie.getTmdbId());
     }
 
     @PostMapping("/rating/{movieId}/add")
     public String addRating (@RequestBody Rating rating, @PathVariable Long movieId) {
+        System.out.println("inside addRating");
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         rating.setUser(user);
         rating.setMovie(movieDao.getById(movieId));
@@ -109,13 +135,7 @@ public class MovieController {
         return "completed editReview";
     }
 
-    private Boolean isMember(List<User> listMembers, User user) {
-        Boolean userIsMemberOfList = false;
-        for(User listMember : listMembers) {
-            if(user.getId().equals(listMember.getId())) userIsMemberOfList = true;
-        }
-        return userIsMemberOfList;
-    }
+
 
 
 
