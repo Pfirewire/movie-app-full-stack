@@ -58,8 +58,10 @@ $(function() {
         async allMovies() {
             try {
                 // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-                let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies`);
+                let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/1`);
+                console.log(response);
                 let data = await response.json();
+                console.log(data);
                 return data;
             } catch (err) {
                 console.log(err);
@@ -76,8 +78,7 @@ $(function() {
                 year: parseInt(movieData.release_date.substring(0,4)),
                 genre: Utils.Convert.genreArrayToString(movieData.genres),
                 plot: movieData.overview,
-                tmdbId: movieData.id,
-                // user_id: MovieApp.userId
+                tmdbId: movieData.id
             }
             // returns movie object that matches the information stored in our project
             return movieToAdd;
@@ -232,7 +233,14 @@ $(function() {
                 },
                 body: JSON.stringify(movie)
             }
-            let addData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/1/add`, postOptions).then(res => {
+            let addMoviePromise = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/1/add`, postOptions).then(res => {
+                // $("#add-movie-text").val('');
+                // $("#movie-list").empty();
+                // Print.allMovies(Get.allMovies());
+                return res;
+            });
+            let addedMovie = await addMoviePromise.then(res => res.json());
+            await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${addedMovie.id}/add`, postOptions).then(res => {
                 $("#add-movie-text").val('');
                 $("#movie-list").empty();
                 Print.allMovies(Get.allMovies());

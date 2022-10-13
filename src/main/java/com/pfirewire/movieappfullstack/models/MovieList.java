@@ -57,4 +57,12 @@ public class MovieList {
     public void setMembmers(List<User> members) {
         this.members = members;
     }
+
+    public void addMovie(Movie movie) {
+        this.movies.add(movie);
+    }
+
+    public void deleteMovie(Movie movie) {
+        this.movies.remove(movie);
+    }
 }

@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Login configuration
             .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/my-movies")
+                .defaultSuccessUrl("/")
                 .permitAll()
                 // Logout configuration
             .and()
@@ -57,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/my-movies",
+                        "/movie/list/*",
                         "/movies",
                         "/movie-lists"
                 )

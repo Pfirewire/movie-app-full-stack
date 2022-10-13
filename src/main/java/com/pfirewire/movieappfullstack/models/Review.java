@@ -12,8 +12,8 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private int review;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String review;
 
     @ManyToOne
     @JsonBackReference
@@ -35,12 +35,12 @@ public class Review {
         this.id = id;
     }
 
-    public int getRating() {
+    public String getReview() {
         return review;
     }
 
-    public void setRating(int rating) {
-        this.review = rating;
+    public void setReview(String review) {
+        this.review = review;
     }
 
     public User getUser() {
@@ -51,11 +51,11 @@ public class Review {
         this.user = user;
     }
 
-    public User getMovie() {
+    public Movie getMovie() {
         return movie;
     }
 
-    public void setMovie(User movie) {
+    public void setMovie(Movie movie) {
         this.movie = movie;
     }
 }

@@ -1,10 +1,7 @@
 package com.pfirewire.movieappfullstack.controllers;
 
 import ch.qos.logback.core.util.CloseUtil;
-import com.pfirewire.movieappfullstack.models.Movie;
-import com.pfirewire.movieappfullstack.models.MovieList;
-import com.pfirewire.movieappfullstack.models.Rating;
-import com.pfirewire.movieappfullstack.models.User;
+import com.pfirewire.movieappfullstack.models.*;
 import com.pfirewire.movieappfullstack.repositories.*;
 import com.pfirewire.movieappfullstack.services.Url;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +44,10 @@ public class MovieController {
         return "health check complete";
     }
 
-    @GetMapping("/movies")
-    public List<Movie> getAllMovies() {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Movie> userMovies = movieDao.findAllByUser(user);
+    @GetMapping("/movies/{listId}")
+    public List<Movie> getAllMovies(@PathVariable Long listId) {
+        MovieList list = listDao.getById(listId);
+        List<Movie> userMovies = list.getMovies();
         return userMovies;
     }
 
@@ -61,31 +58,55 @@ public class MovieController {
         MovieList list = listDao.getById(listId);
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
         if(userIsMemberOfList) {
-            movieDao.delete(movie);
+            list.deleteMovie(movie);
             return "movie deleted";
         } else return "you are not a member of this list";
     }
 
     @PostMapping("/movie/{listId}/add")
-    public String addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
+    public Movie addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
+        if(!movieDao.existsByTmdbId(movie.getTmdbId())) movieDao.save(movie);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MovieList list = listDao.getById(listId);
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
-        if(userIsMemberOfList) movieDao.save(movie);
-        return "completed addMovie";
+        if(userIsMemberOfList) list.addMovie(movie);
+        return movieDao.getByTmdbId(movie.getTmdbId());
     }
 
-    @PatchMapping("/movie/{movieId}/rating/edit")
-    public String editMovie(@RequestBody Movie movie, @PathVariable Long movieId) {
+    @PostMapping("/rating/{movieId}/add")
+    public String addRating (@RequestBody Rating rating, @PathVariable Long movieId) {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Rating rating = ratingDao
-        Boolean userIsMember = isMember(list.getMembers(), user);
-        if()
-        if(movieDao.getById(id).getUser().getId().equals(user.getId())){
-            movie.setUser(user);
-            movieDao.save(movie);
-        }
-        return "completed editMovie";
+        rating.setUser(user);
+        rating.setMovie(movieDao.getById(movieId));
+        ratingDao.save(rating);
+        return "completed addRating";
+    }
+
+    @PostMapping("/review/{movieId}/add")
+    public String addReview (@RequestBody Review review, @PathVariable Long movieId) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        review.setUser(user);
+        review.setMovie(movieDao.getById(movieId));
+        reviewDao.save(review);
+        return "completed addReview";
+    }
+
+    @PatchMapping("/rating/{movieId}/edit")
+    public String editRating(@RequestBody Rating newRating, @PathVariable Long movieId) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Rating oldRating = ratingDao.findByUserAndMovie(user, movieDao.getById(movieId));
+        oldRating.setRating(newRating.getRating());
+        ratingDao.save(oldRating);
+        return "completed editRating";
+    }
+
+    @PatchMapping("/review/{movieId}/edit")
+    public String editReview(@RequestBody Review newReview, @PathVariable Long movieId) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Review oldReview = reviewDao.findByUserAndMovie(user, movieDao.getById(movieId));
+        oldReview.setReview(newReview.getReview());
+        reviewDao.save(oldReview);
+        return "completed editReview";
     }
 
     private Boolean isMember(List<User> listMembers, User user) {

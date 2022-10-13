@@ -51,11 +51,11 @@ public class Rating {
         this.user = user;
     }
 
-    public User getMovie() {
+    public Movie getMovie() {
         return movie;
     }
 
-    public void setMovie(User movie) {
+    public void setMovie(Movie movie) {
         this.movie = movie;
     }
 }
