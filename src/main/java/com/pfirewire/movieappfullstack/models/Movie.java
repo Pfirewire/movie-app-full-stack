@@ -40,7 +40,7 @@ public class Movie {
     private String plot;
 
     @ManyToMany(mappedBy = "movies")
-    @JsonBackReference(value = "listMovies")
+    @JsonManagedReference(value = "listMovies")
     private Set<MovieList> lists;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")

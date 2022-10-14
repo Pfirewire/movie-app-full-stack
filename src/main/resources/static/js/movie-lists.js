@@ -28,6 +28,17 @@ $(function() {
             } catch(error) {
                 console.log(`There was an error: ${error}`);
             }
+        },
+        async allMoviesFromList(listId) {
+            console.log("inside allMoviesFromList")
+            try {
+                // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
+                let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${listId}`);
+                let data = await response.json();
+                return data;
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -35,29 +46,45 @@ $(function() {
         // Print user's movie lists
         allMovieLists(dataPromise) {
             MovieApp.movieListDiv.empty();
-            dataPromise.then(movieListData => {
+            dataPromise.then(function(movieListData) {
                 movieListData.forEach(function(movieList) {
+                    console.log("inside foreach loop to print each movie list. movielist name: ");
+                    console.log(movieList.name);
                     Print.singleMovieList(MovieApp.movieListDiv, movieList);
+                    let movieListCardDiv = MovieApp.movieListDiv.children().last().children(".movie-list-card");
+                    let movieListMovies = Get.allMoviesFromList(movieList.id);
+                    Print.singleMovieListPosters(movieListCardDiv, movieListMovies);
                 })
             });
         },
         singleMovieList(div, movieList) {
-            div.prepend(`
+            div.append(`
                 <div class="movie-list-div">
-                    <h3 class="movie-list-title">${movieList.name}</h3>
+                    <h3 class="movie-list-title">
+                        <a href="/movie/list/${movieList.id}">
+                            ${movieList.name}
+                        </a>
+                    </h3>
                     <div class="movie-list-card">
-                    
                     </div>
                 </div>
             `);
-            // <div className="div-card col-xl-3 col-lg-4 col-md-6 col-12 d-flex justify-content-center"
-            //      data-movie-id="${movie.id}">
-            //     <div className="card movie-card border-0">
-            //         <a role="button" href="#single-movie-modal" data-bs-toggle="modal">
-            //             <img src=${movie.poster} className="card-img all-movie-img">
-            //         </a>
-            //     </div>
-            // </div>
+        },
+        singleMovieListPosters(div, moviesPromise) {
+            moviesPromise.then(function(movieData) {
+                movieData.forEach(function(movie, index) {
+                    if(index < 5) {
+                        Print.singleMoviePoster(div, movie);
+                    }
+                })
+            });
+        },
+        singleMoviePoster(div, movie) {
+            div.append(`
+                <div>
+                    <img src=${movie.poster} class="movie-list-poster">
+                </div>
+            `);
         }
     }
 

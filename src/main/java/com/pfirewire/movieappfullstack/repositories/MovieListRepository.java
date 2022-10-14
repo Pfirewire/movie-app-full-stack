@@ -11,5 +11,5 @@ import java.util.Set;
 
 @Repository
 public interface MovieListRepository extends JpaRepository<MovieList, Long> {
-    Set<MovieList> findAllByUser(User user);
+    Set<MovieList> findAllByMembers(User user);
 }

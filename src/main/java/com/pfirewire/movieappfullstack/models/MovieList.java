@@ -33,7 +33,7 @@ public class MovieList {
             joinColumns = {@JoinColumn(name = "list_id")},
             inverseJoinColumns = {@JoinColumn(name = "movie_id")}
     )
-    @JsonManagedReference(value = "listMovies")
+    @JsonBackReference(value = "listMovies")
     private Set<Movie> movies;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -42,7 +42,7 @@ public class MovieList {
             joinColumns = {@JoinColumn(name = "list_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    @JsonManagedReference(value = "listMembers")
+    @JsonBackReference(value = "listMembers")
     private Set<User> members;
 
     public MovieList() {

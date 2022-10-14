@@ -70,15 +70,17 @@ public class MovieController {
     @GetMapping("/movie/list/all")
     public Set<MovieList> getAllMovieLists() {
         User user = currentUser();
-        System.out.printf("Inside getAllMovieLists. Current user is: %s%n", user.getUsername());
-        Set<MovieList> userMovieLists = listDao.findAllByUser(user);
-        System.out.printf("User movie lists acquired, this should not be null: %s%n", userMovieLists.toString());
+//        System.out.printf("Inside getAllMovieLists. Current user is: %s%n", user.getUsername());
+        Set<MovieList> userMovieLists = listDao.findAllByMembers(user);
+//        System.out.printf("User movie lists acquired, this should not be null: %s%n", userMovieLists.toString());
         return userMovieLists;
     }
 
     @GetMapping("/movies/{listId}")
     public Set<Movie> getAllMovies(@PathVariable Long listId) {
-        MovieList list = listDao.getById(listId);
+        System.out.println("inside getAllMovies. listID: ");
+        System.out.println(listId);
+        MovieList list = listDao.findById(listId).get();
         Set<Movie> userMovies = list.getMovies();
         return userMovies;
     }

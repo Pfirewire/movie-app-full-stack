@@ -31,7 +31,7 @@ public class User {
     private List<MovieList> listsOwned;
 
     @ManyToMany(mappedBy = "members")
-    @JsonBackReference(value = "listMembers")
+    @JsonManagedReference(value = "listMembers")
     private Set<MovieList> lists = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
