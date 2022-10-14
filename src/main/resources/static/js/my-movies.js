@@ -180,7 +180,6 @@ $(function() {
              <p class="modal-overflow-wrap">Plot: ${movie.plot}</p>
              <p class="modal-overflow-wrap">Year: ${movie.year}</p>
              <div class="d-flex justify-content-between">
-                 <button class="edit-btn btn btn-primary">Edit Movie</button>
                  <button class="delete-btn btn btn-danger">Delete Movie</button>
              </div>
         `);
