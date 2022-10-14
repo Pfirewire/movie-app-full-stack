@@ -92,7 +92,8 @@ public class MovieController {
         MovieList list = listDao.getById(listId);
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
         if(userIsMemberOfList) {
-            list.deleteMovie(movie);
+            list.getMovies().remove(movie);
+            listDao.save(list);
             return "movie deleted";
         } else return "you are not a member of this list";
     }

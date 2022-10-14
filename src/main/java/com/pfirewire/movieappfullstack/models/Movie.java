@@ -1,6 +1,7 @@
 package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pfirewire.movieappfullstack.models.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
@@ -40,15 +41,18 @@ public class Movie {
     private String plot;
 
     @ManyToMany(mappedBy = "movies")
-    @JsonManagedReference(value = "listMovies")
+//    @JsonManagedReference(value = "listMovies")
+    @JsonIgnore
     private Set<MovieList> lists;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
-    @JsonManagedReference(value = "movieRating")
+//    @JsonManagedReference(value = "movieRating")
+    @JsonIgnore
     private Set<Rating> ratings;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
-    @JsonManagedReference(value = "movieReview")
+//    @JsonManagedReference(value = "movieReview")
+    @JsonIgnore
     private Set<Review> reviews;
 
     // Constructor functions
