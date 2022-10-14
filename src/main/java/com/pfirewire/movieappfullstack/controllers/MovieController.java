@@ -57,9 +57,23 @@ public class MovieController {
         return userIsMemberOfList;
     }
 
+    private User currentUser() {
+        return (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+    }
+
     @GetMapping("/health")
     public String healthCheck() {
         return "health check complete";
+    }
+
+    @GetMapping("/movie/list/all")
+    public Set<MovieList> getAllMovieLists() {
+        User user = currentUser();
+        System.out.printf("Inside getAllMovieLists. Current user is: %s%n", user.getUsername());
+        Set<MovieList> userMovieLists = listDao.findAllByUser(user);
+        System.out.printf("User movie lists acquired, this should not be null: %s%n", userMovieLists.toString());
+        return userMovieLists;
     }
 
     @GetMapping("/movies/{listId}")
@@ -71,7 +85,7 @@ public class MovieController {
 
     @DeleteMapping("/movie/{movieId}/{listId}/delete")
     public String deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = currentUser();
         Movie movie = movieDao.getById(movieId);
         MovieList list = listDao.getById(listId);
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
@@ -105,7 +119,7 @@ public class MovieController {
     @PostMapping("/rating/{movieId}/add")
     public String addRating (@RequestBody Rating rating, @PathVariable Long movieId) {
         System.out.println("inside addRating");
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = currentUser();
         rating.setUser(user);
         rating.setMovie(movieDao.getById(movieId));
         ratingDao.save(rating);
@@ -114,7 +128,7 @@ public class MovieController {
 
     @PostMapping("/review/{movieId}/add")
     public String addReview (@RequestBody Review review, @PathVariable Long movieId) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = currentUser();
         review.setUser(user);
         review.setMovie(movieDao.getById(movieId));
         reviewDao.save(review);
@@ -123,7 +137,7 @@ public class MovieController {
 
     @PatchMapping("/rating/{movieId}/edit")
     public String editRating(@RequestBody Rating newRating, @PathVariable Long movieId) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = currentUser();
         Rating oldRating = ratingDao.findByUserAndMovie(user, movieDao.getById(movieId));
         oldRating.setRating(newRating.getRating());
         ratingDao.save(oldRating);
@@ -132,7 +146,7 @@ public class MovieController {
 
     @PatchMapping("/review/{movieId}/edit")
     public String editReview(@RequestBody Review newReview, @PathVariable Long movieId) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = currentUser();
         Review oldReview = reviewDao.findByUserAndMovie(user, movieDao.getById(movieId));
         oldReview.setReview(newReview.getReview());
         reviewDao.save(oldReview);

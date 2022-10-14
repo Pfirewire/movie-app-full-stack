@@ -61,9 +61,7 @@ $(function() {
             try {
                 // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
                 let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${MovieApp.listId}`);
-                console.log(response);
                 let data = await response.json();
-                console.log(data);
                 return data;
             } catch (err) {
                 console.log(err);
@@ -248,7 +246,6 @@ $(function() {
                 return res;
             });
             let addedMovie = await results.json();
-            console.log(addedMovie);
             postOptions.body = JSON.stringify({rating: 5});
             await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${addedMovie.id}/add`, postOptions).then(res => {
                 $("#add-movie-text").val('');

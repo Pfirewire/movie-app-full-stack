@@ -60,6 +60,7 @@ public class UserController {
 
     @GetMapping("/movie/list")
     public String showMovieLists(Model model) {
+        model.addAttribute("url", url);
         model.addAttribute("list", new MovieList());
         return "movie/list/movie-lists";
     }

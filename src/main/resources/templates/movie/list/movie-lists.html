@@ -11,6 +11,9 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
+<div hidden th:object="${url}">
+    <div id="base-url" th:text="*{baseUrl}"></div>
+</div>
 <div id="page-wrapper">
     <nav th:replace="partials :: siteBar" />
 
@@ -18,6 +21,14 @@
 
     <div class="container pt-5 my-5">
         <div class="row g-5">
+            <!-- Movie Lists Div -->
+            <div class="col-12 col-lg-7">
+                <div class="container bg-dark rounded-3 p-5">
+                    <h1 class="text-center text-light">My Lists</h1>
+                    <div id="all-movie-lists-div"></div>
+                </div>
+            </div>
+            <!-- Create Movie Div -->
             <div class="col-12 col-lg-5">
                 <div class="container bg-dark rounded-3 p-5">
                     <h1 class="text-center text-light">Create a New List</h1>
@@ -39,5 +50,7 @@
 </div>
 
 <div th:replace="partials :: scripts" />
+<script th:src="@{/js/movie-lists.js}" />
+<script src="../../../../static/js/movie-lists.js"></script>
 </body>
 </html>
