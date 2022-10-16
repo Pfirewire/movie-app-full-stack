@@ -11,10 +11,33 @@
     <link rel="stylesheet" th:href="@{css/index.css}">
 </head>
 <body>
+
+<div hidden th:object="${url}">
+    <div id="base-url" th:text="*{baseUrl}"></div>
+</div>
+
 <div id="page-wrapper">
     <nav th:replace="partials :: siteBar" />
 
     <h1 class="text-center pt-5 my-5">Pfirewire's Movies Splash Page</h1>
+
+    <h2>Trending Movies</h2>
+    <div id="trending-movie-carousel" class="carousel" data-gap="60">
+        <figure>
+<!--            <img src="https://source.unsplash.com/VkwRmha1_tI/800x533" alt="">-->
+<!--            <img src="https://source.unsplash.com/EbuaKnSm8Zw/800x533" alt="">-->
+<!--            <img src="https://source.unsplash.com/kG38b7CFzTY/800x533" alt="">-->
+<!--            <img src="https://source.unsplash.com/nvzvOPQW0gc/800x533" alt="">-->
+<!--            <img src="https://source.unsplash.com/mCg0ZgD7BgU/800x533" alt="">-->
+<!--            <img src="https://source.unsplash.com/1FWICvPQdkY/800x533" alt="">-->
+<!--            <img src="https://source.unsplash.com/bjhrzvzZeq4/800x533" alt="">-->
+<!--            <img src="https://source.unsplash.com/7mUXaBBrhoA/800x533" alt="">-->
+        </figure>
+        <nav>
+            <button class="nav prev">Prev</button>
+            <button class="nav next">Next</button>
+        </nav>
+    </div>
     <h2 class="text-center">To do:</h2>
     <ul class="text-center my-5" style="list-style: none;">
         <li style="text-decoration-line: line-through;">Update navbar in movie list</li>
