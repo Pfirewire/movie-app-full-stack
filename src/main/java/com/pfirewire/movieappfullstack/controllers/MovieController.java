@@ -81,19 +81,6 @@ public class MovieController {
         return userMovies;
     }
 
-    @DeleteMapping("/movie/{movieId}/{listId}/delete")
-    public String deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) {
-        User user = Utils.currentUser();
-        Movie movie = movieDao.getById(movieId);
-        MovieList list = listDao.getById(listId);
-        Boolean userIsMemberOfList = isMember(list.getMembers(), user);
-        if(userIsMemberOfList) {
-            list.getMovies().remove(movie);
-            listDao.save(list);
-            return "movie deleted";
-        } else return "you are not a member of this list";
-    }
-
     @PostMapping("/movie/{listId}/add")
     public Movie addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
         System.out.println("inside addMovie");
@@ -113,5 +100,18 @@ public class MovieController {
             listDao.save(list);
         }
         return movieDao.getByTmdbId(movie.getTmdbId());
+    }
+
+    @DeleteMapping("/movie/{movieId}/{listId}/delete")
+    public String deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) {
+        User user = Utils.currentUser();
+        Movie movie = movieDao.getById(movieId);
+        MovieList list = listDao.getById(listId);
+        Boolean userIsMemberOfList = isMember(list.getMembers(), user);
+        if(userIsMemberOfList) {
+            list.getMovies().remove(movie);
+            listDao.save(list);
+            return "movie deleted";
+        } else return "you are not a member of this list";
     }
 }
