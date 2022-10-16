@@ -4,6 +4,7 @@ import ch.qos.logback.core.util.CloseUtil;
 import com.pfirewire.movieappfullstack.models.*;
 import com.pfirewire.movieappfullstack.repositories.*;
 import com.pfirewire.movieappfullstack.services.Url;
+import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -57,11 +58,6 @@ public class MovieController {
         return userIsMemberOfList;
     }
 
-    private User currentUser() {
-        return (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-    }
-
     @GetMapping("/health")
     public String healthCheck() {
         return "health check complete";
@@ -69,7 +65,7 @@ public class MovieController {
 
     @GetMapping("/movie/list/all")
     public Set<MovieList> getAllMovieLists() {
-        User user = currentUser();
+        User user = Utils.currentUser();
 //        System.out.printf("Inside getAllMovieLists. Current user is: %s%n", user.getUsername());
         Set<MovieList> userMovieLists = listDao.findAllByMembers(user);
 //        System.out.printf("User movie lists acquired, this should not be null: %s%n", userMovieLists.toString());
@@ -87,7 +83,7 @@ public class MovieController {
 
     @DeleteMapping("/movie/{movieId}/{listId}/delete")
     public String deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) {
-        User user = currentUser();
+        User user = Utils.currentUser();
         Movie movie = movieDao.getById(movieId);
         MovieList list = listDao.getById(listId);
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
@@ -117,42 +113,5 @@ public class MovieController {
             listDao.save(list);
         }
         return movieDao.getByTmdbId(movie.getTmdbId());
-    }
-
-    @PostMapping("/rating/{movieId}/add")
-    public String addRating (@RequestBody Rating rating, @PathVariable Long movieId) {
-        System.out.println("inside addRating");
-        User user = currentUser();
-        rating.setUser(user);
-        rating.setMovie(movieDao.getById(movieId));
-        ratingDao.save(rating);
-        return "completed addRating";
-    }
-
-    @PostMapping("/review/{movieId}/add")
-    public String addReview (@RequestBody Review review, @PathVariable Long movieId) {
-        User user = currentUser();
-        review.setUser(user);
-        review.setMovie(movieDao.getById(movieId));
-        reviewDao.save(review);
-        return "completed addReview";
-    }
-
-    @PatchMapping("/rating/{movieId}/edit")
-    public String editRating(@RequestBody Rating newRating, @PathVariable Long movieId) {
-        User user = currentUser();
-        Rating oldRating = ratingDao.findByUserAndMovie(user, movieDao.getById(movieId));
-        oldRating.setRating(newRating.getRating());
-        ratingDao.save(oldRating);
-        return "completed editRating";
-    }
-
-    @PatchMapping("/review/{movieId}/edit")
-    public String editReview(@RequestBody Review newReview, @PathVariable Long movieId) {
-        User user = currentUser();
-        Review oldReview = reviewDao.findByUserAndMovie(user, movieDao.getById(movieId));
-        oldReview.setReview(newReview.getReview());
-        reviewDao.save(oldReview);
-        return "completed editReview";
     }
 }
