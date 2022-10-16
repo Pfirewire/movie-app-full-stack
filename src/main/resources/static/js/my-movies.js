@@ -246,12 +246,12 @@ $(function() {
             });
             let addedMovie = await results.json();
             postOptions.body = JSON.stringify({rating: 5});
-            await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${addedMovie.id}/add`, postOptions).then(res => {
-                $("#add-movie-text").val('');
-                $("#movie-list").empty();
-                Print.allMovies(Get.allMovies());
-                return res;
-            });
+            // await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${addedMovie.id}/add`, postOptions).then(res => {
+            //     $("#add-movie-text").val('');
+            //     $("#movie-list").empty();
+            //     Print.allMovies(Get.allMovies());
+            //     return res;
+            // });
         },
         // Deletes movie from database
         async deleteMovie(movieId, button) {
