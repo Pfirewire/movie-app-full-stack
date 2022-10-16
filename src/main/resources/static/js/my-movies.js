@@ -7,6 +7,7 @@ $(function() {
             moviesURL: "https://liberating-military-cyclone.glitch.me/movies",
             searchTMDBURL: "https://api.themoviedb.org/3/search/movie",
             findTMDBURL: "https://api.themoviedb.org/3/movie/",
+            tmdbPosterPath: "https://image.tmdb.org/t/p/original/",
             backendURLPath: $("#base-url").text(),
         },
         // Paths for NSFW search results from TMDB
@@ -74,7 +75,7 @@ $(function() {
             // Scrapes necessary movie data
             let movieToAdd = {
                 title: movieData.title,
-                poster: `https://image.tmdb.org/t/p/original/${movieData.poster_path}`,
+                poster: `${MovieApp.GlobalURLs.tmdbPosterPath}${movieData.poster_path}`,
                 year: parseInt(movieData.release_date.substring(0,4)),
                 genre: Utils.Convert.genreArrayToString(movieData.genres),
                 plot: movieData.overview,
