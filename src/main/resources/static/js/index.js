@@ -28,6 +28,7 @@ $(function() {
             let tmdbKey = await Get.tmdbKey();
             let response = await fetch(`${MovieApp.GlobalURLs.tmdbTrendingUrl}${tmdbKey}`);
             let data = await response.json();
+            console.log(data.results);
             return data.results;
         }
     }
@@ -112,11 +113,12 @@ $(function() {
     const Events = {
         initialize() {
             $(window).on("load", async function() {
-                let carousel = $(".carousel");
-                await Carousel.initialize(carousel);
+                await Carousel.initialize($(".carousel"));
                 $("#loading-div").addClass("d-none");
+                // Spins carousel every 2.4 seconds
                 setInterval(function() {
-                    if(document.hasFocus()) {
+                    // Only spins when window is active and user not hovering over a movie poster
+                    if(document.hasFocus() && $(".carousel div:hover").length === 0) {
                         Carousel.spin();
                     }
                 }, 2400);
