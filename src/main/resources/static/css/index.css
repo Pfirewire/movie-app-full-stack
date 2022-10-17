@@ -25,7 +25,7 @@ body:before {
 
 img {
     height: 429px;
-    width: 300px;
+    width: 100%;
     border-radius: 1em;
 }
 /*// Carousel configuration parameters*/
@@ -56,18 +56,17 @@ img {
 .carousel figure {
     margin: 0;
     /*width: var(--item-width);*/
-    width: 300px;
+    width: 360px;
     transform-style: preserve-3d;
     transition: transform 0.5s;
 }
 
-.carousel figure img {
+.carousel figure div {
     width: 100%;
     box-sizing: border-box;
-    padding: 0 var(--item-separation) / 2;
 }
 
-.carousel figure img:not(:first-of-type) {
+.carousel figure div:not(:first-of-type) {
      position: absolute;
      left: 0;
      top: 0;

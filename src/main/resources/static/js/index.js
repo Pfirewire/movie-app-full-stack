@@ -40,7 +40,9 @@ $(function() {
         },
         poster(path) {
             MovieApp.Div.trending.append(`
-                <img src="${MovieApp.GlobalURLs.tmdbPosterPath}${path}" alt="">
+                <div>
+                    <img src="${MovieApp.GlobalURLs.tmdbPosterPath}${path}" alt="">
+                </div>
             `);
         }
     }
@@ -52,7 +54,7 @@ $(function() {
                 nav = carouselRoot.children("nav"),
                 images = figure.children(),
                 n = images.length,
-                gap = carouselRoot.attr("data_gap"),
+                gap = 30,
                 theta = 2 * Math.PI / n,
                 currImage = 0;
 
@@ -72,14 +74,16 @@ $(function() {
 
                 figure.css("transform-origin", `50% 50% ${- apothem}px`);
 
-                for (let i = 0; i < n; i++)
+                for (let i = 0; i < n; i++) {
                     $(images[i]).css("padding", `0 ${gap}px`);
+                    $(images[i]).css("border-radius", "1em");
+                }
                 for (let i = 1; i < n; i++) {
                     $(images[i]).css("transform-origin", `50% 50% ${- apothem}px`);
                     $(images[i]).css("transform", `rotateY(${i * theta}rad)`);
                 }
                 for (let i = 0; i < n; i++)
-                    $(images[i]).css("backface-visibility", "hidden");
+                    // $(images[i]).css("backface-visibility", "hidden");
 
                 rotate(currImage);
             }
