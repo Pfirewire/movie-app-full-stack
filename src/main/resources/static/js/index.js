@@ -52,55 +52,57 @@ $(function() {
     }
 
     const Carousel = {
+        figure: null,
+        nav: null,
+        images: null,
+        n: null,
+        gap: 30,
+        theta: null,
+        currImage: 0,
         initialize(carouselRoot) {
-            let
-                figure = carouselRoot.children("figure"),
-                nav = carouselRoot.children("nav"),
-                images = figure.children(),
-                n = images.length,
-                gap = 30,
-                theta = 2 * Math.PI / n,
-                currImage = 0;
+            // Set variables
+            this.figure = carouselRoot.children("figure");
+            this.nav = carouselRoot.children("nav");
+            this.images = this.figure.children();
+            this.n = this.images.length;
+            this.theta = 2 * Math.PI / this.n;
 
-            setupCarousel(n, parseFloat($(images[0]).css("width")));
+            // Set up carousel and navigation
+            this.setupCarousel(this.n, parseFloat($(this.images[0]).css("width")));
+            this.setupNavigation();
+        },
+        rotate(imageIndex) {
+            // Rotates carousel to the image index
+            this.figure.css("transform", `rotateY(${imageIndex * -this.theta}rad)`);
+        },
+        setupCarousel(n, s) {
+            // Sets up and updates carousel css styling
+            // Math stuff for transforming our carousel images
+            let apothem = s / (2 * Math.tan(Math.PI / n));
 
-            setupNavigation();
-
-            function setupCarousel(n, s) {
-                // Sets up and updates carousel css styling
-                // Math stuff for transforming our carousel images
-                let apothem = s / (2 * Math.tan(Math.PI / n));
-
-                figure.css("transform-origin", `50% 50% ${- apothem}px`);
-
-                for (let i = 0; i < n; i++) {
-                    $(images[i]).css("padding", `0 ${gap}px`);
-                    $(images[i]).css("border-radius", "1em");
-                }
-                for (let i = 1; i < n; i++) {
-                    $(images[i]).css("transform-origin", `50% 50% ${- apothem}px`);
-                    $(images[i]).css("transform", `rotateY(${i * theta}rad)`);
-                }
-
-                rotate(currImage);
+            // Transformations to spin the carousel
+            this.figure.css("transform-origin", `50% 50% ${- apothem}px`);
+            for (let i = 0; i < n; i++) {
+                $(this.images[i]).css("padding", `0 ${this.gap}px`);
+                $(this.images[i]).css("border-radius", "1em");
             }
-
-            function setupNavigation() {
-                // Sets up event listeners for the buttons to rotate the carousel
-                nav.children(".carousel-next").on("click", function() {
-                    currImage++;
-                    rotate(currImage);
-                });
-                nav.children(".carousel-prev").on("click", function() {
-                    currImage--;
-                    rotate(currImage);
-                });
+            for (let i = 1; i < n; i++) {
+                $(this.images[i]).css("transform-origin", `50% 50% ${- apothem}px`);
+                $(this.images[i]).css("transform", `rotateY(${i * this.theta}rad)`);
             }
-
-            function rotate(imageIndex) {
-                // Rotates carousel to the image index
-                figure.css("transform", `rotateY(${imageIndex * -theta}rad)`);
-            }
+            // Rotates to current image
+            this.rotate(this.currImage);
+        },
+        setupNavigation() {
+            // Sets up event listeners for the buttons to rotate the carousel
+            this.nav.children(".carousel-next").on("click", function() {
+                Carousel.currImage++;
+                Carousel.rotate(Carousel.currImage);
+            });
+            this.nav.children(".carousel-prev").on("click", function() {
+                Carousel.currImage--;
+                Carousel.rotate(Carousel.currImage);
+            });
         },
         spin() {
             $("button.carousel-next").trigger("click");
