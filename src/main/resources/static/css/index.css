@@ -22,3 +22,71 @@ body:before {
     -o-background-size: cover;
     background-size: cover;
 }
+
+img {
+    height: 429px;
+    width: 300px;
+}
+/*// Carousel configuration parameters*/
+/*$item-width: 40%; // Now we can use percentages!*/
+/*$item-separation: 0px; // This now is set with Js*/
+/*$viewer-distance: 500px;*/
+
+:root {
+    --item-width: 40%;
+    --item-separation: 0px;
+    --viewer-distance: 500px;
+}
+
+.carousel {
+    padding: 20px;
+
+    perspective: var(--viewer-distance);
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.carousel > * {
+    flex: 0 0 auto;
+}
+
+.carousel figure {
+    margin: 0;
+
+    width: var(--item-width);
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.carousel figure img {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 var(--item-separation) / 2;
+}
+
+.carousel figure img:not(:first-of-type) {
+     position: absolute;
+     left: 0;
+     top: 0;
+}
+
+carousel nav {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 0;
+}
+
+carousel nav button {
+    flex: 0 0 auto;
+    margin: 0 5px;
+
+    cursor: pointer;
+
+    color: #333;
+    background: none;
+    border: 1px solid;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+}

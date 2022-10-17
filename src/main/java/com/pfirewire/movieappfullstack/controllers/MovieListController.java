@@ -24,7 +24,7 @@ public class MovieListController {
     @Autowired
     private Url url;
 
-    public MovieListController(UserRepository userDao, MovieRepository movieDao, MovieListRepository movieListDao) {
+    public MovieListController(UserRepository userDao, MovieRepository movieDao, MovieListRepository listDao) {
         this.userDao = userDao;
         this.movieDao = movieDao;
         this.listDao = listDao;
