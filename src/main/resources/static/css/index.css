@@ -26,6 +26,7 @@ body:before {
 img {
     height: 429px;
     width: 300px;
+    border-radius: 1em;
 }
 /*// Carousel configuration parameters*/
 /*$item-width: 40%; // Now we can use percentages!*/
@@ -54,8 +55,8 @@ img {
 
 .carousel figure {
     margin: 0;
-
-    width: var(--item-width);
+    /*width: var(--item-width);*/
+    width: 300px;
     transform-style: preserve-3d;
     transition: transform 0.5s;
 }
