@@ -240,9 +240,9 @@ $(function() {
                 body: JSON.stringify(movie)
             }
             let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${MovieApp.listId}/add`, postOptions).then(res => {
-                // $("#add-movie-text").val('');
-                // $("#movie-list").empty();
-                // Print.allMovies(Get.allMovies());
+                $("#add-movie-text").val('');
+                $("#movie-list").empty();
+                Print.allMovies(Get.allMovies());
                 return res;
             });
             let addedMovie = await results.json();

@@ -57,7 +57,7 @@ $(function() {
         nav: null,
         images: null,
         n: null,
-        gap: 30,
+        gap: 60,
         theta: null,
         currImage: 0,
         initialize(carouselRoot) {
@@ -121,7 +121,7 @@ $(function() {
                     if(document.hasFocus() && $(".carousel div:hover").length === 0) {
                         Carousel.spin();
                     }
-                }, 2400);
+                }, 3600);
             });
         }
     }

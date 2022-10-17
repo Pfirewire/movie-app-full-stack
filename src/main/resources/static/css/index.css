@@ -83,9 +83,9 @@ body {
 /*Carousel container styling*/
 .carousel figure {
     margin: 0;
-    width: 360px;
+    width: 420px;
     transform-style: preserve-3d;
-    transition: transform 2s;
+    transition: transform 1s;
 }
 /*Carousel image wrapper styling*/
 .carousel figure div {
