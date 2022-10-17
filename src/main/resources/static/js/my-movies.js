@@ -364,7 +364,7 @@ $(function() {
             }
             oldRating < 0 ? postOptions.method = 'POST' : postOptions.method = 'PATCH';
             console.log(postOptions);
-            await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${movieId}/add`, postOptions);
+            await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${movieId}`, postOptions);
         },
         // Sorts movies based on user choice. returns new array of movies
         sortMovies(movies) {
