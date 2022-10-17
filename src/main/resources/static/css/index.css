@@ -7,6 +7,10 @@ body {
             1px 1px 0 #000;
 }
 
+.normal-bg {
+    background-color: #8096AD;
+}
+
 body:before {
     content: "";
     display: block;
@@ -23,11 +27,31 @@ body:before {
     background-size: cover;
 }
 
-img {
+.carousel img {
     height: 429px;
     width: 100%;
     border-radius: 1em;
 }
+
+#loading-img {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 20em;
+}
+
+/*Styling to spin our loading image*/
+@keyframes spinning {
+    from { transform: rotate(0deg) }
+    to { transform: rotate(360deg) }
+}
+.spin {
+    animation-name: spinning;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
 /*// Carousel configuration parameters*/
 /*$item-width: 40%; // Now we can use percentages!*/
 /*$item-separation: 0px; // This now is set with Js*/
@@ -58,7 +82,7 @@ img {
     /*width: var(--item-width);*/
     width: 360px;
     transform-style: preserve-3d;
-    transition: transform 0.5s;
+    transition: transform 3s;
 }
 
 .carousel figure div {
@@ -78,15 +102,22 @@ carousel nav {
     margin: 20px 0 0;
 }
 
-carousel nav button {
-    flex: 0 0 auto;
-    margin: 0 5px;
+.carousel nav button {
+    /*flex: 0 0 auto;*/
+    /*margin: 0 5px;*/
 
-    cursor: pointer;
+    /*cursor: pointer;*/
 
-    color: #333;
-    background: none;
-    border: 1px solid;
-    letter-spacing: 1px;
-    padding: 5px 10px;
+    /*color: #333;*/
+    /*background: none;*/
+    /*border: 1px solid;*/
+    /*letter-spacing: 1px;*/
+    /*padding: 5px 10px;*/
+    display: none;
+}
+
+#loading-div {
+    position: absolute;
+    height: 100vw;
+    width: 100vw;
 }
