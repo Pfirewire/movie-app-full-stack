@@ -36,8 +36,9 @@ $(function() {
         trendingPosters(trendingPromise) {
             MovieApp.Div.trending.empty();
             trendingPromise.then(trendingList => {
-                for(let movie of trendingList) {
-                    Print.poster(movie.poster_path);
+                for(let [i, movie] of trendingList.entries()) {
+                    if(i < 12)
+                        Print.poster(movie.poster_path);
                 }
             });
         },
@@ -62,18 +63,13 @@ $(function() {
                 currImage = 0;
 
             setupCarousel(n, parseFloat($(images[0]).css("width")));
-            window.addEventListener('resize', () => {
-                setupCarousel(n, parseFloat(getComputedStyle(images[0]).width))
-            });
 
             setupNavigation();
 
             function setupCarousel(n, s) {
-
-                let
-                    apothem = s / (2 * Math.tan(Math.PI / n))
-                ;
-
+                // Sets up and updates carousel css styling
+                // Math stuff for transforming our carousel images
+                let apothem = s / (2 * Math.tan(Math.PI / n));
 
                 figure.css("transform-origin", `50% 50% ${- apothem}px`);
 
@@ -85,14 +81,12 @@ $(function() {
                     $(images[i]).css("transform-origin", `50% 50% ${- apothem}px`);
                     $(images[i]).css("transform", `rotateY(${i * theta}rad)`);
                 }
-                for (let i = 0; i < n; i++)
-                    // $(images[i]).css("backface-visibility", "hidden");
 
                 rotate(currImage);
             }
 
             function setupNavigation() {
-                // nav.on('click', onClick);
+                // Sets up event listeners for the buttons to rotate the carousel
                 nav.children(".carousel-next").on("click", function() {
                     currImage++;
                     rotate(currImage);
@@ -101,10 +95,10 @@ $(function() {
                     currImage--;
                     rotate(currImage);
                 });
-
             }
 
             function rotate(imageIndex) {
+                // Rotates carousel to the image index
                 figure.css("transform", `rotateY(${imageIndex * -theta}rad)`);
             }
         },
