@@ -136,6 +136,12 @@ $(function() {
             let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
             let data = await response.json();
             return data.backRoomKey;
+        },
+        // gets movie rating from id
+        async movieRating(id) {
+            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${id}`);
+            let data = await response.json();
+            return data;
         }
     }
     // Print Object and Methods
@@ -170,19 +176,17 @@ $(function() {
             // contains movie info with no image
             let modalHeaderDiv = $("#single-movie-modal-header");
             let modalBodyDiv = $("#single-movie");
-            modalHeaderDiv.empty();
-            modalHeaderDiv.append(`
-                <h5 class="modal-title text-light modal-overflow-wrap">${movie.title}</h5>
-            `);
+            Print.modalRating(modalHeaderDiv, movie);
             modalBodyDiv.empty();
             modalBodyDiv.attr("data-movie-id", movie.id);
             modalBodyDiv.append(`
-             <p class="modal-overflow-wrap">Genre: ${movie.genre}</p>
-             <p class="modal-overflow-wrap">Plot: ${movie.plot}</p>
-             <p class="modal-overflow-wrap">Year: ${movie.year}</p>
-             <div class="d-flex justify-content-between">
-                 <button class="delete-btn btn btn-danger">Delete Movie</button>
-             </div>
+                <h5 class="modal-title text-light modal-overflow-wrap mb-2">${movie.title}</h5>
+                <p class="modal-overflow-wrap">Genre: ${movie.genre}</p>
+                <p class="modal-overflow-wrap">Plot: ${movie.plot}</p>
+                <p class="modal-overflow-wrap">Year: ${movie.year}</p>
+                <div class="d-flex justify-content-between">
+                    <button class="delete-btn btn btn-danger">Delete Movie</button>
+                </div>
         `);
         },
         // Prints movie modal from our database with text fields for user to edit
@@ -222,6 +226,40 @@ $(function() {
                 `);
                 }
             });
+        },
+        // prints rating in the movie modal
+        async modalRating(div, movie) {
+            // get rating for movie
+            let ratingData = await Get.movieRating(movie.id);
+            let rating = ratingData.rating;
+            div.empty();
+            if(rating < 0) {
+                for(let i = 1; i < 6; i++) {
+                    div.append(`
+                        <i class="bi bi-star px-1 fs-3 modal-rating-star modal-rating-${i}" data-rating-star="${i}" data-movie-id="${movie.id}"></i>
+                    `);
+                }
+            } else {
+                for(let i = 1; i <= rating; i++) {
+                    div.append(`
+                        <i class="bi bi-star-fill px-1 fs-1 modal-rating-star modal-rating-${i}" data-rating-star="${i}" data-movie-id="${movie.id}"></i>
+                    `);
+                }
+                for(let i = rating + 1; i < 6; i++) {
+                    div.append(`
+                        <i class="bi bi-star px-1 fs-3 modal-rating-star modal-rating-${i}" data-rating-star="${i}" data-movie-id="${movie.id}"></i>
+                    `);
+                }
+            }
+        },
+        starFill(rating) {
+            for(let i = 1; i < 6; i++) {
+                if(i <= rating) {
+                    $(`.modal-rating-${i}`).removeClass("bi-star fs-3").addClass("bi-star-fill fs-1");
+                } else {
+                    $(`.modal-rating-${i}`).removeClass("bi-star-fill fs-1").addClass("bi-star fs-3");
+                }
+            }
         }
     }
     // User Object and Methods
@@ -289,6 +327,44 @@ $(function() {
 
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
+        },
+        // // Adds movie rating
+        // async addRating(movieId, rating) {
+        //     let ratingObject = {
+        //         rating
+        //     }
+        //     console.log(ratingObject);
+        //     const postOptions = {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type' : 'application/json',
+        //             'X-CSRF-TOKEN' : MovieApp.csrfToken
+        //         },
+        //         body: JSON.stringify(ratingObject)
+        //     }
+        //     await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${movieId}/add`, postOptions);
+        // },
+        // // Edits movie rating
+        // async editRating() {
+        //
+        // },
+        // Calls add or edit rating based on if a rating exists
+        async setRating(movieId, rating) {
+            let ratingData = await Get.movieRating(movieId);
+            let oldRating = ratingData.rating;
+            let ratingObject = {
+                rating
+            }
+            let postOptions = {
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'X-CSRF-TOKEN' : MovieApp.csrfToken
+                },
+                body: JSON.stringify(ratingObject)
+            }
+            oldRating < 0 ? postOptions.method = 'POST' : postOptions.method = 'PATCH';
+            console.log(postOptions);
+            await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${movieId}/add`, postOptions);
         },
         // Sorts movies based on user choice. returns new array of movies
         sortMovies(movies) {
@@ -400,6 +476,22 @@ $(function() {
             // Listens for change in sort select
             $("#sort-select").change(function() {
                 Print.allMovies(Get.allMovies());
+            });
+            $(document.body).on("mouseenter", ".modal-rating-star", function() {
+                let rating = $(this).attr("data-rating-star");
+                Print.starFill(rating);
+            });
+            $(document.body).on("mouseleave", "#single-movie-modal-header", async function() {
+                // get the saved rating and display it correctly
+                let movieId = $("#single-movie").attr("data-movie-id");
+                let ratingData = await Get.movieRating(movieId);
+                let rating = ratingData.rating;
+                Print.starFill(rating);
+            });
+            $(document.body).on("click", ".modal-rating-star", function() {
+                let rating = $(this).attr("data-rating-star");
+                let movieId = $(this).attr("data-movie-id");
+                User.setRating(movieId, parseInt(rating));
             });
         }
     }

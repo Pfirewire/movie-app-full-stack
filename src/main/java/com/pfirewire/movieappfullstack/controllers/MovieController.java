@@ -63,14 +63,6 @@ public class MovieController {
         return "health check complete";
     }
 
-    @GetMapping("/movie/list/all")
-    public Set<MovieList> getAllMovieLists() {
-        User user = Utils.currentUser();
-//        System.out.printf("Inside getAllMovieLists. Current user is: %s%n", user.getUsername());
-        Set<MovieList> userMovieLists = listDao.findAllByMembers(user);
-//        System.out.printf("User movie lists acquired, this should not be null: %s%n", userMovieLists.toString());
-        return userMovieLists;
-    }
 
     @GetMapping("/movies/{listId}")
     public Set<Movie> getAllMovies(@PathVariable Long listId) {

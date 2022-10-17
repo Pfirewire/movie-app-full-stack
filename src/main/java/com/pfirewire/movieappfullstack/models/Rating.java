@@ -12,6 +12,7 @@ public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @Column(nullable = false)
@@ -30,6 +31,10 @@ public class Rating {
     private Movie movie;
 
     public Rating() {}
+
+    public Rating(int rating) {
+        this.rating = rating;
+    }
 
     public Long getId() {
         return id;

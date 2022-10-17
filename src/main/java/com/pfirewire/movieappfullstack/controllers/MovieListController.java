@@ -6,6 +6,7 @@ import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import com.pfirewire.movieappfullstack.services.Url;
+import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Set;
 
 @Controller
 public class MovieListController {
@@ -28,6 +31,14 @@ public class MovieListController {
         this.userDao = userDao;
         this.movieDao = movieDao;
         this.listDao = listDao;
+    }
+
+
+    @GetMapping("/movie/list/all")
+    public Set<MovieList> getAllMovieLists() {
+        User user = Utils.currentUser();
+        Set<MovieList> userMovieLists = listDao.findAllByMembers(user);
+        return userMovieLists;
     }
 
     @GetMapping("/movie/list")

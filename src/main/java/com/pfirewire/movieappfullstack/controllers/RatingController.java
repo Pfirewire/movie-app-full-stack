@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.Rating;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
@@ -21,6 +22,18 @@ public class RatingController {
         this.userDao = userDao;
         this.movieDao = movieDao;
         this.ratingDao = ratingDao;
+    }
+
+    @GetMapping("/rating/{movieId}")
+    public Rating getRating(@PathVariable Long movieId) {
+        User user = Utils.currentUser();
+        Movie movie = movieDao.getById(movieId);
+        Rating rating = ratingDao.findByUserAndMovie(user, movie);
+        if(rating == null) {
+            return new Rating(-1);
+        } else {
+            return rating;
+        }
     }
 
     @PostMapping("/rating/{movieId}/add")
