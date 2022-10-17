@@ -1,16 +1,11 @@
-body {
-    color: #FFF;
-    text-shadow:
-            -1px -1px 0 #000,
-            1px -1px 0 #000,
-            -1px 1px 0 #000,
-            1px 1px 0 #000;
+/*Global Variables*/
+:root {
+    --item-width: 40%;
+    --item-separation: 0px;
+    --viewer-distance: 500px;
 }
 
-.normal-bg {
-    background-color: #8096AD;
-}
-
+/*Background images*/
 body:before {
     content: "";
     display: block;
@@ -26,20 +21,33 @@ body:before {
     -o-background-size: cover;
     background-size: cover;
 }
-
-.carousel img {
-    height: 429px;
-    width: 100%;
-    border-radius: 1em;
+/*Setting text to white and text shadow*/
+body {
+    color: #FFF;
+    text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+}
+/*Background for loading div*/
+.normal-bg {
+    background-color: #8096AD;
 }
 
+/*Loading image div wrapper styling*/
+#loading-div {
+    position: absolute;
+    height: 100vw;
+    width: 100vw;
+}
+/*Styling for loading image*/
 #loading-img {
     height: 100px;
     width: 100px;
     position: absolute;
     top: 20em;
 }
-
 /*Styling to spin our loading image*/
 @keyframes spinning {
     from { transform: rotate(0deg) }
@@ -52,17 +60,7 @@ body:before {
     animation-timing-function: ease-in-out;
 }
 
-/*// Carousel configuration parameters*/
-/*$item-width: 40%; // Now we can use percentages!*/
-/*$item-separation: 0px; // This now is set with Js*/
-/*$viewer-distance: 500px;*/
-
-:root {
-    --item-width: 40%;
-    --item-separation: 0px;
-    --viewer-distance: 500px;
-}
-
+/*Carousel styling*/
 .carousel {
     padding: 20px;
 
@@ -76,48 +74,37 @@ body:before {
 .carousel > * {
     flex: 0 0 auto;
 }
-
+/*Carousel image styling*/
+.carousel img {
+    height: 429px;
+    width: 100%;
+    border-radius: 1em;
+}
+/*Carousel container styling*/
 .carousel figure {
     margin: 0;
-    /*width: var(--item-width);*/
     width: 360px;
     transform-style: preserve-3d;
-    transition: transform 3s;
+    transition: transform 2s;
 }
-
+/*Carousel image wrapper styling*/
 .carousel figure div {
     width: 100%;
     box-sizing: border-box;
 }
-
+/*Carousel styling for anything not the main image*/
 .carousel figure div:not(:first-of-type) {
      position: absolute;
      left: 0;
      top: 0;
 }
-
+/*Carousel nav styling*/
 carousel nav {
     display: flex;
     justify-content: center;
     margin: 20px 0 0;
 }
-
+/*Hiding carousel buttons*/
 .carousel nav button {
-    /*flex: 0 0 auto;*/
-    /*margin: 0 5px;*/
-
-    /*cursor: pointer;*/
-
-    /*color: #333;*/
-    /*background: none;*/
-    /*border: 1px solid;*/
-    /*letter-spacing: 1px;*/
-    /*padding: 5px 10px;*/
     display: none;
-}
-
-#loading-div {
-    position: absolute;
-    height: 100vw;
-    width: 100vw;
 }

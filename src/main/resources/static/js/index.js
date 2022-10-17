@@ -9,7 +9,11 @@ $(function() {
         Div: {
             trending: $("#trending-movie-carousel>figure")
         },
-        spinInterval: null
+        spinInterval: null,
+        initialize() {
+            Events.initialize();
+            Print.trendingPosters(Get.trendingMovies());
+        }
     }
 
     const Get = {
@@ -32,11 +36,6 @@ $(function() {
         trendingPosters(trendingPromise) {
             MovieApp.Div.trending.empty();
             trendingPromise.then(trendingList => {
-                // for(let [i, movie] of trendingList.entries()) {
-                //     if(i < 8) {
-                //         Print.poster(movie.poster_path);
-                //     }
-                // }
                 for(let movie of trendingList) {
                     Print.poster(movie.poster_path);
                 }
@@ -124,22 +123,11 @@ $(function() {
                     if(document.hasFocus()) {
                         Carousel.spin();
                     }
-                }, 3000);
+                }, 2400);
             });
-            // $(window)
-            //     .on("focus", function() {
-            //         clearInterval(MovieApp.spinInterval);
-            //         MovieApp.spinInterval = setInterval(Carousel.spin, 3000);
-            //     })
-            //     .on("blur", function() {
-            //         clearInterval(MovieApp.spinInterval);
-            //     })
-            // ;
         }
     }
 
-
-    Events.initialize();
-    Print.trendingPosters(Get.trendingMovies());
+    MovieApp.initialize();
 
 });
