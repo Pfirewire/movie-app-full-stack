@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <div th:replace="partials :: metaTags" />
+    <div th:replace="partials :: links" />
+
+    <title>Write Review</title>
+
+    <link rel="stylesheet" th:href="@{/assets/css/review.css}">
+</head>
+<body>
+<div id="page-wrapper">
+    <nav th:replace="partials :: siteBar" />
+
+    <div class="container bg-dark rounded-3 mt-5 p-5">
+        <form th:action="@{/review/{movieId} (movieId=${movie.id})}" th:method="PATCH" th:object="${review}">
+            <div th:replace="partials :: reviewForm" />
+        </form>
+
+    </div>
+
+    <div th:replace="partials :: scripts" />
+</body>
+</html>

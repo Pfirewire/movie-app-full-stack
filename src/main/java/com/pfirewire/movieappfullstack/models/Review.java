@@ -12,8 +12,11 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String title;
+
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String review;
+    private String body;
 
     @ManyToOne
     @JsonBackReference(value = "userReview")
@@ -35,12 +38,20 @@ public class Review {
         this.id = id;
     }
 
-    public String getReview() {
-        return review;
+    public String getTitle() {
+        return title;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public User getUser() {

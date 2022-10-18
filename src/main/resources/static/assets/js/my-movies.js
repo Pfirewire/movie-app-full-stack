@@ -176,7 +176,7 @@ $(function() {
             // contains movie info with no image
             let modalHeaderDiv = $("#single-movie-modal-header");
             let modalBodyDiv = $("#single-movie");
-            Print.modalRating(modalHeaderDiv, movie);
+            await Print.modalRating(modalHeaderDiv, movie);
             modalBodyDiv.empty();
             modalBodyDiv.attr("data-movie-id", movie.id);
             modalBodyDiv.append(`
@@ -185,6 +185,7 @@ $(function() {
                 <p class="modal-overflow-wrap">Plot: ${movie.plot}</p>
                 <p class="modal-overflow-wrap">Year: ${movie.year}</p>
                 <div class="d-flex justify-content-between">
+                    <button class="review-btn btn btn-primary">Review Movie</button>
                     <button class="delete-btn btn btn-danger">Delete Movie</button>
                 </div>
         `);
@@ -389,6 +390,9 @@ $(function() {
                     return null;
                     break;
             }
+        },
+        reviewForm(movieId) {
+            window.location.href = `${MovieApp.GlobalURLs.backendURLPath}review/${movieId}`;
         }
     }
     // Utilities Object and Methods
@@ -435,12 +439,6 @@ $(function() {
                 User.deleteMovie($(this).parent().parent().attr("data-movie-id"), $(this));
                 Utils.Hide.modal($("#single-movie-modal"));
             })
-            // Listens for click of edit button
-            $(document.body).on("click", ".edit-btn", function (){
-                $(this).attr("disabled", "");
-                Get.movieById($(this).parent().parent().attr("data-movie-id"))
-                    .then(res => Print.editModal(res));
-            })
             // Listens for click of add button
             $("#add-movie-btn").on("click", function() {
                 $("#add-movie-text").val("").text("");
@@ -454,11 +452,8 @@ $(function() {
                 Get.movieById($(this).parent().parent().parent().attr("data-movie-id"))
                     .then(res => Print.movieModal($("#single-movie-modal"), res));
             });
-            // Listens for click of the save edit button
-            $(document.body).on("click", "#save-edit-btn", function() {
-                User.editMovie($("#single-movie").attr("data-movie-id"), $(this));
-                $(this).attr("disabled", "");
-                Utils.Hide.modal($("#single-movie-modal"), $(this));
+            $(document.body).on("click", ".review-btn", function() {
+                User.reviewForm($(this).parent().parent().attr("data-movie-id"));
             });
             // // Listens for any keyup on the screen
             // $("body").on("keyup", function(e) {

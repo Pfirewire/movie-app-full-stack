@@ -43,18 +43,10 @@ public class MovieController {
     }
 
     private Boolean isMember(Set<User> listMembers, User user) {
-        System.out.println("inside ismember");
         Boolean userIsMemberOfList = false;
         for(User listMember : listMembers) {
-            System.out.println("inside for list member loop in isMember");
-            System.out.println("listmember id: ");
-            System.out.println(listMember.getId());
-            System.out.println("user id: ");
-            System.out.println(user.getId());
             if(user.getId() == listMember.getId()) userIsMemberOfList = true;
         }
-        System.out.println("userIsMemberOfList is: ");
-        System.out.println(userIsMemberOfList);
         return userIsMemberOfList;
     }
 
@@ -66,8 +58,6 @@ public class MovieController {
 
     @GetMapping("/movies/{listId}")
     public Set<Movie> getAllMovies(@PathVariable Long listId) {
-        System.out.println("inside getAllMovies. listID: ");
-        System.out.println(listId);
         MovieList list = listDao.findById(listId).get();
         Set<Movie> userMovies = list.getMovies();
         return userMovies;
@@ -75,19 +65,16 @@ public class MovieController {
 
     @PostMapping("/movie/{listId}/add")
     public Movie addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
-        System.out.println("inside addMovie");
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
             movieDao.save(movie);
         } else {
             movie = movieDao.getByTmdbId(movie.getTmdbId());
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.printf("Current user id is: %s%n", user.getId());
         MovieList list = listDao.getById(listId);
 
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
         if(userIsMemberOfList){
-            System.out.println("inside if statement");
             list.getMovies().add(movie);
             listDao.save(list);
         }

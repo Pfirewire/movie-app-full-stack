@@ -49,6 +49,6 @@ public class UserController {
 
     @GetMapping("/reviews")
     public String showMovieReviews() {
-        return "movie/review/all";
+        return "view-all";
     }
 }
