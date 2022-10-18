@@ -22,7 +22,7 @@ public class ReviewController {
         this.reviewDao = reviewDao;
     }
 
-    @PostMapping("/review/{movieId}/add")
+    @PostMapping("/review/{movieId}")
     public String addReview (@RequestBody Review review, @PathVariable Long movieId) {
         User user = Utils.currentUser();
         review.setUser(user);
@@ -31,7 +31,7 @@ public class ReviewController {
         return "completed addReview";
     }
 
-    @PatchMapping("/review/{movieId}/edit")
+    @PatchMapping("/review/{movieId}")
     public String editReview(@RequestBody Review newReview, @PathVariable Long movieId) {
         User user = Utils.currentUser();
         Review oldReview = reviewDao.findByUserAndMovie(user, movieDao.getById(movieId));

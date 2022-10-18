@@ -1,19 +1,14 @@
 package com.pfirewire.movieappfullstack.controllers;
 
-import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import com.pfirewire.movieappfullstack.services.Url;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -54,6 +49,6 @@ public class UserController {
 
     @GetMapping("/reviews")
     public String showMovieReviews() {
-        return "movie/reviews";
+        return "movie/review/all";
     }
 }

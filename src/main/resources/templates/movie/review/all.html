@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <div th:replace="partials :: metaTags" />
+    <div th:replace="partials :: links" />
+
+    <title>Movie Reviews</title>
+
+    <link rel="stylesheet" th:href="@{/css/reviews.css}">
+</head>
+<body>
+<div id="page-wrapper">
+    <nav th:replace="partials :: siteBar" />
+
+    <h1 class="text-center pt-5 my-5">Movie Reviews</h1>
+    <h2 class="text-center">Coming Soon!</h2>
+</div>
+
+<div th:replace="partials :: scripts" />
+</body>
+</html>
