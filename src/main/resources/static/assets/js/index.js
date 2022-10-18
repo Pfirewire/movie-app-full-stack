@@ -7,7 +7,7 @@ $(function() {
             backendURLPath: $("#base-url").text()
         },
         Div: {
-            trending: $("#trending-movie-carousel>figure")
+            trending: $(".carousel")
         },
         spinInterval: null,
         initialize() {
@@ -44,7 +44,7 @@ $(function() {
         },
         poster(path) {
             MovieApp.Div.trending.append(`
-                <div>
+                <div class="carousel-cell">
                     <img src="${MovieApp.GlobalURLs.tmdbPosterPath}${path}" alt="">
                 </div>
             `);
@@ -52,8 +52,6 @@ $(function() {
     }
 
     const Carousel = {
-        figure: null,
-        nav: null,
         images: null,
         n: null,
         gap: 60,
@@ -61,9 +59,7 @@ $(function() {
         currImage: 0,
         initialize(carouselRoot) {
             // Set variables
-            this.figure = carouselRoot.children("figure");
-            this.nav = carouselRoot.children("nav");
-            this.images = this.figure.children();
+            this.images = carouselRoot.children();
             this.n = this.images.length;
             this.theta = 2 * Math.PI / this.n;
 
@@ -73,35 +69,26 @@ $(function() {
         },
         rotate(imageIndex) {
             // Rotates carousel to the image index
-            this.figure.css("transform", `rotateY(${imageIndex * -this.theta}rad) translateZ(783px)`);
+            MovieApp.Div.trending.css("transform", `translateZ(-783.731px) rotateY(${imageIndex * -30}deg)`);
         },
         setupCarousel(n, s) {
             // Sets up and updates carousel css styling
             // Math stuff for transforming our carousel images
             let apothem = s / (2 * Math.tan(Math.PI / n));
-//transform: translate(-100%, 50%) rotate(45deg) translate(100%, -50%);
-            // Transformations to spin the carousel
-            // this.figure.css("transform-origin", `50% 50% ${- apothem}px`);
-            // this.figure.css("-webkit-transform-origin", `50% 50% ${- apothem}px`);
             for (let i = 0; i < n; i++) {
                 $(this.images[i]).css("padding", `0 ${this.gap}px`);
                 $(this.images[i]).css("border-radius", "1em");
+                $(this.images[i]).css("transform", `rotateY(${i * 30}deg) translateZ(${apothem}px)`);
             }
-            for (let i = 1; i < n; i++) {
-                // $(this.images[i]).css("transform-origin", `50% 50% ${- apothem}px`);
-                // $(this.images[i]).css("-webkit-transform-origin", `50% 50% ${- apothem}px`);
-                $(this.images[i]).css("transform", `rotateY(${i * this.theta}rad) translateZ(783px)`);
-            }
-            // Rotates to current image
             this.rotate(this.currImage);
         },
         setupNavigation() {
             // Sets up event listeners for the buttons to rotate the carousel
-            this.nav.children(".carousel-next").on("click", function() {
+            $(".carousel-next").on("click", function() {
                 Carousel.currImage++;
                 Carousel.rotate(Carousel.currImage);
             });
-            this.nav.children(".carousel-prev").on("click", function() {
+            $(".carousel-prev").on("click", function() {
                 Carousel.currImage--;
                 Carousel.rotate(Carousel.currImage);
             });

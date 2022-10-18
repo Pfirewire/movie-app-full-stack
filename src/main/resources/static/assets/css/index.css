@@ -1,12 +1,46 @@
-/*Global Variables*/
-:root {
-    --item-width: 40%;
-    --item-separation: 0px;
-    --viewer-distance: 500px;
+* {
+    box-sizing: border-box;
 }
 /*Background for loading div*/
 .normal-bg {
     background-color: #8096AD;
+}
+
+.carousel-scene {
+    margin: 40px 0;
+    position: relative;
+    width: 420px;
+    height: 429px;
+    margin: 40px auto;
+    perspective: 1000px;
+}
+
+.carousel {
+    width: 420px;
+    height: 429px;
+    position: absolute;
+    transform: translateZ(-783.731px);
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+
+.carousel-cell {
+    position: absolute;
+    width: 420px;
+    height: 429px;
+    left: 10px;
+    top: 10px;
+}
+
+.carousel-cell img {
+    width: 300px;
+    height: 429px;
+    border-radius: 1em;
+}
+
+/*Hiding carousel buttons*/
+.carousel-nav {
+    display: none;
 }
 
 /*Loading image div wrapper styling*/
@@ -32,53 +66,4 @@
     animation-duration: 1.2s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
-}
-
-/*Carousel styling*/
-.carousel {
-    padding: 20px;
-
-    perspective: 500px;
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.carousel > * {
-    flex: 0 0 auto;
-}
-/*Carousel image styling*/
-.carousel img {
-    height: 429px;
-    width: 100%;
-    border-radius: 1em;
-}
-/*Carousel container styling*/
-.carousel figure {
-    margin: 0;
-    width: 420px;
-    transform-style: preserve-3d;
-    transition: transform 1s;
-}
-/*Carousel image wrapper styling*/
-.carousel figure div {
-    width: 100%;
-    box-sizing: border-box;
-}
-/*Carousel styling for anything not the main image*/
-.carousel figure div:not(:first-of-type) {
-     position: absolute;
-     left: 0;
-     top: 0;
-}
-/*Carousel nav styling*/
-carousel nav {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0 0;
-}
-/*Hiding carousel buttons*/
-.carousel nav button {
-    display: none;
 }
