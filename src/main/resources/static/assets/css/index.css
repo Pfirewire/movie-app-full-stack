@@ -38,7 +38,7 @@
 .carousel {
     padding: 20px;
 
-    perspective: var(--viewer-distance);
+    perspective: 500px;
     overflow: hidden;
 
     display: flex;

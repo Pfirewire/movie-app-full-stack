@@ -73,22 +73,24 @@ $(function() {
         },
         rotate(imageIndex) {
             // Rotates carousel to the image index
-            this.figure.css("transform", `rotateY(${imageIndex * -this.theta}rad)`);
+            this.figure.css("transform", `rotateY(${imageIndex * -this.theta}rad) translateZ(783px)`);
         },
         setupCarousel(n, s) {
             // Sets up and updates carousel css styling
             // Math stuff for transforming our carousel images
             let apothem = s / (2 * Math.tan(Math.PI / n));
-
+//transform: translate(-100%, 50%) rotate(45deg) translate(100%, -50%);
             // Transformations to spin the carousel
-            this.figure.css("transform-origin", `50% 50% ${- apothem}px`);
+            // this.figure.css("transform-origin", `50% 50% ${- apothem}px`);
+            // this.figure.css("-webkit-transform-origin", `50% 50% ${- apothem}px`);
             for (let i = 0; i < n; i++) {
                 $(this.images[i]).css("padding", `0 ${this.gap}px`);
                 $(this.images[i]).css("border-radius", "1em");
             }
             for (let i = 1; i < n; i++) {
-                $(this.images[i]).css("transform-origin", `50% 50% ${- apothem}px`);
-                $(this.images[i]).css("transform", `rotateY(${i * this.theta}rad)`);
+                // $(this.images[i]).css("transform-origin", `50% 50% ${- apothem}px`);
+                // $(this.images[i]).css("-webkit-transform-origin", `50% 50% ${- apothem}px`);
+                $(this.images[i]).css("transform", `rotateY(${i * this.theta}rad) translateZ(783px)`);
             }
             // Rotates to current image
             this.rotate(this.currImage);
@@ -104,8 +106,11 @@ $(function() {
                 Carousel.rotate(Carousel.currImage);
             });
         },
-        spin() {
+        spinRight() {
             $("button.carousel-next").trigger("click");
+        },
+        spinLeft() {
+            $("button.carousel-prev").trigger("click");
         }
     }
 
@@ -118,9 +123,16 @@ $(function() {
                 setInterval(function() {
                     // Only spins when window is active and user not hovering over a movie poster
                     if(document.hasFocus() && $(".carousel div:hover").length === 0) {
-                        Carousel.spin();
+                        Carousel.spinRight();
                     }
                 }, 3600);
+            });
+            $(window).on("keyup", function(e) {
+                if(e.key === "Left" || e.key === "ArrowLeft") {
+                    Carousel.spinLeft();
+                } else if(e.key === "Right" || e.key === "ArrowRight") {
+                    Carousel.spinRight();
+                }
             });
         }
     }
