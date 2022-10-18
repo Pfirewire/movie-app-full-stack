@@ -8,7 +8,7 @@
 
     <title>Movie Lists</title>
 
-    <link rel="stylesheet" th:href="@{/css/movie-lists.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/movie-lists.css}">
 </head>
 <body>
 <div hidden th:object="${url}">
@@ -50,7 +50,7 @@
 </div>
 
 <div th:replace="partials :: scripts" />
-<script th:src="@{/js/movie-lists.js}" />
+<script th:src="@{/assets/js/movie-lists.js}" />
 <script src="../../../../static/js/movie-lists.js"></script>
 </body>
 </html>

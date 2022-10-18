@@ -1,4 +1,4 @@
-$(() => {
+$(function() {
     // Local variables and requirements
     let passwordFulfillsRequirements = false;
     let lengthMet = false;

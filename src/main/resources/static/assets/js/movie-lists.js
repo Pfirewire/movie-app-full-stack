@@ -22,15 +22,12 @@ $(function() {
             try {
                 let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/list/all`);
                 let data = results.json();
-                console.log("inside get.movieLists. data returned: ")
-                console.log(data);
                 return data;
             } catch(error) {
                 console.log(`There was an error: ${error}`);
             }
         },
         async allMoviesFromList(listId) {
-            console.log("inside allMoviesFromList")
             try {
                 // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
                 let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${listId}`);
@@ -48,8 +45,6 @@ $(function() {
             MovieApp.movieListDiv.empty();
             dataPromise.then(function(movieListData) {
                 movieListData.forEach(function(movieList) {
-                    console.log("inside foreach loop to print each movie list. movielist name: ");
-                    console.log(movieList.name);
                     Print.singleMovieList(MovieApp.movieListDiv, movieList);
                     let movieListCardDiv = MovieApp.movieListDiv.children().last().children(".movie-list-card");
                     let movieListMovies = Get.allMoviesFromList(movieList.id);

@@ -28,7 +28,6 @@ $(function() {
             let tmdbKey = await Get.tmdbKey();
             let response = await fetch(`${MovieApp.GlobalURLs.tmdbTrendingUrl}${tmdbKey}`);
             let data = await response.json();
-            console.log(data.results);
             return data.results;
         }
     }
