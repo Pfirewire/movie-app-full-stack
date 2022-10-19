@@ -65,7 +65,7 @@
 }
 
 /*Making the movie cards scale up on hover, with a small transition time so it is not instant*/
-.movie-card, .search-card, .big-movie {
+.movie-card, .search-card, .big-movie, .carousel-nav i {
     transition: all 200ms;
 }
 .movie-card:hover, .search-card:hover {
@@ -139,12 +139,23 @@
 
 .carousel-nav {
     position: fixed;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 0;
     bottom: 0;
     height: 100%;
     width: 25vw;
     opacity: 0;
+}
+
+.carousel-nav i {
+    color: #8096AD;
+    transform: scale(4);
+}
+
+.carousel-nav:hover {
+    cursor: pointer;
 }
 
 .carousel-prev {

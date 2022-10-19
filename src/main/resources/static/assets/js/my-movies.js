@@ -607,6 +607,13 @@ $(function() {
                     $(this).toggleClass("big-movie");
                 }
             });
+            // Hover over prev-next buttons
+            $(document.body).on("mouseenter", ".carousel-nav", function() {
+                $(this).css("opacity", "75");
+            });
+            $(document.body).on("mouseleave", ".carousel-nav", function() {
+                $(this).css("opacity", "0");
+            });
         }
     }
 
