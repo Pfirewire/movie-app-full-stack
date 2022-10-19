@@ -19,6 +19,7 @@ $(function() {
         listId: $("#list-id").text(),
         // String that holds user input for secret code
         hiddenString: "",
+        carouselRoot: $(".carousel"),
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // Prints current movie database on screen and initializes all event listeners
@@ -152,26 +153,42 @@ $(function() {
         async allMovies(dataPromise) {
             $("#loading-div").removeClass("d-none");
             // prints all movies in our database on screen
-            const cardDiv = $("#cards-div");
+            const cardDiv = $(".carousel");
             cardDiv.empty();
-            dataPromise.then(movieData => {
+            await dataPromise.then(movieData => {
                 User.sortMovies(movieData).forEach((movie) => {
                     Print.singleMovie(cardDiv, movie);
                 });
                 $("#loading-div").addClass("d-none");
             });
+
+            Carousel.initialize();
+            Carousel.rotateToBeginning();
+
+            // const cardDiv = $("#cards-div");
+            // cardDiv.empty();
+            // dataPromise.then(movieData => {
+            //     User.sortMovies(movieData).forEach((movie) => {
+            //         Print.singleMovie(cardDiv, movie);
+            //     });
+            //     $("#loading-div").addClass("d-none");
+            // });
         },
         // prints single movie card from our database to be inserted into the all movies list
         async singleMovie(div, movie) {
             div.prepend(`
-                <div class="div-card col-xl-3 col-lg-4 col-md-6 col-12 d-flex justify-content-center" data-movie-id="${movie.id}">
-                    <div class="card movie-card border-0">
-                        <a role="button" href="#single-movie-modal" data-bs-toggle="modal">
-                            <img src=${movie.poster} class="card-img all-movie-img">
-                        </a>
-                    </div>
+                <div class="carousel-cell" data-movie-id="${movie.id}">
+                    <img src="${movie.poster}" alt="">
                 </div>
             `);
+            // <div class="div-card col-xl-3classNamelg-4 col-md-6 col-12 d-flex justify-content-center"
+            //      data-movie-id="${movie.id}">
+            //     <div class="card movie-card bclassName-0">
+            //         <a role="button" href="#single-movie-modal" data-bs-toggle="modal">
+            //             <img src=${movie.poster} class="card-img all-moviclassName">
+            //         </a>
+            //     </div>
+            // </div>
         },
         // prints the movie modal from our database
         async movieModal(div, movie) {
@@ -264,6 +281,51 @@ $(function() {
                     $(`.modal-rating-${i}`).removeClass("bi-star-fill fs-1").addClass("bi-star fs-3");
                 }
             }
+        }
+    }
+    // Carousel Object and Methods
+    const Carousel = {
+        images: null,
+        n: null,
+        gap: 60,
+        theta: null,
+        apothem: null,
+        currImage: 0,
+        initialize() {
+            // Set variables
+            this.images = MovieApp.carouselRoot.children();
+            this.n = this.images.length;
+            this.theta = 360 / this.n;
+            let width = parseFloat($(this.images[0]).css("width"))
+            this.apothem = width / (2 * Math.tan(Math.PI / this.n));
+
+            // Set up carousel and navigation
+            this.setupCarousel(this.n, width);
+        },
+        rotateToBeginning() {
+            this.currImage = 0;
+            this.rotate(this.currImage);
+        },
+        rotate(imageIndex) {
+            // Rotates carousel to the image index
+            MovieApp.carouselRoot.css("transform", `translateZ(-${this.apothem}px) rotateY(${imageIndex * -this.theta}deg)`);
+        },
+        setupCarousel(n, s) {
+            // Sets up and updates carousel css styling
+            // Math stuff for transforming our carousel images
+            let apothem = s / (2 * Math.tan(Math.PI / n));
+            for (let i = 0; i < n; i++) {
+                $(this.images[i]).css("padding", `0 ${this.gap}px`);
+                $(this.images[i]).css("border-radius", "1em");
+                $(this.images[i]).css("transform", `rotateY(${i * this.theta}deg) translateZ(${apothem}px)`);
+            }
+            this.rotate(this.currImage);
+        },
+        spinRight() {
+            $("button.carousel-next").trigger("click");
+        },
+        spinLeft() {
+            $("button.carousel-prev").trigger("click");
         }
     }
     // User Object and Methods
@@ -374,7 +436,7 @@ $(function() {
             // Checks which value user selected and sorts
             switch($("#sort-select").children("option:selected").val()){
                 case "1":
-                    return movies;
+                    return movies.sort((prev, current) => parseInt(prev.id) - parseInt(current.id));
                     break;
                 case "2":
                     return movies.sort((prev, current) => prev.title.localeCompare(current.title)).reverse();
@@ -489,6 +551,24 @@ $(function() {
                 let rating = $(this).attr("data-rating-star");
                 let movieId = $(this).attr("data-movie-id");
                 User.setRating(movieId, parseInt(rating));
+            });
+            $(window).on("keyup", function(e) {
+                if(e.key === "Left" || e.key === "ArrowLeft") {
+                    Carousel.spinLeft();
+                } else if(e.key === "Right" || e.key === "ArrowRight") {
+                    Carousel.spinRight();
+                }
+            });
+            // Sets up event listeners for the buttons to rotate the carousel
+            $(".carousel-next").on("click", function() {
+                Carousel.currImage++;
+                Carousel.rotate(Carousel.currImage);
+                console.log(Carousel.currImage);
+            });
+            $(".carousel-prev").on("click", function() {
+                Carousel.currImage--;
+                Carousel.rotate(Carousel.currImage);
+                console.log(Carousel.currImage);
             });
         }
     }

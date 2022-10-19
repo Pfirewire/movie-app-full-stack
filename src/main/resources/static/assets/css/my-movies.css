@@ -53,6 +53,10 @@
     border-radius: 1.5em;
 }
 
+#all-movie-carousel {
+    margin-top: 90px;
+}
+
 /*Stying sort select element*/
 #sort-select, #sort-select>option, #add-movie-btn {
     background-color: #8096AD;
