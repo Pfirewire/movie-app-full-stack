@@ -20,6 +20,7 @@ $(function() {
         // String that holds user input for secret code
         hiddenString: "",
         carouselRoot: $(".carousel"),
+        singleMovieModal: new bootstrap.Modal("#single-movie-modal"),
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // Prints current movie database on screen and initializes all event listeners
@@ -309,6 +310,7 @@ $(function() {
         rotate(imageIndex) {
             // Rotates carousel to the image index
             MovieApp.carouselRoot.css("transform", `translateZ(-${this.apothem}px) rotateY(${imageIndex * -this.theta}deg)`);
+            MovieApp.carouselRoot.attr("data-degree", (imageIndex * -this.theta))
         },
         setupCarousel(n, s) {
             // Sets up and updates carousel css styling
@@ -318,6 +320,7 @@ $(function() {
                 $(this.images[i]).css("padding", `0 ${this.gap}px`);
                 $(this.images[i]).css("border-radius", "1em");
                 $(this.images[i]).css("transform", `rotateY(${i * this.theta}deg) translateZ(${apothem}px)`);
+                $(this.images[i]).attr("data-degree", (i*this.theta));
             }
             this.rotate(this.currImage);
         },
@@ -326,6 +329,17 @@ $(function() {
         },
         spinLeft() {
             $("button.carousel-prev").trigger("click");
+        },
+        isInFront(img) {
+            let carouselDegree = parseFloat(img.parent().parent().attr("data-degree"));
+            let cellDegree = parseFloat(img.parent().attr("data-degree"));
+            return Math.abs(carouselDegree) % 360 === cellDegree;
+        },
+        modalClick(){
+            // $("#hidden-add-movie-modal-link").trigger("click");
+            // Utils.Modal.show($("#single-movie-modal"));
+            // $("#single-movie-modal").modal("toggle");
+            MovieApp.singleMovieModal.show();
         }
     }
     // User Object and Methods
@@ -475,13 +489,22 @@ $(function() {
                 }, '');
             }
         },
-        // Hide methods
-        Hide: {
-            // Hides modal
-            modal(modal) {
+        // Modal Methods
+        Modal: {
+            hide(modal) {
                 bootstrap.Modal.getInstance(modal).hide();
+            },
+            show(modal) {
+                bootstrap.Modal.show(modal);
             }
         }
+        // // Hide methods
+        // Hide: {
+        //     // Hides modal
+        //     modal(modal) {
+        //         bootstrap.Modal.getInstance(modal).hide();
+        //     }
+        // }
     }
     // Events Object and Methods
     const Events = {
@@ -496,13 +519,13 @@ $(function() {
             // Listens for click on add movie card
             $(document.body).on("click", "#movie-list .card", function() {
                 User.addMovie($(this).attr("data-movie-tmdb-id"));
-                Utils.Hide.modal($("#add-movie-modal"));
+                Utils.Modal.hide($("#add-movie-modal"));
             });
             // Listens for click on delete button
             $(document.body).on("click", ".delete-btn", function (){
                 $(this).attr("disabled", "");
                 User.deleteMovie($(this).parent().parent().attr("data-movie-id"), $(this));
-                Utils.Hide.modal($("#single-movie-modal"));
+                Utils.Modal.hide($("#single-movie-modal"));
             })
             // Listens for click of add button
             $("#add-movie-btn").on("click", function() {
@@ -513,9 +536,12 @@ $(function() {
                 }, 500);
             });
             // Listens for click of any image of our full movie list
-            $(document.body).on("click", ".all-movie-img", function() {
-                Get.movieById($(this).parent().parent().parent().attr("data-movie-id"))
-                    .then(res => Print.movieModal($("#single-movie-modal"), res));
+            $(document.body).on("click", ".carousel-cell img", function() {
+                if(Carousel.isInFront($(this))) {
+                    Carousel.modalClick();
+                    Get.movieById($(this).parent().attr("data-movie-id"))
+                        .then(res => Print.movieModal($("#single-movie-modal"), res));
+                }
             });
             $(document.body).on("click", ".review-btn", function() {
                 User.reviewForm($(this).parent().parent().attr("data-movie-id"));
@@ -569,6 +595,17 @@ $(function() {
                 Carousel.currImage--;
                 Carousel.rotate(Carousel.currImage);
                 console.log(Carousel.currImage);
+            });
+            // Hover over front movie in carousel
+            $(document.body).on("mouseenter", ".carousel-cell img", function() {
+                if(Carousel.isInFront($(this))) {
+                    $(this).toggleClass("big-movie");
+                }
+            });
+            $(document.body).on("mouseleave", ".carousel-cell img", function() {
+                if(Carousel.isInFront($(this))) {
+                    $(this).toggleClass("big-movie");
+                }
             });
         }
     }

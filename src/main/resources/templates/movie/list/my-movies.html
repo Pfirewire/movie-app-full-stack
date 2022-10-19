@@ -23,8 +23,8 @@
     <!-- Scripts and Stylesheets -->
     <script th:src="@{/assets/js/jquery-3.6.1.min.js}"></script>
     <link rel="stylesheet" th:href="@{/assets/css/background.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/my-movies.css}">
     <link rel="stylesheet" th:href="@{/assets/css/carousel.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/my-movies.css}">
 
 
 </head>
@@ -110,7 +110,7 @@
         <div id="all-movie-carousel" class="carousel-scene d-flex justify-content-center">
             <div class="carousel"></div>
         </div>
-        <nav>
+        <nav id="carousel-buttons">
             <button class="carousel-nav carousel-prev">Prev</button>
             <button class="carousel-nav carousel-next">Next</button>
         </nav>

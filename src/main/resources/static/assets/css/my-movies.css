@@ -54,7 +54,9 @@
 }
 
 #all-movie-carousel {
-    margin-top: 90px;
+    margin-top: 30px;
+    padding: 5em 0;
+    height: 600px;
 }
 
 /*Stying sort select element*/
@@ -63,16 +65,20 @@
 }
 
 /*Making the movie cards scale up on hover, with a small transition time so it is not instant*/
-.movie-card, .search-card {
+.movie-card, .search-card, .big-movie {
     transition: all 200ms;
 }
 .movie-card:hover, .search-card:hover {
     transform: scale(1.1);
 }
 
+.big-movie {
+    transform: scale(1.2);
+}
+
 /*Rounding edges and preventing image inside from overflowing*/
 /*Adding shadow borders*/
-.movie-card {
+.carousel-cell img {
     border-radius: 2em;
     overflow: hidden;
     box-shadow: 6px 12px 12px #000;
@@ -117,4 +123,39 @@
 }
 .modal-rating-star:hover {
     cursor: pointer;
+}
+
+#carousel-buttons {
+    /*display: flex;*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*width: 100vw;*/
+    /*height: 100vh;*/
+    /*pointer-events: none;*/
+}
+
+.carousel-nav {
+    position: fixed;
+    display: block;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 25vw;
+    opacity: 0;
+}
+
+.carousel-prev {
+    left: 0;
+}
+.carousel-next {
+    right: 0;
+}
+
+@media screen and (max-width: 800px) {
+    .carousel-nav {
+        width: 18vw;
+    }
 }
