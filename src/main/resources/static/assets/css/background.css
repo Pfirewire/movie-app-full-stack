@@ -15,7 +15,7 @@ body:before {
     background-size: cover;
 }
 /*Setting text to white and text shadow*/
-body {
+.outlined {
     color: #FFF;
     text-shadow:
             -1px -1px 0 #000,

@@ -99,11 +99,7 @@ public class MovieList {
     }
 
     public void addMember(User user) {
-        System.out.println("adding member to a list. user id is: ");
-        System.out.println(user.getId());
         this.members.add(user);
-        System.out.println("member has been added. new member list: ");
-        System.out.println(this.members.toString());
     }
 
     public void deleteMember(User user) {

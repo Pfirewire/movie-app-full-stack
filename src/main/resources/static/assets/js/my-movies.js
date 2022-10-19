@@ -141,6 +141,8 @@ $(function() {
         async movieRating(id) {
             let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${id}`);
             let data = await response.json();
+            console.log("getting rating");
+            console.log(data);
             return data;
         }
     }
@@ -232,7 +234,8 @@ $(function() {
         async modalRating(div, movie) {
             // get rating for movie
             let ratingData = await Get.movieRating(movie.id);
-            let rating = ratingData.rating;
+            let rating = ratingData.value;
+            console.log("rating: " + rating);
             div.empty();
             if(rating < 0) {
                 for(let i = 1; i < 6; i++) {
@@ -352,9 +355,9 @@ $(function() {
         // Calls add or edit rating based on if a rating exists
         async setRating(movieId, rating) {
             let ratingData = await Get.movieRating(movieId);
-            let oldRating = ratingData.rating;
+            let oldRating = ratingData.value;
             let ratingObject = {
-                rating
+                value: rating
             }
             let postOptions = {
                 headers: {
@@ -479,7 +482,7 @@ $(function() {
                 // get the saved rating and display it correctly
                 let movieId = $("#single-movie").attr("data-movie-id");
                 let ratingData = await Get.movieRating(movieId);
-                let rating = ratingData.rating;
+                let rating = ratingData.value;
                 Print.starFill(rating);
             });
             $(document.body).on("click", ".modal-rating-star", function() {

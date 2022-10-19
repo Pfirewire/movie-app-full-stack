@@ -16,7 +16,7 @@ public class Rating {
     private Long id;
 
     @Column(nullable = false)
-    private int rating;
+    private int value;
 
     @ManyToOne
 //    @JsonBackReference(value = "userRating")
@@ -32,8 +32,8 @@ public class Rating {
 
     public Rating() {}
 
-    public Rating(int rating) {
-        this.rating = rating;
+    public Rating(int value) {
+        this.value = value;
     }
 
     public Long getId() {
@@ -44,12 +44,12 @@ public class Rating {
         this.id = id;
     }
 
-    public int getRating() {
-        return rating;
+    public int getValue() {
+        return value;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public User getUser() {

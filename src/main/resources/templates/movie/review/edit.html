@@ -15,7 +15,7 @@
     <nav th:replace="partials :: siteBar" />
 
     <div class="container bg-dark rounded-3 mt-5 p-5">
-        <form th:action="@{/review/{movieId} (movieId=${movie.id})}" th:method="PATCH" th:object="${review}">
+        <form th:action="@{/review/{movieId}/edit (movieId=${movie.id})}" th:method="POST" th:object="${review}">
             <div th:replace="partials :: reviewForm" />
         </form>
 

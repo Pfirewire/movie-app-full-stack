@@ -106,6 +106,10 @@ public class User {
         this.reviews = reviews;
     }
 
+    public void removeReview(Review review) {
+        this.reviews.remove(review);
+    }
+
     public void addList(MovieList list) {
         this.lists.add(list);
     }

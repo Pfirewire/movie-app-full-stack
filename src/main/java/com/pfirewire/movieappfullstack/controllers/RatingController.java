@@ -38,7 +38,6 @@ public class RatingController {
 
     @PostMapping("/rating/{movieId}")
     public String addRating (@RequestBody Rating rating, @PathVariable Long movieId) {
-        System.out.println("inside addRating");
         User user = Utils.currentUser();
         rating.setUser(user);
         rating.setMovie(movieDao.getById(movieId));
@@ -48,10 +47,9 @@ public class RatingController {
 
     @PatchMapping("/rating/{movieId}")
     public String editRating(@RequestBody Rating newRating, @PathVariable Long movieId) {
-        System.out.println("inside editRating");
         User user = Utils.currentUser();
         Rating oldRating = ratingDao.findByUserAndMovie(user, movieDao.getById(movieId));
-        oldRating.setRating(newRating.getRating());
+        oldRating.setValue(newRating.getValue());
         ratingDao.save(oldRating);
         return "completed editRating";
     }

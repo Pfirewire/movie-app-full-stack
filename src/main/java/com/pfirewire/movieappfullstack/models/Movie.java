@@ -140,4 +140,8 @@ public class Movie {
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public void removeReview(Review review) {
+        this.reviews.remove(review);
+    }
 }
