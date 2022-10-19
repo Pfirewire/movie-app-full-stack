@@ -333,7 +333,7 @@ $(function() {
         isInFront(img) {
             let carouselDegree = parseFloat(img.parent().parent().attr("data-degree"));
             let cellDegree = parseFloat(img.parent().attr("data-degree"));
-            return Math.abs(carouselDegree) % 360 === cellDegree;
+            return (carouselDegree + cellDegree) % 360 === 0;
         },
         modalClick(){
             // $("#hidden-add-movie-modal-link").trigger("click");
