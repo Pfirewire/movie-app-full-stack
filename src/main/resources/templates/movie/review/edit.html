@@ -8,17 +8,21 @@
 
     <title>Write Review</title>
 
-    <link rel="stylesheet" th:href="@{/assets/css/review.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/review-form.css}">
 </head>
 <body>
 <div id="page-wrapper">
     <nav th:replace="partials :: siteBar" />
 
-    <div class="container bg-dark rounded-3 mt-5 p-5">
-        <form th:action="@{/review/{movieId}/edit (movieId=${movie.id})}" th:method="POST" th:object="${review}">
-            <div th:replace="partials :: reviewForm" />
-        </form>
-
+    <div id="main-container" class="container bg-dark text-light rounded-3">
+        <div class="poster-div">
+            <img th:src="${movie.poster}">
+        </div>
+        <div class="review-div">
+            <form th:action="@{/review/{movieId}/edit (movieId=${movie.id})}" th:method="POST" th:object="${review}">
+                <div th:replace="partials :: reviewForm" />
+            </form>
+        </div>
     </div>
 
     <div th:replace="partials :: scripts" />

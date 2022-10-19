@@ -27,6 +27,15 @@ public class ReviewController {
         this.reviewDao = reviewDao;
     }
 
+    @GetMapping("/review/{reviewId}/view")
+    public String viewReview(@PathVariable Long reviewId, Model model) {
+        Review review = reviewDao.getById(reviewId);
+        model.addAttribute("review", review);
+        model.addAttribute("movie", review.getMovie());
+        model.addAttribute("reviewUser", review.getUser());
+        return "movie/review/view";
+    }
+
     @GetMapping("/review/{movieId}")
     public String reviewForm (@PathVariable Long movieId, Model model) {
         User user = Utils.currentUser();
@@ -53,26 +62,21 @@ public class ReviewController {
         reviewDao.save(review);
         model.addAttribute("movie", movie);
         model.addAttribute("review", review);
+        model.addAttribute("reviewUser", review.getUser());
         return "movie/review/view";
     }
 
     @PostMapping("/review/{movieId}/edit")
     public String editReview(@ModelAttribute Review newReview, @PathVariable Long movieId, Model model) {
-        System.out.println("Inside editReview");
         User user = Utils.currentUser();
-        System.out.printf("User writing review: %s%n", user.getUsername());
         Movie movie = movieDao.getById(movieId);
-        System.out.printf("Movie review is about: %s%n", movie.getTitle());
         Review oldReview = reviewDao.findByUserAndMovie(user, movie);
-        System.out.printf("Old review title: %s%n", oldReview.getTitle());
         oldReview.setBody(newReview.getBody());
-        System.out.printf("Old review with new title: %s%n", oldReview.getTitle());
-        System.out.printf("Old review body: %s%n", oldReview.getBody());
         oldReview.setTitle(newReview.getTitle());
-        System.out.printf("Old review with new body: %s%n", oldReview.getBody());
         reviewDao.save(oldReview);
         model.addAttribute("movie", movie);
         model.addAttribute("review", oldReview);
+        model.addAttribute("reviewUser", oldReview.getUser());
         return "movie/review/view";
     }
 }
