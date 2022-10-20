@@ -17,45 +17,15 @@ $(function() {
         },
         // List id
         listId: $("#list-id").text(),
-        // String that holds user input for secret code
-        hiddenString: "",
         carouselRoot: $(".carousel"),
         singleMovieModal: new bootstrap.Modal("#single-movie-modal"),
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // Prints current movie database on screen and initializes all event listeners
         async initialize() {
-            // setTimeout just to show the loading screen for more than a split second. It can be removed for production
-            // setTimeout(() => {
             Print.allMovies(Get.allMovies());
-            // }, 5000);
             Events.initialize();
         },
-        // // Function to change TMDB search to allow adult results
-        // enterBackRoom() {
-        //     User.overEighteen = true;
-        //     // Changes background of page to represent that the user is in NSFW mode
-        //     $("#page-wrapper").toggleClass("normal-bg back-room-bg");
-        //     // Setting back room timer to 30 seconds
-        //     let backRoomTimer = 30;
-        //     $("#back-room-timer").html(`0.${backRoomTimer.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`);
-        //     // Decrementing timer every second
-        //     let intervalId = setInterval(() => {
-        //         backRoomTimer--;
-        //         $("#back-room-timer").html(`0.${backRoomTimer.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`);
-        //     }, 1000);
-        //     // After 30 seconds runs function to turn off NSFW mode
-        //     setTimeout(() => {
-        //         MovieApp.leaveBackRoom()
-        //         clearInterval(intervalId);
-        //     }, 30000);
-        // },
-        // // Sets TMDB search back to SFW
-        // leaveBackRoom() {
-        //     User.overEighteen = false;
-        //     $("#page-wrapper").toggleClass("normal-bg back-room-bg");
-        //     $("#back-room-timer").html("");
-        // }
     }
     // Get Object and Methods
     const Get = {
@@ -165,15 +135,6 @@ $(function() {
 
             Carousel.initialize();
             Carousel.rotateToBeginning();
-
-            // const cardDiv = $("#cards-div");
-            // cardDiv.empty();
-            // dataPromise.then(movieData => {
-            //     User.sortMovies(movieData).forEach((movie) => {
-            //         Print.singleMovie(cardDiv, movie);
-            //     });
-            //     $("#loading-div").addClass("d-none");
-            // });
         },
         // prints single movie card from our database to be inserted into the all movies list
         async singleMovie(div, movie) {
@@ -182,14 +143,6 @@ $(function() {
                     <img src="${movie.poster}" alt="">
                 </div>
             `);
-            // <div class="div-card col-xl-3classNamelg-4 col-md-6 col-12 d-flex justify-content-center"
-            //      data-movie-id="${movie.id}">
-            //     <div class="card movie-card bclassName-0">
-            //         <a role="button" href="#single-movie-modal" data-bs-toggle="modal">
-            //             <img src=${movie.poster} class="card-img all-moviclassName">
-            //         </a>
-            //     </div>
-            // </div>
         },
         // prints the movie modal from our database
         async movieModal(div, movie) {
@@ -333,12 +286,11 @@ $(function() {
         isInFront(img) {
             let carouselDegree = parseFloat(img.parent().parent().attr("data-degree"));
             let cellDegree = parseFloat(img.parent().attr("data-degree"));
-            return (carouselDegree + cellDegree) % 360 === 0;
+            let carouselModulo = (carouselDegree + cellDegree) % 360;
+            console.log((carouselDegree + cellDegree) % 360);
+            return Utils.Math.approximatelyEqual(carouselModulo, 360) || Utils.Math.approximatelyEqual(carouselModulo, 0);
         },
         modalClick(){
-            // $("#hidden-add-movie-modal-link").trigger("click");
-            // Utils.Modal.show($("#single-movie-modal"));
-            // $("#single-movie-modal").modal("toggle");
             MovieApp.singleMovieModal.show();
         }
     }
@@ -365,12 +317,6 @@ $(function() {
             });
             let addedMovie = await results.json();
             postOptions.body = JSON.stringify({rating: 5});
-            // await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${addedMovie.id}/add`, postOptions).then(res => {
-            //     $("#add-movie-text").val('');
-            //     $("#movie-list").empty();
-            //     Print.allMovies(Get.allMovies());
-            //     return res;
-            // });
         },
         // Deletes movie from database
         async deleteMovie(movieId, button) {
@@ -401,33 +347,9 @@ $(function() {
                 },
                 body : JSON.stringify(newMovie)
             }
-
-            // let editData =await fetch(`${MovieApp.GlobalURLs.moviesURL}/${id}`, editOptions).then(results => results);
-            // let editData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${id}/edit`, editOptions).then(results => results);
-
             Print.allMovies(Get.allMovies());
             button.removeAttr("disabled");
         },
-        // // Adds movie rating
-        // async addRating(movieId, rating) {
-        //     let ratingObject = {
-        //         rating
-        //     }
-        //     console.log(ratingObject);
-        //     const postOptions = {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type' : 'application/json',
-        //             'X-CSRF-TOKEN' : MovieApp.csrfToken
-        //         },
-        //         body: JSON.stringify(ratingObject)
-        //     }
-        //     await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${movieId}/add`, postOptions);
-        // },
-        // // Edits movie rating
-        // async editRating() {
-        //
-        // },
         // Calls add or edit rating based on if a rating exists
         async setRating(movieId, rating) {
             let ratingData = await Get.movieRating(movieId);
@@ -497,14 +419,12 @@ $(function() {
             show(modal) {
                 bootstrap.Modal.show(modal);
             }
+        },
+        Math: {
+            approximatelyEqual(v1, v2, epsilon = 0.001) {
+                return Math.abs(v1 - v2) < epsilon;
+            }
         }
-        // // Hide methods
-        // Hide: {
-        //     // Hides modal
-        //     modal(modal) {
-        //         bootstrap.Modal.getInstance(modal).hide();
-        //     }
-        // }
     }
     // Events Object and Methods
     const Events = {
@@ -546,18 +466,6 @@ $(function() {
             $(document.body).on("click", ".review-btn", function() {
                 User.reviewForm($(this).parent().parent().attr("data-movie-id"));
             });
-            // // Listens for any keyup on the screen
-            // $("body").on("keyup", function(e) {
-            //     if(e.key === "Enter") {
-            //         MovieApp.hiddenString = "";
-            //     } else {
-            //         MovieApp.hiddenString += e.key;
-            //     }
-            //     if(!User.overEighteen && MovieApp.hiddenString.toUpperCase().includes(BACK_ROOM)) {
-            //         MovieApp.hiddenString = "";
-            //         MovieApp.enterBackRoom();
-            //     }
-            // });
             // Listens for change in sort select
             $("#sort-select").change(function() {
                 Print.allMovies(Get.allMovies());
