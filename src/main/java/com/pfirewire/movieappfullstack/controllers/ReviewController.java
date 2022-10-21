@@ -85,9 +85,9 @@ public class ReviewController {
 
     @GetMapping("/reviews/all")
     public @ResponseBody Set<Review> getAllReviews(Model model) {
-        List<Review> reviewsList = reviewDao.findAll();
-        Set<Review> reviews = new HashSet<Review>();
-        for(Review review : reviewsList) {
+        List<Review> reviewList = reviewDao.findAll();
+        Set<Review> reviews = new HashSet<>();
+        for(Review review : reviewList) {
             reviews.add(review);
         }
         return reviews;
@@ -95,6 +95,8 @@ public class ReviewController {
 
     @GetMapping("/reviews/user")
     public @ResponseBody Set<Review> getUserReviews(Model model) {
-
+        User user = Utils.currentUser();
+        Set<Review> reviews = reviewDao.findAllByUser(user);
+        return reviews;
     }
 }
