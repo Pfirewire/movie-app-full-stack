@@ -83,7 +83,7 @@
     overflow: hidden;
     box-shadow: 6px 12px 12px #000;
 }
-.search-card {
+.search-card{
     box-shadow: 0 0 3px 3px #8096AD;
     border-radius: 1em;
     overflow: hidden;
@@ -146,12 +146,15 @@
     bottom: 0;
     height: 100%;
     width: 25vw;
+    transition: opacity 200ms;
     opacity: 0;
 }
 
 .carousel-nav i {
     color: #8096AD;
     transform: scale(4);
+    box-shadow: 0 0 1px 1px #8096AD;
+    border-radius: 1em;
 }
 
 .carousel-nav:hover {

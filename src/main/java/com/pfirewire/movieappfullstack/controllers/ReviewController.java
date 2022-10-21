@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.PreRemove;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ReviewController {
@@ -78,5 +81,20 @@ public class ReviewController {
         model.addAttribute("review", oldReview);
         model.addAttribute("reviewUser", oldReview.getUser());
         return "movie/review/view";
+    }
+
+    @GetMapping("/reviews/all")
+    public @ResponseBody Set<Review> getAllReviews(Model model) {
+        List<Review> reviewsList = reviewDao.findAll();
+        Set<Review> reviews = new HashSet<Review>();
+        for(Review review : reviewsList) {
+            reviews.add(review);
+        }
+        return reviews;
+    }
+
+    @GetMapping("/reviews/user")
+    public @ResponseBody Set<Review> getUserReviews(Model model) {
+
     }
 }

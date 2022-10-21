@@ -10,15 +10,13 @@ $(function() {
             tmdbPosterPath: "https://image.tmdb.org/t/p/original/",
             backendURLPath: $("#base-url").text(),
         },
-        // Paths for NSFW search results from TMDB
-        TMDBPaths: {
-            sfw: "&include_adult=false",
-            nsfw: "&include_adult=true"
-        },
         // List id
         listId: $("#list-id").text(),
+        // Root div of carousel
         carouselRoot: $(".carousel"),
+        // Modals on screen
         singleMovieModal: new bootstrap.Modal("#single-movie-modal"),
+        addMovieModal: new bootstrap.Modal("#add-movie-modal"),
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // Prints current movie database on screen and initializes all event listeners
@@ -113,8 +111,6 @@ $(function() {
         async movieRating(id) {
             let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${id}`);
             let data = await response.json();
-            console.log("getting rating");
-            console.log(data);
             return data;
         }
     }
@@ -192,12 +188,12 @@ $(function() {
             movieList.results.forEach((movie, index) => {
                 if(index < 6) {
                     $("#movie-list").append(`
-                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex justify-content-center">
-                        <div class="card search-card border-0" data-movie-tmdb-id="${movie.id}">
-                            <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}" class="card-img search-card-img">
+                        <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex justify-content-center">
+                            <div class="card search-card border-0" data-movie-tmdb-id="${movie.id}">
+                                <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}" class="card-img search-card-img">
+                            </div>
                         </div>
-                    </div>
-                `);
+                    `);
                 }
             });
         },
@@ -206,7 +202,6 @@ $(function() {
             // get rating for movie
             let ratingData = await Get.movieRating(movie.id);
             let rating = ratingData.value;
-            console.log("rating: " + rating);
             div.empty();
             if(rating < 0) {
                 for(let i = 1; i < 6; i++) {
@@ -287,7 +282,6 @@ $(function() {
             let carouselDegree = parseFloat(img.parent().parent().attr("data-degree"));
             let cellDegree = parseFloat(img.parent().attr("data-degree"));
             let carouselModulo = (carouselDegree + cellDegree) % 360;
-            console.log((carouselDegree + cellDegree) % 360);
             return Utils.Math.approximatelyEqual(carouselModulo, 360) || Utils.Math.approximatelyEqual(carouselModulo, 0);
         },
         modalClick(){
@@ -414,13 +408,14 @@ $(function() {
         // Modal Methods
         Modal: {
             hide(modal) {
-                bootstrap.Modal.getInstance(modal).hide();
+                bootstrap.Modal.hide(modal);
             },
             show(modal) {
                 bootstrap.Modal.show(modal);
             }
         },
         Math: {
+            // returns true if numbers are equal within error margin, default 0.001
             approximatelyEqual(v1, v2, epsilon = 0.001) {
                 return Math.abs(v1 - v2) < epsilon;
             }
@@ -439,13 +434,13 @@ $(function() {
             // Listens for click on add movie card
             $(document.body).on("click", "#movie-list .card", function() {
                 User.addMovie($(this).attr("data-movie-tmdb-id"));
-                Utils.Modal.hide($("#add-movie-modal"));
+                Utils.Modal.hide(MovieApp.addMovieModal);
             });
             // Listens for click on delete button
             $(document.body).on("click", ".delete-btn", function (){
                 $(this).attr("disabled", "");
                 User.deleteMovie($(this).parent().parent().attr("data-movie-id"), $(this));
-                Utils.Modal.hide($("#single-movie-modal"));
+                Utils.Modal.hide(MovieApp.addMovieModal);
             })
             // Listens for click of add button
             $("#add-movie-btn").on("click", function() {
@@ -486,7 +481,7 @@ $(function() {
                 let movieId = $(this).attr("data-movie-id");
                 User.setRating(movieId, parseInt(rating));
             });
-            $(window).on("keyup", function(e) {
+            $(document.body).on("keyup", function(e) {
                 if(e.key === "Left" || e.key === "ArrowLeft") {
                     Carousel.spinLeft();
                 } else if(e.key === "Right" || e.key === "ArrowRight") {
@@ -497,12 +492,10 @@ $(function() {
             $(".carousel-next").on("click", function() {
                 Carousel.currImage++;
                 Carousel.rotate(Carousel.currImage);
-                console.log(Carousel.currImage);
             });
             $(".carousel-prev").on("click", function() {
                 Carousel.currImage--;
                 Carousel.rotate(Carousel.currImage);
-                console.log(Carousel.currImage);
             });
             // Hover over front movie in carousel
             $(document.body).on("mouseenter", ".carousel-cell img", function() {
