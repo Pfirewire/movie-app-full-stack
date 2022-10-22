@@ -7,7 +7,9 @@ import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
 import com.pfirewire.movieappfullstack.repositories.ReviewRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
+import com.pfirewire.movieappfullstack.services.Url;
 import com.pfirewire.movieappfullstack.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +25,19 @@ public class ReviewController {
     private UserRepository userDao;
     private MovieRepository movieDao;
     private ReviewRepository reviewDao;
+    @Autowired
+    private Url url;
 
     public ReviewController(UserRepository userDao, MovieRepository movieDao, ReviewRepository reviewDao) {
         this.userDao = userDao;
         this.movieDao = movieDao;
         this.reviewDao = reviewDao;
+    }
+
+    @GetMapping("/review/all/view")
+    public String showAllReviews(Model model) {
+        model.addAttribute("url", url);
+        return "movie/review/view-all";
     }
 
     @GetMapping("/review/{reviewId}/view")

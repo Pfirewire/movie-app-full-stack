@@ -11,6 +11,9 @@
     <link rel="stylesheet" th:href="@{/assets/css/all-reviews.css}">
 </head>
 <body>
+<div hidden th:object="${url}">
+    <div id="base-url" th:text="*{baseUrl}"></div>
+</div>
 <div id="page-wrapper">
     <nav th:replace="partials :: siteBar" />
 
