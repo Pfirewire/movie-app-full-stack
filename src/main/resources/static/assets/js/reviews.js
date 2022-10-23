@@ -1,11 +1,12 @@
 $(function() {
+    console.log("inside reviews.js");
 
     const MovieApp = {
         Urls: {
             backendPath: $("#base-url").text()
         },
         Divs: {
-            reviewList: $("#reviews-div");
+            reviewList: $("#reviews-div")
         }
     }
 
@@ -14,6 +15,7 @@ $(function() {
             try {
                 let reviewData = await fetch(`${MovieApp.Urls.backendPath}reviews/all`);
                 let reviewList = await reviewData.json();
+                console.log(reviewList);
                 return reviewList
             } catch (err) {
                 console.log(err);
@@ -27,7 +29,15 @@ $(function() {
         },
         singleReview() {
 
+        },
+        test() {
+            MovieApp.Divs.reviewList.html(`
+                <h1 class="outlined">Testing</h1>
+            `);
         }
     }
+
+    Get.reviews();
+    Print.test();
 
 });

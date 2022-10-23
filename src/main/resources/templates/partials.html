@@ -39,7 +39,7 @@
                             Reviews
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/review/all}">All Reviews</a></li>
+                            <li><a class="dropdown-item" th:href="@{/review/all/view}">All Reviews</a></li>
                             <li><a class="dropdown-item" th:href="@{/review/user}">My Reviews</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" th:href="@{review/create}">Create Reviews</a></li>
@@ -58,7 +58,7 @@
             <span sec:authorize="isAnonymous()">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a id="nav-reviews-link" class="nav-link" th:href="@{/reviews}">Reviews</a>
+                        <a id="nav-reviews-link" class="nav-link" th:href="@{/review/all/view}">Reviews</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/signup}">Signup</a>
