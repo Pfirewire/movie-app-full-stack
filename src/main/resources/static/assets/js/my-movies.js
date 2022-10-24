@@ -1,3 +1,5 @@
+// import { Get } from "./utils.js";
+
 // Initialize jQuery
 $(function() {
     // MovieApp Object and Methods
