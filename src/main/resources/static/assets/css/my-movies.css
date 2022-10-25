@@ -111,7 +111,7 @@
 
 /*Overflow-wrap for all edit movie fields*/
 .modal-overflow-wrap {
-    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 /*Change color of filled stars to yellow*/

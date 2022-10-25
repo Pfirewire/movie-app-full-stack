@@ -10,7 +10,7 @@ $(function() {
         },
         initialize() {
             if($("title").text().includes("My")) {
-                Get.userReviews();
+                Print.allReviews(Get.userReviews());
             } else {
                 Print.allReviews(Get.allReviews());
             }

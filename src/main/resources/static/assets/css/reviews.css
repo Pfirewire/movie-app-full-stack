@@ -1,0 +1,32 @@
+#reviews-div {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.review-wrapper {
+    display: flex;
+    margin: 2em 0;
+}
+
+.review-img {
+    padding: 1em;
+}
+
+.review-img>img {
+    width: 160px;
+    height: 240px;
+    border-radius: 1em;
+}
+
+.review-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.review-content>h3, .review-content>p {
+    overflow: hidden;
+    word-break: break-word;
+}
