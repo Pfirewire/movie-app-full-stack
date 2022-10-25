@@ -2,6 +2,7 @@ package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -20,14 +21,12 @@ public class Review {
     private String body;
 
     @ManyToOne
-//    @JsonBackReference(value = "userReview")
-    @JsonIgnore
+    @JsonManagedReference(value = "userReview")
     @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-//    @JsonBackReference(value = "movieReview")
-    @JsonIgnore
+    @JsonManagedReference(value = "movieReview")
     @JoinColumn(name="movie_id")
     private Movie movie;
 

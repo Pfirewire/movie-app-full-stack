@@ -57,12 +57,10 @@ $(function() {
             });
         },
         async singleReview(review, div) {
-            let movie = await Get.movieById(review.movie).then(res => res);
-            console.log(movie);
             div.append(`
                 <div class="review-wrapper container bg-dark text-light rounded-3">
                     <div class="review-img">
-                        <img src="${movie.poster}">
+                        <img src="${review.movie.poster}">
                     </div>
                     <div class="review-content">
                         <h3>${review.title}</h3>

@@ -19,6 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true)
+    @JsonIgnore
     private String email;
     @Column(nullable = false, unique = true)
     private String username;
@@ -39,7 +40,7 @@ public class User {
     private Set<Rating> ratings = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonManagedReference(value = "userReview")
+    @JsonBackReference(value = "userReview")
     private Set<Review> reviews = new HashSet<>();
     // Constructor functions
     public User () {
