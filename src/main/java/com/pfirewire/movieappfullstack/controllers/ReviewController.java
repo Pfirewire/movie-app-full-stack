@@ -40,6 +40,12 @@ public class ReviewController {
         return "movie/review/view-all";
     }
 
+    @GetMapping("/review/user/view")
+    public String showUserReviews(Model model) {
+        model.addAttribute("url", url);
+        return "movie/review/view-user";
+    }
+
     @GetMapping("/review/{reviewId}/view")
     public String viewReview(@PathVariable Long reviewId, Model model) {
         Review review = reviewDao.getById(reviewId);
@@ -104,9 +110,14 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/user")
-    public @ResponseBody Set<Review> getUserReviews(Model model) {
+    public @ResponseBody Set<Review> getUserMyReviews(Model model) {
         User user = Utils.currentUser();
-        Set<Review> reviews = reviewDao.findAllByUser(user);
-        return reviews;
+        return reviewDao.findAllByUser(user);
+    }
+
+    @GetMapping("/reviews/user/{userId}")
+    public @ResponseBody Set<Review> getUserReviews(@PathVariable Long userId, Model model) {
+        User user = userDao.getById(userId);
+        return reviewDao.findAllByUser(user);
     }
 }

@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/",
                         "/index",
                         "/reviews",
-                        "/review/*/view"
+                        "/review/all/view"
                 )
                 .permitAll()
                 // Pages only viewable when logged in
@@ -60,7 +60,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/movie/list/*",
                         "/movies",
-                        "/movie/list"
+                        "/movie/list",
+                        "/review/user/view"
                 )
                 .authenticated()
         ;

@@ -55,6 +55,10 @@ public class MovieController {
         return "health check complete";
     }
 
+    @GetMapping("/movie/{movieId}")
+    public Movie getMovieById(@PathVariable Long movieId) {
+        return movieDao.getById(movieId);
+    }
 
     @GetMapping("/movies/{listId}")
     public Set<Movie> getAllMovies(@PathVariable Long listId) {
