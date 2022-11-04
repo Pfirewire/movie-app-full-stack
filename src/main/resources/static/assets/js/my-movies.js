@@ -84,7 +84,7 @@ $(function() {
             // returns data array inside a promise
             try {
                 let tmdbKey = await Get.tmdbKey();
-                let response = await fetch(`${MovieApp.GlobalURLs.searchTMDBURL}${tmdbKey}&query=${title}${User.overEighteen? MovieApp.TMDBPaths.nsfw : MovieApp.TMDBPaths.sfw}`);
+                let response = await fetch(`${MovieApp.GlobalURLs.searchTMDBURL}${tmdbKey}&query=${title}`);
                 let data = await response.json();
                 return data;
             } catch(err) {
