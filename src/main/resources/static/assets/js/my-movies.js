@@ -287,7 +287,7 @@ $(function() {
             return Utils.Math.approximatelyEqual(carouselModulo, 360) || Utils.Math.approximatelyEqual(carouselModulo, 0);
         },
         modalClick(){
-            MovieApp.singleMovieModal.show();
+            Utils.Modal.show(MovieApp.singleMovieModal);
         }
     }
     // User Object and Methods
@@ -410,10 +410,10 @@ $(function() {
         // Modal Methods
         Modal: {
             hide(modal) {
-                bootstrap.Modal.hide(modal);
+                modal.hide();
             },
             show(modal) {
-                bootstrap.Modal.show(modal);
+                modal.show();
             }
         },
         Math: {
@@ -442,7 +442,7 @@ $(function() {
             $(document.body).on("click", ".delete-btn", function (){
                 $(this).attr("disabled", "");
                 User.deleteMovie($(this).parent().parent().attr("data-movie-id"), $(this));
-                Utils.Modal.hide(MovieApp.addMovieModal);
+                Utils.Modal.hide(MovieApp.singleMovieModal);
             })
             // Listens for click of add button
             $("#add-movie-btn").on("click", function() {
