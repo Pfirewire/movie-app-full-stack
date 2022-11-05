@@ -45,6 +45,11 @@ $(function() {
             } catch(err) {
                 console.log(err);
             }
+        },
+        async movieRating(id) {
+            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${id}`);
+            let data = await response.json();
+            return data;
         }
     }
 
