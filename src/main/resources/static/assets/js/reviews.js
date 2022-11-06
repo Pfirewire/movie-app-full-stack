@@ -73,7 +73,32 @@ $(function() {
                     </div>
                 </div>
             `);
-        }
+        },
+        async modalRating(div, movie) {
+            // get rating for movie
+            let ratingData = await Get.movieRating(movie.id);
+            let rating = ratingData.value;
+            div.empty();
+            if(rating < 0) {
+                for(let i = 1; i < 6; i++) {
+                    div.append(`
+                        <i class="bi bi-star px-1 fs-3 modal-rating-star modal-rating-${i}" data-rating-star="${i}" data-movie-id="${movie.id}"></i>
+                    `);
+                }
+            } else {
+                for(let i = 1; i <= rating; i++) {
+                    div.append(`
+                        <i class="bi bi-star-fill px-1 fs-1 modal-rating-star modal-rating-${i}" data-rating-star="${i}" data-movie-id="${movie.id}"></i>
+                    `);
+                }
+                for(let i = rating + 1; i < 6; i++) {
+                    div.append(`
+                        <i class="bi bi-star px-1 fs-3 modal-rating-star modal-rating-${i}" data-rating-star="${i}" data-movie-id="${movie.id}"></i>
+                    `);
+                }
+            }
+        },
+
     }
 
 
