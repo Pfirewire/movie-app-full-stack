@@ -56,12 +56,14 @@ $(function() {
     const Print = {
         async allReviews(promise) {
             await promise.then(reviewData => {
-                reviewData.forEach(review => {
-                    Print.singleReview(review, MovieApp.Divs.reviewList);
+                reviewData.forEach(async function(review) {
+                    let ratingData = await Get.movieRating(review.movie.id);
+                    let rating = await ratingData.json();
+                    Print.singleReview(review, rating, MovieApp.Divs.reviewList);
                 });
             });
         },
-        async singleReview(review, div) {
+        async singleReview(review, rating, div) {
             div.append(`
                 <div class="review-wrapper container bg-dark text-light rounded-3">
                     <div class="review-img">
