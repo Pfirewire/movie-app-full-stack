@@ -36,6 +36,18 @@ public class RatingController {
         }
     }
 
+    @GetMapping("/rating/{movieId}/{userId}")
+    public Rating getRating(@PathVariable Long movieId, @PathVariable Long userId) {
+        User user = userDao.getById(userId);
+        Movie movie = movieDao.getById(movieId);
+        Rating rating = ratingDao.findByUserAndMovie(user, movie);
+        if(rating == null) {
+            return new Rating(-1);
+        } else {
+            return rating;
+        }
+    }
+
     @PostMapping("/rating/{movieId}")
     public String addRating (@RequestBody Rating rating, @PathVariable Long movieId) {
         User user = Utils.currentUser();

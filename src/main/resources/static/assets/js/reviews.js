@@ -46,8 +46,9 @@ $(function() {
                 console.log(err);
             }
         },
-        async movieRating(id) {
-            let response = await fetch(`${MovieApp.Urls.backendPath}rating/${id}`);
+        async movieRating(movieId, userId) {
+            console.log(userId);
+            let response = await fetch(`${MovieApp.Urls.backendPath}rating/${movieId}/${userId}`);
             let data = await response.json();
             return data;
         }
@@ -57,14 +58,15 @@ $(function() {
         async allReviews(promise) {
             await promise.then(reviewData => {
                 reviewData.forEach(async function(review) {
-                    let rating = await Get.movieRating(review.movie.id);
+                    // console.log(review.user.id);
+                    let rating = await Get.movieRating(review.movie.id, review.user.id);
                     // let rating = await ratingData.then(res => res);
-                    .singleReview(review, rating, MovieApp.Divs.reviewList);
+                    Print.singleReview(review, rating, MovieApp.Divs.reviewList);
                 });
             });
         },
         async singleReview(review, rating, div) {
-            let html = await Print.modalRating(review.movie);
+            let html = await Print.modalRating(review.movie, rating.value);
             div.append(`
                 <div class="review-wrapper container bg-dark text-light rounded-3">
                     <div class="review-img">
@@ -78,10 +80,10 @@ $(function() {
                 </div>
             `);
         },
-        async modalRating(movie) {
+        async modalRating(movie, rating) {
             // get rating for movie
-            let ratingData = await Get.movieRating(movie.id);
-            let rating = ratingData.value;
+            // let ratingData = await Get.movieRating(movie.id);
+            // let rating = ratingData.value;
             let html = "";
             if(rating < 0) {
                 for(let i = 1; i < 6; i++) {
