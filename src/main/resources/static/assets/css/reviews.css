@@ -30,3 +30,11 @@
     overflow: hidden;
     word-break: break-word;
 }
+
+/*Change color of filled stars to yellow*/
+.bi-star-fill {
+    color: #FF0;
+}
+.bi-star {
+    color: #FFF;
+}
