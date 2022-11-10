@@ -186,7 +186,7 @@ $(function() {
         // prints modal with movies from TMDB database
         async moviesList(title) {
             // shows the top 6 from search results
-            let movieList = await Get.movieByTitle(MovieApp.GlobalURLs.searchTMDBURL, title).then(results => results);
+            let movieList = await Get.movieByTitle(MovieApp.GlobalURLs.backendURLPath MovieApp.GlobalURLs.searchTMDBURL, title).then(results => results);
             $("#movie-list").empty();
             movieList.results.forEach((movie, index) => {
                 if(index < 6) {
@@ -297,7 +297,7 @@ $(function() {
         overEighteen: false,
         // Adds movie to database
         async addMovie(tmdbId) {
-            let movie = await Get.scrapeSingleMovieData(MovieApp.GlobalURLs.findTMDBURL, tmdbId);
+            let movie = await Get.scrapeSingleMovieData(MovieApp.GlobalURLs.backendURLPath, MovieApp.GlobalURLs.findTMDBURL, tmdbId);
             const postOptions = {
                 method: 'POST',
                 headers: {

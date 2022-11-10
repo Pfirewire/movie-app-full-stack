@@ -11,10 +11,10 @@ export const Get = {
         }
     },
     // Gets only the data we need for our database from the TMDB database from the TMDB id input
-    async scrapeSingleMovieData(tmdbUrl, tmdbId) {
+    async scrapeSingleMovieData(url, tmdbUrl, tmdbId) {
         let tmdbPosterPath = "https://image.tmdb.org/t/p/original/";
         // Receives the full TMDB data
-        let movieData = await Get.tmbdMovieById(tmdbUrl, tmdbId);
+        let movieData = await Get.tmdbMovieById(url, tmdbUrl, tmdbId);
         // Scrapes necessary movie data
         let movieToAdd = {
             title: movieData.title,
@@ -37,11 +37,11 @@ export const Get = {
         }
     },
     // finds movie from TMDB database
-    async tmbdMovieById(tmdbUrl, id) {
+    async tmdbMovieById(url, tmdbUrl, id) {
         // uses TMDB id
         // returns data inside a promise
         try {
-            let tmdbKey = await Get.tmdbKey();
+            let tmdbKey = await Get.tmdbKey(url);
             let response = await fetch(`${tmdbUrl}${id}${tmdbKey}`);
             let data = await response.json();
             return data;
@@ -50,11 +50,11 @@ export const Get = {
         }
     },
     // finds movies from TMDB database
-    async movieByTitle(tmdbUrl, title) {
+    async movieByTitle(url, tmdbUrl, title) {
         // inputs string with movie title
         // returns data array inside a promise
         try {
-            let tmdbKey = await Get.tmdbKey();
+            let tmdbKey = await Get.tmdbKey(url);
             let response = await fetch(`${tmdbUrl}${tmdbKey}&query=${title}`);
             let data = await response.json();
             return data;
