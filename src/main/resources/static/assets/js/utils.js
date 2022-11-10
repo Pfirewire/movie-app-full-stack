@@ -86,6 +86,38 @@ export const Get = {
         let response = await fetch(`${url}rating/${id}`);
         let data = await response.json();
         return data;
+    },
+    // gets trending movie list
+    async trendingMovies(url, trendingUrl) {
+        let tmdbKey = await Get.tmdbKey(url);
+        let response = await fetch(`${trendingUrl}${tmdbKey}`);
+        let data = await response.json();
+        return data.results;
+    },
+    async allReviews(url) {
+        try {
+            let reviewData = await fetch(`${url}reviews/all`);
+            let reviewList = await reviewData.json();
+            console.log(reviewList);
+            return reviewList
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    async userReviews(url) {
+        try {
+            let reviewData = await fetch(`${url}reviews/user`);
+            let reviewList = await reviewData.json();
+            return reviewList
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    async movieRatingWithUserId(url, movieId, userId) {
+        console.log(userId);
+        let response = await fetch(`${url}rating/${movieId}/${userId}`);
+        let data = await response.json();
+        return data;
     }
 }
 

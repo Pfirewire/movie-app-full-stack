@@ -1,40 +1,24 @@
+import { Get } from "./utils.js";
+
 $(function() {
 
-    const MovieApp = {
+    const MovieIndex = {
         GlobalURLs: {
             tmdbTrendingUrl: "https://api.themoviedb.org/3/trending/movie/week",
             tmdbPosterPath: "https://image.tmdb.org/t/p/original/",
             backendURLPath: $("#base-url").text()
         },
-        Div: {
-            trending: $(".carousel")
-        },
+        carouselRoot: $(".carousel"),
         spinInterval: null,
         initialize() {
             Events.initialize();
-            Print.trendingPosters(Get.trendingMovies());
-        }
-    }
-
-    const Get = {
-        // gets api key
-        async tmdbKey() {
-            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
-            let data = await response.json();
-            return data.tmdbKey;
-        },
-        // gets trending movie list
-        async trendingMovies() {
-            let tmdbKey = await Get.tmdbKey();
-            let response = await fetch(`${MovieApp.GlobalURLs.tmdbTrendingUrl}${tmdbKey}`);
-            let data = await response.json();
-            return data.results;
+            Print.trendingPosters(Get.trendingMovies(MovieIndex.GlobalURLs.backendURLPath, MovieIndex.GlobalURLs.tmdbTrendingUrl));
         }
     }
 
     const Print = {
         trendingPosters(trendingPromise) {
-            MovieApp.Div.trending.empty();
+            MovieIndex.carouselRoot.empty();
             trendingPromise.then(trendingList => {
                 for(let [i, movie] of trendingList.entries()) {
                     if(i < 12)
@@ -43,9 +27,9 @@ $(function() {
             });
         },
         poster(path) {
-            MovieApp.Div.trending.append(`
+            MovieIndex.carouselRoot.append(`
                 <div class="carousel-cell">
-                    <img src="${MovieApp.GlobalURLs.tmdbPosterPath}${path}" alt="">
+                    <img src="${MovieIndex.GlobalURLs.tmdbPosterPath}${path}" alt="">
                 </div>
             `);
         }
@@ -69,7 +53,7 @@ $(function() {
         },
         rotate(imageIndex) {
             // Rotates carousel to the image index
-            MovieApp.Div.trending.css("transform", `translateZ(-783.731px) rotateY(${imageIndex * -30}deg)`);
+            MovieIndex.carouselRoot.css("transform", `translateZ(-783.731px) rotateY(${imageIndex * -30}deg)`);
         },
         setupCarousel(n, s) {
             // Sets up and updates carousel css styling
@@ -124,6 +108,6 @@ $(function() {
         }
     }
 
-    MovieApp.initialize();
+    MovieIndex.initialize();
 
 });

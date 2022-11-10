@@ -1,7 +1,9 @@
+import { Get } from "./utils.js";
+
 $(function() {
     console.log("inside reviews.js");
 
-    const MovieApp = {
+    const MovieReviews = {
         Urls: {
             backendPath: $("#base-url").text()
         },
@@ -10,47 +12,10 @@ $(function() {
         },
         initialize() {
             if($("title").text().includes("My")) {
-                Print.allReviews(Get.userReviews());
+                Print.allReviews(Get.userReviews(MovieReviews.Urls.backendPath));
             } else {
-                Print.allReviews(Get.allReviews());
+                Print.allReviews(Get.allReviews(MovieReviews.Urls.backendPath));
             }
-        }
-    }
-
-    const Get = {
-        async allReviews() {
-            try {
-                let reviewData = await fetch(`${MovieApp.Urls.backendPath}reviews/all`);
-                let reviewList = await reviewData.json();
-                console.log(reviewList);
-                return reviewList
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        async userReviews() {
-            try {
-                let reviewData = await fetch(`${MovieApp.Urls.backendPath}reviews/user`);
-                let reviewList = await reviewData.json();
-                return reviewList
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        async movieById(id) {
-            try {
-                let movieData = await fetch(`${MovieApp.Urls.backendPath}movie/${id}`);
-                let movie = await movieData.json();
-                return movie;
-            } catch(err) {
-                console.log(err);
-            }
-        },
-        async movieRating(movieId, userId) {
-            console.log(userId);
-            let response = await fetch(`${MovieApp.Urls.backendPath}rating/${movieId}/${userId}`);
-            let data = await response.json();
-            return data;
         }
     }
 
@@ -59,9 +24,9 @@ $(function() {
             await promise.then(reviewData => {
                 reviewData.forEach(async function(review) {
                     // console.log(review.user.id);
-                    let rating = await Get.movieRating(review.movie.id, review.user.id);
+                    let rating = await Get.movieRatingWithUserId(MovieReviews.Urls.backendPath, review.movie.id, review.user.id);
                     // let rating = await ratingData.then(res => res);
-                    Print.singleReview(review, rating, MovieApp.Divs.reviewList);
+                    Print.singleReview(review, rating, MovieReviews.Divs.reviewList);
                 });
             });
         },
@@ -81,9 +46,6 @@ $(function() {
             `);
         },
         async modalRating(movie, rating) {
-            // get rating for movie
-            // let ratingData = await Get.movieRating(movie.id);
-            // let rating = ratingData.value;
             let html = "";
             if(rating < 0) {
                 for(let i = 1; i < 6; i++) {
@@ -109,6 +71,6 @@ $(function() {
     }
 
 
-    MovieApp.initialize();
+    MovieReviews.initialize();
 
 });
