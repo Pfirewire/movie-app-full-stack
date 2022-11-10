@@ -3,10 +3,10 @@ import { Utils } from "./utils.js";
 
 // Initialize jQuery
 $(function() {
-    // MovieApp Object and Methods
-    const MovieApp = {
+    // MyMovies Object and Methods
+    const MyMovies = {
         // Storing all the URL const variables
-        GlobalURLs: {
+        urls: {
             moviesURL: "https://liberating-military-cyclone.glitch.me/movies",
             searchTMDBURL: "https://api.themoviedb.org/3/search/movie",
             findTMDBURL: "https://api.themoviedb.org/3/movie/",
@@ -24,7 +24,7 @@ $(function() {
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // Prints current movie database on screen and initializes all event listeners
         async initialize() {
-            Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath, MovieApp.listId));
+            Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId));
             Events.initialize();
         },
     }
@@ -33,8 +33,8 @@ $(function() {
     //     // Gets all movies from our database
     //     async allMovies() {
     //         try {
-    //             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-    //             let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${MovieApp.listId}`);
+    //             // let response = await fetch(MyMovies.urls.moviesURL);
+    //             let response = await fetch(`${MyMovies.urls.backendURLPath}movies/${MyMovies.listId}`);
     //             let data = await response.json();
     //             return data;
     //         } catch (err) {
@@ -48,7 +48,7 @@ $(function() {
     //         // Scrapes necessary movie data
     //         let movieToAdd = {
     //             title: movieData.title,
-    //             poster: `${MovieApp.GlobalURLs.tmdbPosterPath}${movieData.poster_path}`,
+    //             poster: `${MyMovies.urls.tmdbPosterPath}${movieData.poster_path}`,
     //             year: parseInt(movieData.release_date.substring(0,4)),
     //             genre: Utils.Convert.genreArrayToString(movieData.genres),
     //             plot: movieData.overview,
@@ -72,7 +72,7 @@ $(function() {
     //         // returns data inside a promise
     //         try {
     //             let tmdbKey = await Get.tmdbKey();
-    //             let response = await fetch(`${MovieApp.GlobalURLs.findTMDBURL}${id}${tmdbKey}`);
+    //             let response = await fetch(`${MyMovies.urls.findTMDBURL}${id}${tmdbKey}`);
     //             let data = await response.json();
     //             return data;
     //         } catch(err) {
@@ -85,7 +85,7 @@ $(function() {
     //         // returns data array inside a promise
     //         try {
     //             let tmdbKey = await Get.tmdbKey();
-    //             let response = await fetch(`${MovieApp.GlobalURLs.searchTMDBURL}${tmdbKey}&query=${title}`);
+    //             let response = await fetch(`${MyMovies.urls.searchTMDBURL}${tmdbKey}&query=${title}`);
     //             let data = await response.json();
     //             return data;
     //         } catch(err) {
@@ -94,25 +94,25 @@ $(function() {
     //     },
     //     // gets api key
     //     async tmdbKey() {
-    //         let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
+    //         let response = await fetch(`${MyMovies.urls.backendURLPath}keys`);
     //         let data = await response.json();
     //         return data.tmdbKey;
     //     },
     //     // gets movie list
     //     async movieList() {
-    //         let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}list`);
+    //         let response = await fetch(`${MyMovies.urls.backendURLPath}list`);
     //         let data = await response.json();
     //         return data.id;
     //     },
     //     // gets api key
     //     // async backRoomKey() {
-    //     //     let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
+    //     //     let response = await fetch(`${MyMovies.urls.backendURLPath}keys`);
     //     //     let data = await response.json();
     //     //     return data.backRoomKey;
     //     // },
     //     // gets movie rating from id
     //     async movieRating(id) {
-    //         let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${id}`);
+    //         let response = await fetch(`${MyMovies.urls.backendURLPath}rating/${id}`);
     //         let data = await response.json();
     //         return data;
     //     }
@@ -186,7 +186,7 @@ $(function() {
         // prints modal with movies from TMDB database
         async moviesList(title) {
             // shows the top 6 from search results
-            let movieList = await Get.movieByTitle(MovieApp.GlobalURLs.backendURLPath, MovieApp.GlobalURLs.searchTMDBURL, title).then(results => results);
+            let movieList = await Get.movieByTitle(MyMovies.urls.backendURLPath, MyMovies.urls.searchTMDBURL, title).then(results => results);
             $("#movie-list").empty();
             movieList.results.forEach((movie, index) => {
                 if(index < 6) {
@@ -203,7 +203,7 @@ $(function() {
         // prints rating in the movie modal
         async modalRating(div, movie) {
             // get rating for movie
-            let ratingData = await Get.movieRating(MovieApp.GlobalURLs.backendURLPath, movie.id);
+            let ratingData = await Get.movieRating(MyMovies.urls.backendURLPath, movie.id);
             let rating = ratingData.value;
             div.empty();
             if(rating < 0) {
@@ -245,7 +245,7 @@ $(function() {
         currImage: 0,
         initialize() {
             // Set variables
-            this.images = MovieApp.carouselRoot.children();
+            this.images = MyMovies.carouselRoot.children();
             this.n = this.images.length;
             this.theta = 360 / this.n;
             let width = parseFloat($(this.images[0]).css("width"))
@@ -260,8 +260,8 @@ $(function() {
         },
         rotate(imageIndex) {
             // Rotates carousel to the image index
-            MovieApp.carouselRoot.css("transform", `translateZ(-${this.apothem}px) rotateY(${imageIndex * -this.theta}deg)`);
-            MovieApp.carouselRoot.attr("data-degree", (imageIndex * -this.theta))
+            MyMovies.carouselRoot.css("transform", `translateZ(-${this.apothem}px) rotateY(${imageIndex * -this.theta}deg)`);
+            MyMovies.carouselRoot.attr("data-degree", (imageIndex * -this.theta))
         },
         setupCarousel(n, s) {
             // Sets up and updates carousel css styling
@@ -288,7 +288,7 @@ $(function() {
             return Utils.Math.approximatelyEqual(carouselModulo, 360) || Utils.Math.approximatelyEqual(carouselModulo, 0);
         },
         modalClick(){
-            Utils.Modal.show(MovieApp.singleMovieModal);
+            Utils.Modal.show(MyMovies.singleMovieModal);
         }
     }
     // User Object and Methods
@@ -297,19 +297,19 @@ $(function() {
         overEighteen: false,
         // Adds movie to database
         async addMovie(tmdbId) {
-            let movie = await Get.scrapeSingleMovieData(MovieApp.GlobalURLs.backendURLPath, MovieApp.GlobalURLs.findTMDBURL, tmdbId);
+            let movie = await Get.scrapeSingleMovieData(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, tmdbId);
             const postOptions = {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
-                    'X-CSRF-TOKEN' : MovieApp.csrfToken
+                    'X-CSRF-TOKEN' : MyMovies.csrfToken
                 },
                 body: JSON.stringify(movie)
             }
-            let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${MovieApp.listId}/add`, postOptions).then(res => {
+            let results = await fetch(`${MyMovies.urls.backendURLPath}movie/${MyMovies.listId}/add`, postOptions).then(res => {
                 $("#add-movie-text").val('');
                 $("#movie-list").empty();
-                Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath));
+                Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId));
                 return res;
             });
             let addedMovie = await results.json();
@@ -321,16 +321,16 @@ $(function() {
                 method: 'DELETE',
                 headers: {
                     'Content-Type' : 'application/json',
-                    'X-CSRF-TOKEN' : MovieApp.csrfToken
+                    'X-CSRF-TOKEN' : MyMovies.csrfToken
                 }
             }
-            let deleteData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${movieId}/${MovieApp.listId}/delete`, deleteOptions).then(results => results);
-            Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath));
+            let deleteData = await fetch(`${MyMovies.urls.backendURLPath}movie/${movieId}/${MyMovies.listId}/delete`, deleteOptions).then(results => results);
+            Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId));
             button.removeAttr("disabled");
         },
         // Edits movie in database
         async editMovie(id, button) {
-            let newMovie = await Get.movieById(MovieApp.GlobalURLs.backendURLPath, id, MovieApp.listId);
+            let newMovie = await Get.movieById(MyMovies.urls.backendURLPath, id, MyMovies.listId);
             newMovie.title = $("#title-input").val();
             newMovie.genre = $("#genre-input").val();
             newMovie.plot =  $("#plot-input").val();
@@ -340,16 +340,16 @@ $(function() {
                 method: 'PATCH',
                 headers: {
                     'Content-Type' : 'application/json',
-                    'X-CSRF-TOKEN' : MovieApp.csrfToken
+                    'X-CSRF-TOKEN' : MyMovies.csrfToken
                 },
                 body : JSON.stringify(newMovie)
             }
-            Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath));
+            Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId));
             button.removeAttr("disabled");
         },
         // Calls add or edit rating based on if a rating exists
         async setRating(movieId, rating) {
-            let ratingData = await Get.movieRating(MovieApp.GlobalURLs.backendURLPath, movieId);
+            let ratingData = await Get.movieRating(MyMovies.urls.backendURLPath, movieId);
             let oldRating = ratingData.value;
             let ratingObject = {
                 value: rating
@@ -357,12 +357,12 @@ $(function() {
             let postOptions = {
                 headers: {
                     'Content-Type' : 'application/json',
-                    'X-CSRF-TOKEN' : MovieApp.csrfToken
+                    'X-CSRF-TOKEN' : MyMovies.csrfToken
                 },
                 body: JSON.stringify(ratingObject)
             }
             oldRating < 0 ? postOptions.method = 'POST' : postOptions.method = 'PATCH';
-            await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${movieId}`, postOptions);
+            await fetch(`${MyMovies.urls.backendURLPath}rating/${movieId}`, postOptions);
         },
         // Sorts movies based on user choice. returns new array of movies
         sortMovies(movies) {
@@ -390,7 +390,7 @@ $(function() {
             }
         },
         reviewForm(movieId) {
-            window.location.href = `${MovieApp.GlobalURLs.backendURLPath}review/${movieId}`;
+            window.location.href = `${MyMovies.urls.backendURLPath}review/${movieId}`;
         }
     }
     // Utilities Object and Methods
@@ -437,13 +437,13 @@ $(function() {
             // Listens for click on add movie card
             $(document.body).on("click", "#movie-list .card", function() {
                 User.addMovie($(this).attr("data-movie-tmdb-id"));
-                Utils.Modal.hide(MovieApp.addMovieModal);
+                Utils.Modal.hide(MyMovies.addMovieModal);
             });
             // Listens for click on delete button
             $(document.body).on("click", ".delete-btn", function (){
                 $(this).attr("disabled", "");
                 User.deleteMovie($(this).parent().parent().attr("data-movie-id"), $(this));
-                Utils.Modal.hide(MovieApp.singleMovieModal);
+                Utils.Modal.hide(MyMovies.singleMovieModal);
             })
             // Listens for click of add button
             $("#add-movie-btn").on("click", function() {
@@ -457,7 +457,7 @@ $(function() {
             $(document.body).on("click", ".carousel-cell img", function() {
                 if(Carousel.isInFront($(this))) {
                     Carousel.modalClick();
-                    Get.movieById(MovieApp.GlobalURLs.backendURLPath, $(this).parent().attr("data-movie-id"), MovieApp.listId)
+                    Get.movieById(MyMovies.urls.backendURLPath, $(this).parent().attr("data-movie-id"), MyMovies.listId)
                         .then(res => Print.movieModal($("#single-movie-modal"), res));
                 }
             });
@@ -466,7 +466,7 @@ $(function() {
             });
             // Listens for change in sort select
             $("#sort-select").change(function() {
-                Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath));
+                Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId));
             });
             $(document.body).on("mouseenter", ".modal-rating-star", function() {
                 let rating = $(this).attr("data-rating-star");
@@ -475,7 +475,7 @@ $(function() {
             $(document.body).on("mouseleave", "#single-movie-modal-header", async function() {
                 // get the saved rating and display it correctly
                 let movieId = $("#single-movie").attr("data-movie-id");
-                let ratingData = await Get.movieRating(MovieApp.GlobalURLs.backendURLPath, movieId);
+                let ratingData = await Get.movieRating(MyMovies.urls.backendURLPath, movieId);
                 let rating = ratingData.value;
                 Print.starFill(rating);
             });
@@ -521,6 +521,6 @@ $(function() {
         }
     }
 
-    // Initialize MovieApp
-    MovieApp.initialize();
+    // Initialize MyMovies
+    MyMovies.initialize();
 });
