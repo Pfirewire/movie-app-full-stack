@@ -158,41 +158,41 @@ export const User = {
     // Property to hold value to see if NSFW search is active
     overEighteen: false,
     // Adds movie to database
-    async addMovie(tmdbId) {
-        let movie = await Get.scrapeSingleMovieData(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, tmdbId);
+    async addMovie(url, tmdbUrl, tmdbId, listId, csrfToken) {
+        let movie = await Get.scrapeSingleMovieData(url, tmdbUrl, tmdbId);
         const postOptions = {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
-                'X-CSRF-TOKEN' : MyMovies.csrfToken
+                'X-CSRF-TOKEN' : csrfToken
             },
             body: JSON.stringify(movie)
         }
-        let results = await fetch(`${MyMovies.urls.backendURLPath}movie/${MyMovies.listId}/add`, postOptions).then(res => {
+        let results = await fetch(`${url}movie/${listId}/add`, postOptions).then(res => {
             $("#add-movie-text").val('');
             $("#movie-list").empty();
-            Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId));
+            // Print.allMovies(Get.allMovies(url, listId));
             return res;
         });
         let addedMovie = await results.json();
         postOptions.body = JSON.stringify({rating: 5});
     },
     // Deletes movie from database
-    async deleteMovie(movieId, button) {
+    async deleteMovie(url, movieId, listId, button, csrfToken) {
         let deleteOptions = {
             method: 'DELETE',
             headers: {
                 'Content-Type' : 'application/json',
-                'X-CSRF-TOKEN' : MyMovies.csrfToken
+                'X-CSRF-TOKEN' : csrfToken
             }
         }
-        let deleteData = await fetch(`${MyMovies.urls.backendURLPath}movie/${movieId}/${MyMovies.listId}/delete`, deleteOptions).then(results => results);
-        Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId));
+        let deleteData = await fetch(`${url}movie/${movieId}/${listId}/delete`, deleteOptions).then(results => results);
+        // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
     },
     // Edits movie in database
-    async editMovie(id, button) {
-        let newMovie = await Get.movieById(MyMovies.urls.backendURLPath, id, MyMovies.listId);
+    async editMovie(url, id, listId, button, csrfToken) {
+        let newMovie = await Get.movieById(url, id, listId);
         newMovie.title = $("#title-input").val();
         newMovie.genre = $("#genre-input").val();
         newMovie.plot =  $("#plot-input").val();
@@ -202,16 +202,16 @@ export const User = {
             method: 'PATCH',
             headers: {
                 'Content-Type' : 'application/json',
-                'X-CSRF-TOKEN' : MyMovies.csrfToken
+                'X-CSRF-TOKEN' : csrfToken
             },
             body : JSON.stringify(newMovie)
         }
-        Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId));
+        // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
     },
     // Calls add or edit rating based on if a rating exists
-    async setRating(movieId, rating) {
-        let ratingData = await Get.movieRating(MyMovies.urls.backendURLPath, movieId);
+    async setRating(url, movieId, rating, csrfToken) {
+        let ratingData = await Get.movieRating(url, movieId);
         let oldRating = ratingData.value;
         let ratingObject = {
             value: rating
@@ -219,15 +219,16 @@ export const User = {
         let postOptions = {
             headers: {
                 'Content-Type' : 'application/json',
-                'X-CSRF-TOKEN' : MyMovies.csrfToken
+                'X-CSRF-TOKEN' : csrfToken
             },
             body: JSON.stringify(ratingObject)
         }
         oldRating < 0 ? postOptions.method = 'POST' : postOptions.method = 'PATCH';
-        await fetch(`${MyMovies.urls.backendURLPath}rating/${movieId}`, postOptions);
+        await fetch(`${url}rating/${movieId}`, postOptions);
     },
     // Sorts movies based on user choice. returns new array of movies
-    sortMovies(movies) {
+    async sortMovies(movies) {
+        console.log(movies);
         // Checks which value user selected and sorts
         switch($("#sort-select").children("option:selected").val()){
             case "1":
@@ -251,8 +252,8 @@ export const User = {
                 break;
         }
     },
-    reviewForm(movieId) {
-        window.location.href = `${MyMovies.urls.backendURLPath}review/${movieId}`;
+    reviewForm(url, movieId) {
+        window.location.href = `${url}review/${movieId}`;
     }
 }
 
