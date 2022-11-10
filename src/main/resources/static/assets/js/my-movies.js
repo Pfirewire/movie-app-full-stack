@@ -1,10 +1,11 @@
-// import { Get } from "./utils.js";
+import { Get } from "./utils.js";
+import { Utils } from "./utils.js";
 
 // Initialize jQuery
 $(function() {
     // MovieApp Object and Methods
     const MovieApp = {
-        // Storing all the URL const variablers
+        // Storing all the URL const variables
         GlobalURLs: {
             moviesURL: "https://liberating-military-cyclone.glitch.me/movies",
             searchTMDBURL: "https://api.themoviedb.org/3/search/movie",
@@ -23,99 +24,99 @@ $(function() {
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // Prints current movie database on screen and initializes all event listeners
         async initialize() {
-            Print.allMovies(Get.allMovies());
+            Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath, MovieApp.listId));
             Events.initialize();
         },
     }
     // Get Object and Methods
-    const Get = {
-        // Gets all movies from our database
-        async allMovies() {
-            try {
-                // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-                let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${MovieApp.listId}`);
-                let data = await response.json();
-                return data;
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        // Gets only the data we need for our database from the TMDB database from the TMDB id input
-        async scrapeSingleMovieData(tmdbId) {
-            // Receives the full TMDB data
-            let movieData = await Get.tmbdMovieById(tmdbId);
-            // Scrapes necessary movie data
-            let movieToAdd = {
-                title: movieData.title,
-                poster: `${MovieApp.GlobalURLs.tmdbPosterPath}${movieData.poster_path}`,
-                year: parseInt(movieData.release_date.substring(0,4)),
-                genre: Utils.Convert.genreArrayToString(movieData.genres),
-                plot: movieData.overview,
-                tmdbId: movieData.id
-            }
-            // returns movie object that matches the information stored in our project
-            return movieToAdd;
-        },
-        // finds and returns movie data for movie in our database
-        async movieById(id) {
-            let allMoviesData = await this.allMovies();
-            for(let movie of allMoviesData) {
-                if(movie.id === parseInt(id)) {
-                    return movie;
-                }
-            }
-        },
-        // finds movie from TMDB database
-        async tmbdMovieById(id) {
-            // uses TMDB id
-            // returns data inside a promise
-            try {
-                let tmdbKey = await Get.tmdbKey();
-                let response = await fetch(`${MovieApp.GlobalURLs.findTMDBURL}${id}${tmdbKey}`);
-                let data = await response.json();
-                return data;
-            } catch(err) {
-                console.log(err);
-            }
-        },
-        // finds movies from TMDB database
-        async movieByTitle(title) {
-            // inputs string with movie title
-            // returns data array inside a promise
-            try {
-                let tmdbKey = await Get.tmdbKey();
-                let response = await fetch(`${MovieApp.GlobalURLs.searchTMDBURL}${tmdbKey}&query=${title}`);
-                let data = await response.json();
-                return data;
-            } catch(err) {
-                console.log(err);
-            }
-        },
-        // gets api key
-        async tmdbKey() {
-            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
-            let data = await response.json();
-            return data.tmdbKey;
-        },
-        // gets movie list
-        async movieList() {
-            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}list`);
-            let data = await response.json();
-            return data.id;
-        },
-        // gets api key
-        async backRoomKey() {
-            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
-            let data = await response.json();
-            return data.backRoomKey;
-        },
-        // gets movie rating from id
-        async movieRating(id) {
-            let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${id}`);
-            let data = await response.json();
-            return data;
-        }
-    }
+    // const Get = {
+    //     // Gets all movies from our database
+    //     async allMovies() {
+    //         try {
+    //             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
+    //             let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${MovieApp.listId}`);
+    //             let data = await response.json();
+    //             return data;
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     },
+    //     // Gets only the data we need for our database from the TMDB database from the TMDB id input
+    //     async scrapeSingleMovieData(tmdbId) {
+    //         // Receives the full TMDB data
+    //         let movieData = await Get.tmbdMovieById(tmdbId);
+    //         // Scrapes necessary movie data
+    //         let movieToAdd = {
+    //             title: movieData.title,
+    //             poster: `${MovieApp.GlobalURLs.tmdbPosterPath}${movieData.poster_path}`,
+    //             year: parseInt(movieData.release_date.substring(0,4)),
+    //             genre: Utils.Convert.genreArrayToString(movieData.genres),
+    //             plot: movieData.overview,
+    //             tmdbId: movieData.id
+    //         }
+    //         // returns movie object that matches the information stored in our project
+    //         return movieToAdd;
+    //     },
+    //     // finds and returns movie data for movie in our database
+    //     async movieById(id) {
+    //         let allMoviesData = await this.allMovies();
+    //         for(let movie of allMoviesData) {
+    //             if(movie.id === parseInt(id)) {
+    //                 return movie;
+    //             }
+    //         }
+    //     },
+    //     // finds movie from TMDB database
+    //     async tmbdMovieById(id) {
+    //         // uses TMDB id
+    //         // returns data inside a promise
+    //         try {
+    //             let tmdbKey = await Get.tmdbKey();
+    //             let response = await fetch(`${MovieApp.GlobalURLs.findTMDBURL}${id}${tmdbKey}`);
+    //             let data = await response.json();
+    //             return data;
+    //         } catch(err) {
+    //             console.log(err);
+    //         }
+    //     },
+    //     // finds movies from TMDB database
+    //     async movieByTitle(title) {
+    //         // inputs string with movie title
+    //         // returns data array inside a promise
+    //         try {
+    //             let tmdbKey = await Get.tmdbKey();
+    //             let response = await fetch(`${MovieApp.GlobalURLs.searchTMDBURL}${tmdbKey}&query=${title}`);
+    //             let data = await response.json();
+    //             return data;
+    //         } catch(err) {
+    //             console.log(err);
+    //         }
+    //     },
+    //     // gets api key
+    //     async tmdbKey() {
+    //         let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
+    //         let data = await response.json();
+    //         return data.tmdbKey;
+    //     },
+    //     // gets movie list
+    //     async movieList() {
+    //         let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}list`);
+    //         let data = await response.json();
+    //         return data.id;
+    //     },
+    //     // gets api key
+    //     // async backRoomKey() {
+    //     //     let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
+    //     //     let data = await response.json();
+    //     //     return data.backRoomKey;
+    //     // },
+    //     // gets movie rating from id
+    //     async movieRating(id) {
+    //         let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}rating/${id}`);
+    //         let data = await response.json();
+    //         return data;
+    //     }
+    // }
     // Print Object and Methods
     const Print = {
         // Prints all movies onto screen
@@ -185,7 +186,7 @@ $(function() {
         // prints modal with movies from TMDB database
         async moviesList(title) {
             // shows the top 6 from search results
-            let movieList = await Get.movieByTitle(title).then(results => results);
+            let movieList = await Get.movieByTitle(MovieApp.GlobalURLs.searchTMDBURL, title).then(results => results);
             $("#movie-list").empty();
             movieList.results.forEach((movie, index) => {
                 if(index < 6) {
@@ -202,7 +203,7 @@ $(function() {
         // prints rating in the movie modal
         async modalRating(div, movie) {
             // get rating for movie
-            let ratingData = await Get.movieRating(movie.id);
+            let ratingData = await Get.movieRating(MovieApp.GlobalURLs.backendURLPath, movie.id);
             let rating = ratingData.value;
             div.empty();
             if(rating < 0) {
@@ -296,7 +297,7 @@ $(function() {
         overEighteen: false,
         // Adds movie to database
         async addMovie(tmdbId) {
-            let movie = await Get.scrapeSingleMovieData(tmdbId);
+            let movie = await Get.scrapeSingleMovieData(MovieApp.GlobalURLs.findTMDBURL, tmdbId);
             const postOptions = {
                 method: 'POST',
                 headers: {
@@ -308,7 +309,7 @@ $(function() {
             let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${MovieApp.listId}/add`, postOptions).then(res => {
                 $("#add-movie-text").val('');
                 $("#movie-list").empty();
-                Print.allMovies(Get.allMovies());
+                Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath));
                 return res;
             });
             let addedMovie = await results.json();
@@ -324,12 +325,12 @@ $(function() {
                 }
             }
             let deleteData = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/${movieId}/${MovieApp.listId}/delete`, deleteOptions).then(results => results);
-            Print.allMovies(Get.allMovies());
+            Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath));
             button.removeAttr("disabled");
         },
         // Edits movie in database
         async editMovie(id, button) {
-            let newMovie = await Get.movieById(id);
+            let newMovie = await Get.movieById(MovieApp.GlobalURLs.backendURLPath, id);
             newMovie.title = $("#title-input").val();
             newMovie.genre = $("#genre-input").val();
             newMovie.plot =  $("#plot-input").val();
@@ -343,12 +344,12 @@ $(function() {
                 },
                 body : JSON.stringify(newMovie)
             }
-            Print.allMovies(Get.allMovies());
+            Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath));
             button.removeAttr("disabled");
         },
         // Calls add or edit rating based on if a rating exists
         async setRating(movieId, rating) {
-            let ratingData = await Get.movieRating(movieId);
+            let ratingData = await Get.movieRating(MovieApp.GlobalURLs.backendURLPath, movieId);
             let oldRating = ratingData.value;
             let ratingObject = {
                 value: rating
@@ -456,7 +457,7 @@ $(function() {
             $(document.body).on("click", ".carousel-cell img", function() {
                 if(Carousel.isInFront($(this))) {
                     Carousel.modalClick();
-                    Get.movieById($(this).parent().attr("data-movie-id"))
+                    Get.movieById(MovieApp.GlobalURLs.backendURLPath, $(this).parent().attr("data-movie-id"))
                         .then(res => Print.movieModal($("#single-movie-modal"), res));
                 }
             });
@@ -465,7 +466,7 @@ $(function() {
             });
             // Listens for change in sort select
             $("#sort-select").change(function() {
-                Print.allMovies(Get.allMovies());
+                Print.allMovies(Get.allMovies(MovieApp.GlobalURLs.backendURLPath));
             });
             $(document.body).on("mouseenter", ".modal-rating-star", function() {
                 let rating = $(this).attr("data-rating-star");
@@ -474,7 +475,7 @@ $(function() {
             $(document.body).on("mouseleave", "#single-movie-modal-header", async function() {
                 // get the saved rating and display it correctly
                 let movieId = $("#single-movie").attr("data-movie-id");
-                let ratingData = await Get.movieRating(movieId);
+                let ratingData = await Get.movieRating(MovieApp.GlobalURLs.backendURLPath, movieId);
                 let rating = ratingData.value;
                 Print.starFill(rating);
             });
