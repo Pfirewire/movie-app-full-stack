@@ -33,4 +33,7 @@ build/
 .vscode/
 
 application.properties
+.idea/*
+*.iml
+.DS_Store
 keys.js
