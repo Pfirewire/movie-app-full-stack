@@ -28,8 +28,8 @@ export const Get = {
         return movieToAdd;
     },
     // finds and returns movie data for movie in our database
-    async movieById(url, id) {
-        let allMoviesData = await this.allMovies(url);
+    async movieById(url, id, listId) {
+        let allMoviesData = await this.allMovies(url, listId);
         for(let movie of allMoviesData) {
             if(movie.id === parseInt(id)) {
                 return movie;

@@ -186,7 +186,7 @@ $(function() {
         // prints modal with movies from TMDB database
         async moviesList(title) {
             // shows the top 6 from search results
-            let movieList = await Get.movieByTitle(MovieApp.GlobalURLs.backendURLPath MovieApp.GlobalURLs.searchTMDBURL, title).then(results => results);
+            let movieList = await Get.movieByTitle(MovieApp.GlobalURLs.backendURLPath, MovieApp.GlobalURLs.searchTMDBURL, title).then(results => results);
             $("#movie-list").empty();
             movieList.results.forEach((movie, index) => {
                 if(index < 6) {
@@ -330,7 +330,7 @@ $(function() {
         },
         // Edits movie in database
         async editMovie(id, button) {
-            let newMovie = await Get.movieById(MovieApp.GlobalURLs.backendURLPath, id);
+            let newMovie = await Get.movieById(MovieApp.GlobalURLs.backendURLPath, id, MovieApp.listId);
             newMovie.title = $("#title-input").val();
             newMovie.genre = $("#genre-input").val();
             newMovie.plot =  $("#plot-input").val();
@@ -457,7 +457,7 @@ $(function() {
             $(document.body).on("click", ".carousel-cell img", function() {
                 if(Carousel.isInFront($(this))) {
                     Carousel.modalClick();
-                    Get.movieById(MovieApp.GlobalURLs.backendURLPath, $(this).parent().attr("data-movie-id"))
+                    Get.movieById(MovieApp.GlobalURLs.backendURLPath, $(this).parent().attr("data-movie-id"), MovieApp.listId)
                         .then(res => Print.movieModal($("#single-movie-modal"), res));
                 }
             });
