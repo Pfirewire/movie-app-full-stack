@@ -9,7 +9,6 @@
     <title>My Movie Reviews</title>
 
     <link rel="stylesheet" th:href="@{/assets/css/reviews.css}">
-    <script type="module" th:src="@{/assets/js/reviews.js}"></script>
 </head>
 <body>
 <div hidden th:object="${url}">
@@ -24,7 +23,7 @@
 </div>
 
 <div th:replace="partials :: scripts" />
-<script th:src="@{/assets/js/reviews.js}"></script>
+<script type="module" th:src="@{/assets/js/reviews.js}"></script>
 
 </body>
 </html>

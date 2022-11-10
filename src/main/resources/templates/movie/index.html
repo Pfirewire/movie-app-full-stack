@@ -11,7 +11,6 @@
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/background.css}">
     <link rel="stylesheet" th:href="@{/assets/css/index.css}">
     <link rel="stylesheet" th:href="@{/assets/css/carousel.css}">
-    <script type="module" th:src="@{/assets/js/index.js}"></script>
 </head>
 <body>
 
@@ -62,6 +61,6 @@
 </div>
 
 <div th:replace="partials :: scripts" />
-<script th:src="@{/assets/js/index.js}"></script>
+<script type="module" th:src="@{/assets/js/index.js}"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@ $(function() {
             }
         }
     }
-
+    
     const Print = {
         async allReviews(promise) {
             await promise.then(reviewData => {
