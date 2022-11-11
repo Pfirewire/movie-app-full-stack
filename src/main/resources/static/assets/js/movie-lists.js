@@ -2,8 +2,8 @@ import { Get } from "./utils.js";
 
 $(function() {
 
-    // MovieApp object and globals
-    const MovieApp = {
+    // MovieLists object and globals
+    const MovieLists = {
         // Storing all the URL const variablers
         GlobalURLs: {
             backendURLPath: $("#base-url").text()
@@ -11,7 +11,7 @@ $(function() {
         movieListDiv: $("#all-movie-lists-div"),
         async initialize() {
             // Print lists in div
-            Print.allMovieLists(Get.movieLists());
+            Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath));
             // Initialize event listeners
             Events.initialize();
         }
@@ -22,7 +22,7 @@ $(function() {
     //     // Get user's movie lists
     //     async movieLists() {
     //         try {
-    //             let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/list/all`);
+    //             let results = await fetch(`${MovieLists.GlobalURLs.backendURLPath}movie/list/all`);
     //             let data = results.json();
     //             return data;
     //         } catch(error) {
@@ -31,8 +31,8 @@ $(function() {
     //     },
     //     async allMoviesFromList(listId) {
     //         try {
-    //             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-    //             let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${listId}`);
+    //             // let response = await fetch(MovieLists.GlobalURLs.moviesURL);
+    //             let response = await fetch(`${MovieLists.GlobalURLs.backendURLPath}movies/${listId}`);
     //             let data = await response.json();
     //             return data;
     //         } catch (error) {
@@ -44,12 +44,12 @@ $(function() {
     const Print = {
         // Print user's movie lists
         allMovieLists(dataPromise) {
-            MovieApp.movieListDiv.empty();
+            MovieLists.movieListDiv.empty();
             dataPromise.then(function(movieListData) {
                 movieListData.forEach(function(movieList) {
-                    Print.singleMovieList(MovieApp.movieListDiv, movieList);
-                    let movieListCardDiv = MovieApp.movieListDiv.children().last().children(".movie-list-card");
-                    let movieListMovies = Get.allMoviesFromList(movieList.id);
+                    Print.singleMovieList(MovieLists.movieListDiv, movieList);
+                    let movieListCardDiv = MovieLists.movieListDiv.children().last().children(".movie-list-card");
+                    let movieListMovies = Get.allMoviesFromList(MovieLists.GlobalURLs.backendURLPath, movieList.id);
                     Print.singleMovieListPosters(movieListCardDiv, movieListMovies);
                 })
             });
@@ -95,7 +95,7 @@ $(function() {
         }
     }
 
-    // Initialize MovieApp
-    MovieApp.initialize();
+    // Initialize MovieLists
+    MovieLists.initialize();
 
 });
