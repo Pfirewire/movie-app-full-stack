@@ -118,6 +118,26 @@ export const Get = {
         let response = await fetch(`${url}rating/${movieId}/${userId}`);
         let data = await response.json();
         return data;
+    },
+    // Get user's movie lists
+    async movieLists(url) {
+        try {
+            let results = await fetch(`${url}movie/list/all`);
+            let data = results.json();
+            return data;
+        } catch(error) {
+            console.log(`There was an error: ${error}`);
+        }
+    },
+    async allMoviesFromList(url, listId) {
+        try {
+            // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
+            let response = await fetch(`${url}movies/${listId}`);
+            let data = await response.json();
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

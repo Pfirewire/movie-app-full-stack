@@ -16,28 +16,28 @@ $(function() {
     }
 
     // Get object and methods
-    const Get = {
-        // Get user's movie lists
-        async movieLists() {
-            try {
-                let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/list/all`);
-                let data = results.json();
-                return data;
-            } catch(error) {
-                console.log(`There was an error: ${error}`);
-            }
-        },
-        async allMoviesFromList(listId) {
-            try {
-                // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-                let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${listId}`);
-                let data = await response.json();
-                return data;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
+    // const Get = {
+    //     // Get user's movie lists
+    //     async movieLists() {
+    //         try {
+    //             let results = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movie/list/all`);
+    //             let data = results.json();
+    //             return data;
+    //         } catch(error) {
+    //             console.log(`There was an error: ${error}`);
+    //         }
+    //     },
+    //     async allMoviesFromList(listId) {
+    //         try {
+    //             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
+    //             let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}movies/${listId}`);
+    //             let data = await response.json();
+    //             return data;
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    // }
 
     const Print = {
         // Print user's movie lists
