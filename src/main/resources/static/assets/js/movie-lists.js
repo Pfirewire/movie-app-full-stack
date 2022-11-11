@@ -1,3 +1,5 @@
+import { Get } from "./utils.js";
+
 $(function() {
 
     // MovieApp object and globals
