@@ -67,6 +67,7 @@ public class MovieListController {
         return "movie/list/my-movies";
     }
 
+    // Probably don't even need this method
     @GetMapping("movie/list/{listId}/edit")
     public String showEditMovieListForm(@PathVariable Long listId, Model model) {
         MovieList list = listDao.getById(listId);
@@ -79,6 +80,12 @@ public class MovieListController {
         MovieList oldList = listDao.getById(listId);
         oldList.setName(newList.getName());
         listDao.save(oldList);
+        return "movie/list/movie-lists";
+    }
+
+    @PostMapping("movie/list/{listId}/delete")
+    public String deleteMovieList(@PathVariable Long listId) {
+        listDao.delete(listDao.getById(listId));
         return "movie/list/movie-lists";
     }
 }
