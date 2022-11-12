@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
@@ -64,5 +65,20 @@ public class MovieListController {
         model.addAttribute("list", list);
         model.addAttribute("url", url);
         return "movie/list/my-movies";
+    }
+
+    @GetMapping("movie/list/{listId}/edit")
+    public String showEditMovieListForm(@PathVariable Long listId, Model model) {
+        MovieList list = listDao.getById(listId);
+        model.addAttribute("list", list);
+        return "movie/list/edit";
+    }
+
+    @PostMapping("movie/list/{listId}/edit")
+    public String editMovieList(@PathVariable Long listId, @RequestBody MovieList newList) {
+        MovieList oldList = listDao.getById(listId);
+        oldList.setName(newList.getName());
+        listDao.save(oldList);
+        return "movie/list/movie-lists";
     }
 }
