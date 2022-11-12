@@ -274,6 +274,12 @@ export const User = {
     },
     reviewForm(url, movieId) {
         window.location.href = `${url}review/${movieId}`;
+    },
+    async editMovieList(url, listId) {
+
+    },
+    async deleteMovieList(url, listId) {
+
     }
 }
 
