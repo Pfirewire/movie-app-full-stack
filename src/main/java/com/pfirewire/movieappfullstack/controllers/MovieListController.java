@@ -67,6 +67,12 @@ public class MovieListController {
         return "movie/list/my-movies";
     }
 
+    @GetMapping("movie/list/{listId}/get")
+    public @ResponseBody MovieList getMovieList(@PathVariable Long listId) {
+        MovieList list = listDao.getById(listId);
+        return list;
+    }
+
     // Probably don't even need this method
     @GetMapping("movie/list/{listId}/edit")
     public String showEditMovieListForm(@PathVariable Long listId, Model model) {

@@ -138,6 +138,15 @@ export const Get = {
         } catch (error) {
             console.log(error);
         }
+    },
+    async movieListById(url, listId) {
+        try {
+            let response = await fetch(`${url}/movie/list/${listId}/get`);
+            let data = await response.json();
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
@@ -275,11 +284,35 @@ export const User = {
     reviewForm(url, movieId) {
         window.location.href = `${url}review/${movieId}`;
     },
-    async editMovieList(url, listId) {
+    async editMovieList(url, listId, button, csrfToken) {
+        let newMovieList = await Get.movieListById(url, listId);
+        // Set Name for newMovieList
+        // TEST
+        newMovieList.name = "test";
 
+        let editOptions = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type' : 'application/json',
+                'X-CSRF-TOKEN' : csrfToken
+            },
+            body : JSON.stringify(newMovieList)
+        }
+        let editData = await fetch(`${url}movie/list/${listId}/edit`, editOptions).then(res => res);
+        // Print.allMovies(Get.allMovies(url, listId));
+        button.removeAttr("disabled");
     },
-    async deleteMovieList(url, listId) {
-
+    async deleteMovieList(url, listId, button, csrfToken) {
+        let deleteOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type' : 'application/json',
+                'X-CSRF-TOKEN' : csrfToken
+            }
+        }
+        let deleteData = await fetch(`${url}movie/list/${listId}/delete`, deleteOptions).then(results => results);
+        // Print.allMovies(Get.allMovies(url, listId));
+        button.removeAttr("disabled");
     }
 }
 
