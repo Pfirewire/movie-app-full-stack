@@ -89,7 +89,7 @@ public class MovieListController {
         return "movie/list/movie-lists";
     }
 
-    @PostMapping("movie/list/{listId}/delete")
+    @DeleteMapping("movie/list/{listId}/delete")
     public String deleteMovieList(@PathVariable Long listId) {
         listDao.delete(listDao.getById(listId));
         return "movie/list/movie-lists";

@@ -1,4 +1,5 @@
 import { Get } from "./utils.js";
+import { User } from "./utils.js";
 
 $(function() {
 
@@ -9,6 +10,8 @@ $(function() {
             backendURLPath: $("#base-url").text()
         },
         movieListDiv: $("#all-movie-lists-div"),
+        // CSRF Token
+        csrfToken: $("meta[name='_csrf']").attr("content"),
         async initialize() {
             // Print lists in div
             Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath));
@@ -32,7 +35,7 @@ $(function() {
         },
         singleMovieList(div, movieList) {
             div.append(`
-                <div class="movie-list-div">
+                <div class="movie-list-div" data-list-id="${movieList.id}">
                     <div class="movie-list-header-div">
                         <div class="edit-movie-list-div">
                             <button class="edit-movie-list-button">Edit Name</button>
@@ -72,15 +75,20 @@ $(function() {
     // Events Object and Methods
     const Events = {
         initialize() {
-            console.log("inside event listener initialize");
             // Mouseover for each list
 
             // Click event for movie list
-            $(document.body).on("click", ".delete-movie-list-button", function() {
-                console.log("delete button clicked");
+            $(document.body).on("click", ".delete-movie-list-button", async function() {
+                await User.deleteMovieList(
+                    MovieLists.GlobalURLs.backendURLPath,
+                    $(this).parent().parent().parent().attr("data-list-id"),
+                    $(this),
+                    MovieLists.csrfToken
+                );
+                Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath));
             });
             $(document.body).on("click", ".edit-movie-list-button", function() {
-                console.log("edit button clicked");
+
             });
         }
     }
