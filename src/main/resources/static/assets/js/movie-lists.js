@@ -57,11 +57,19 @@ $(function() {
         singleMovieList(div, movieList) {
             div.append(`
                 <div class="movie-list-div">
-                    <h3 class="movie-list-title">
-                        <a href="/movie/list/${movieList.id}">
-                            ${movieList.name}
-                        </a>
-                    </h3>
+                    <div class="movie-list-header-div">
+                        <div class="edit-movie-list-div">
+                            <button class="edit-movie-list-button">Edit Name</button>
+                        </div>
+                        <h3 class="movie-list-title">
+                            <a href="/movie/list/${movieList.id}">
+                                ${movieList.name}
+                            </a>
+                        </h3>
+                        <div class="delete-movie-list-div">
+                            <button class="delete-movie-list-button">Delete Movie List</button>
+                        </div>
+                    </div>
                     <div class="movie-list-card">
                     </div>
                 </div>
