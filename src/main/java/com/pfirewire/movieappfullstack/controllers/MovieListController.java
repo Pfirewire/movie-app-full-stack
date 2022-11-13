@@ -90,9 +90,9 @@ public class MovieListController {
     }
 
     @DeleteMapping("movie/list/{listId}/delete")
-    public @ResponseBody MovieList deleteMovieList(@PathVariable Long listId, Model model) {
+    public @ResponseBody MovieList deleteMovieList(@PathVariable Long listId) {
         MovieList list = listDao.getById(listId);
-        listDao.delete(list);
+        listDao.deleteById(listId);
         return list;
     }
 }
