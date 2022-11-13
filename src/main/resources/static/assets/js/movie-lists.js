@@ -17,30 +17,6 @@ $(function() {
         }
     }
 
-    // Get object and methods
-    // const Get = {
-    //     // Get user's movie lists
-    //     async movieLists() {
-    //         try {
-    //             let results = await fetch(`${MovieLists.GlobalURLs.backendURLPath}movie/list/all`);
-    //             let data = results.json();
-    //             return data;
-    //         } catch(error) {
-    //             console.log(`There was an error: ${error}`);
-    //         }
-    //     },
-    //     async allMoviesFromList(listId) {
-    //         try {
-    //             // let response = await fetch(MovieLists.GlobalURLs.moviesURL);
-    //             let response = await fetch(`${MovieLists.GlobalURLs.backendURLPath}movies/${listId}`);
-    //             let data = await response.json();
-    //             return data;
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    // }
-
     const Print = {
         // Print user's movie lists
         allMovieLists(dataPromise) {
@@ -96,10 +72,16 @@ $(function() {
     // Events Object and Methods
     const Events = {
         initialize() {
+            console.log("inside event listener initialize");
             // Mouseover for each list
 
             // Click event for movie list
-
+            $(document.body).on("click", ".delete-movie-list-button", function() {
+                console.log("delete button clicked");
+            });
+            $(document.body).on("click", ".edit-movie-list-button", function() {
+                console.log("edit button clicked");
+            });
         }
     }
 
