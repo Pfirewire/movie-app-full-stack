@@ -141,7 +141,7 @@ export const Get = {
     },
     async movieListById(url, listId) {
         try {
-            let response = await fetch(`${url}/movie/list/${listId}/get`);
+            let response = await fetch(`${url}movie/list/${listId}/get`);
             let data = await response.json();
             return data;
         } catch (error) {

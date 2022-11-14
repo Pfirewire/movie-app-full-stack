@@ -69,7 +69,7 @@ public class MovieListController {
 
     @GetMapping("movie/list/{listId}/get")
     public @ResponseBody MovieList getMovieList(@PathVariable Long listId) {
-        MovieList list = listDao.getById(listId);
+        MovieList list = listDao.findById(listId).get();
         return list;
     }
 

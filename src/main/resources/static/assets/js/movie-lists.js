@@ -69,6 +69,11 @@ $(function() {
                     <img src=${movie.poster} class="movie-list-poster">
                 </div>
             `);
+        },
+        singleMovieListEdit(headerDiv, listObject) {
+            headerDiv.children(".movie-list-title").html(`
+                <input id="edit-list-title" value="${listObject.name}">
+            `);
         }
     }
 
@@ -87,8 +92,10 @@ $(function() {
                 );
                 Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath));
             });
-            $(document.body).on("click", ".edit-movie-list-button", function() {
-
+            $(document.body).on("click", ".edit-movie-list-button", async function() {
+                let listObject = $(this).parent().parent().parent().attr("data-list-id");
+                await Get.movieListById(MovieLists.GlobalURLs.backendURLPath, listObject)
+                Print.singleMovieListEdit($(this).parent().parent(), listObject);
             });
         }
     }
