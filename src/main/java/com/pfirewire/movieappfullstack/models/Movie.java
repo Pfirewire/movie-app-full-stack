@@ -46,7 +46,7 @@ public class Movie {
     private Set<MovieList> lists;
 
     @OneToMany(mappedBy = "movie")
-//    @JsonManagedReference(value = "movieRating")
+    @JsonManagedReference(value = "movieRating")
     @JsonIgnore
     private Set<Rating> ratings;
 

@@ -41,8 +41,8 @@ $(function() {
             cardDiv.empty();
             await dataPromise.then(async function(movieData) {
                 let sortedMovies = await User.sortMovies(movieData);
-                console.log("sorted movies:");
-                console.log(sortedMovies);
+                // console.log("sorted movies:");
+                // console.log(sortedMovies);
                 for(let movie of sortedMovies){
                 // sortedMovies.forEach((movie) => {
                     Print.singleMovie(cardDiv, movie);

@@ -21,8 +21,7 @@ public class Review {
     private String body;
 
     @ManyToOne
-//    @JsonManagedReference(value = "userReview")
-    @JsonIgnore
+    @JsonManagedReference(value = "userReview")
     @JoinColumn(name="user_id")
     private User user;
 

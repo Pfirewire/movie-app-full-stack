@@ -19,14 +19,14 @@ public class Rating {
     private int value;
 
     @ManyToOne
-//    @JsonBackReference(value = "userRating")
-    @JsonIgnore
+    @JsonBackReference(value = "userRating")
+//    @JsonIgnore
     @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-//    @JsonBackReference(value = "movieRating")
-    @JsonIgnore
+    @JsonBackReference(value = "movieRating")
+//    @JsonIgnore
     @JoinColumn(name="movie_id")
     private Movie movie;
 

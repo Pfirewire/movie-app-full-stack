@@ -37,12 +37,12 @@ public class User {
     private Set<MovieList> lists = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    @JsonManagedReference(value = "userRating")
+    @JsonManagedReference(value = "userRating")
     @JsonIgnore
     private Set<Rating> ratings = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    @JsonBackReference(value = "userReview")
+    @JsonBackReference(value = "userReview")
     @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
     // Constructor functions

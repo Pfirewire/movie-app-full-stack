@@ -23,7 +23,7 @@ $(function() {
         async allReviews(promise) {
             await promise.then(reviewData => {
                 reviewData.forEach(async function(review) {
-                    // console.log(review.user.id);
+                    console.log(review.user.id);
                     let rating = await Get.movieRatingWithUserId(MovieReviews.Urls.backendPath, review.movie.id, review.user.id);
                     // let rating = await ratingData.then(res => res);
                     Print.singleReview(review, rating, MovieReviews.Divs.reviewList);

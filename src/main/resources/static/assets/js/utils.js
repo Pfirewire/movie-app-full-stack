@@ -257,7 +257,7 @@ export const User = {
     },
     // Sorts movies based on user choice. returns new array of movies
     async sortMovies(movies) {
-        console.log(movies);
+        // console.log(movies);
         // Checks which value user selected and sorts
         switch($("#sort-select").children("option:selected").val()){
             case "1":
