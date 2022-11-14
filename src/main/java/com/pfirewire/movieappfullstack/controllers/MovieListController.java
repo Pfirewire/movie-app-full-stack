@@ -90,12 +90,7 @@ public class MovieListController {
     }
 
     @DeleteMapping("movie/list/{listId}/delete")
-    public @ResponseBody MovieList deleteMovieList(@PathVariable Long listId) {
-        System.out.println("Inside deleteMovieList.");
-        MovieList list = listDao.getById(listId);
-        System.out.println("Created list with listRepository.");
+    public @ResponseBody void deleteMovieList(@PathVariable Long listId) {
         listDao.deleteById(listId);
-        System.out.println("Deleted list.");
-        return list;
     }
 }
