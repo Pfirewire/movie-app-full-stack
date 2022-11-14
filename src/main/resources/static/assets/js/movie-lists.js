@@ -38,7 +38,7 @@ $(function() {
                 <div class="movie-list-div" data-list-id="${movieList.id}">
                     <div class="movie-list-header-div">
                         <div class="edit-movie-list-div">
-                            <button class="edit-movie-list-button">Edit Name</button>
+                            <button class="edit-movie-list-button btn btn-light">Edit Name</button>
                         </div>
                         <h3 class="movie-list-title">
                             <a href="/movie/list/${movieList.id}">
@@ -46,7 +46,7 @@ $(function() {
                             </a>
                         </h3>
                         <div class="delete-movie-list-div">
-                            <button class="delete-movie-list-button">Delete Movie List</button>
+                            <button class="delete-movie-list-button btn btn-danger">Delete</button>
                         </div>
                     </div>
                     <div class="movie-list-card">
@@ -75,7 +75,7 @@ $(function() {
                 <input id="edit-list-title" value="${listObject.name}">
             `);
             headerDiv.children(".edit-movie-list-div").html(`
-                <button class="edit-movie-list-button-confirm">Save Changes</button>
+                <button class="edit-movie-list-button-confirm btn btn-primary">Save Changes</button>
             `);
         }
     }
