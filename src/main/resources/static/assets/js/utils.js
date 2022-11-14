@@ -284,21 +284,19 @@ export const User = {
     reviewForm(url, movieId) {
         window.location.href = `${url}review/${movieId}`;
     },
-    async editMovieList(url, listId, button, csrfToken) {
-        let newMovieList = await Get.movieListById(url, listId);
-        // Set Name for newMovieList
-        // TEST
-        newMovieList.name = "test";
+    async editMovieList(url, listId, listName, button, csrfToken) {
+        let newMovieList = await Get.movieListById(url, listId).then(res => res);
+        newMovieList.name = listName;
 
         let editOptions = {
-            method: 'PATCH',
+            method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
                 'X-CSRF-TOKEN' : csrfToken
             },
             body : JSON.stringify(newMovieList)
         }
-        let editData = await fetch(`${url}movie/list/${listId}/edit`, editOptions).then(res => res);
+        await fetch(`${url}movie/list/${listId}/edit`, editOptions);
         // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
     },

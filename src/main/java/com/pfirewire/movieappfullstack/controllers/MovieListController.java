@@ -70,23 +70,27 @@ public class MovieListController {
     @GetMapping("movie/list/{listId}/get")
     public @ResponseBody MovieList getMovieList(@PathVariable Long listId) {
         MovieList list = listDao.findById(listId).get();
+        System.out.println("inside getMovieList");
+        System.out.printf("ID: %d%nName: %s%nOwner: %s%n", list.getId(), list.getName(), list.getOwner().getUsername());
         return list;
     }
 
     // Probably don't even need this method
-    @GetMapping("movie/list/{listId}/edit")
-    public String showEditMovieListForm(@PathVariable Long listId, Model model) {
-        MovieList list = listDao.getById(listId);
-        model.addAttribute("list", list);
-        return "movie/list/edit";
-    }
+//    @GetMapping("movie/list/{listId}/edit")
+//    public String showEditMovieListForm(@PathVariable Long listId, Model model) {
+//        MovieList list = listDao.getById(listId);
+//        model.addAttribute("list", list);
+//        return "movie/list/edit";
+//    }
 
     @PostMapping("movie/list/{listId}/edit")
-    public String editMovieList(@PathVariable Long listId, @RequestBody MovieList newList) {
-        MovieList oldList = listDao.getById(listId);
+    public @ResponseBody void editMovieList(@PathVariable Long listId, @RequestBody MovieList newList) {
+        System.out.println("Inside editMovieList");
+        MovieList oldList = listDao.findById(listId).get();
+        System.out.println("oldList populated.");
+        System.out.printf("ID: %d%nName: %s%n", oldList.getId(), oldList.getName());
         oldList.setName(newList.getName());
         listDao.save(oldList);
-        return "movie/list/movie-lists";
     }
 
     @DeleteMapping("movie/list/{listId}/delete")

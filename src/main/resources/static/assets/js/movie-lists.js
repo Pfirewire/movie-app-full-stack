@@ -74,6 +74,9 @@ $(function() {
             headerDiv.children(".movie-list-title").html(`
                 <input id="edit-list-title" value="${listObject.name}">
             `);
+            headerDiv.children(".edit-movie-list-div").html(`
+                <button class="edit-movie-list-button-confirm">Save Changes</button>
+            `);
         }
     }
 
@@ -93,9 +96,22 @@ $(function() {
                 Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath));
             });
             $(document.body).on("click", ".edit-movie-list-button", async function() {
-                let listObject = $(this).parent().parent().parent().attr("data-list-id");
-                await Get.movieListById(MovieLists.GlobalURLs.backendURLPath, listObject)
+                let listId = $(this).parent().parent().parent().attr("data-list-id");
+                let listObject = await Get.movieListById(MovieLists.GlobalURLs.backendURLPath, listId).then(res => res);
                 Print.singleMovieListEdit($(this).parent().parent(), listObject);
+            });
+            $(document.body).on("click", ".edit-movie-list-button-confirm", async function() {
+                $(this).attr("disabled", true);
+                let listId = $(this).parent().parent().parent().attr("data-list-id");
+                let listName = $(this).parent().siblings("h3").children("input").val();
+                await User.editMovieList(
+                    MovieLists.GlobalURLs.backendURLPath,
+                    listId,
+                    listName,
+                    $(this),
+                    MovieLists.csrfToken
+                );
+                Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath))
             });
         }
     }

@@ -21,12 +21,13 @@ public class Review {
     private String body;
 
     @ManyToOne
-    @JsonManagedReference(value = "userReview")
+//    @JsonManagedReference(value = "userReview")
+    @JsonIgnore
     @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-    @JsonManagedReference(value = "movieReview")
+//    @JsonManagedReference(value = "movieReview")
     @JoinColumn(name="movie_id")
     private Movie movie;
 
