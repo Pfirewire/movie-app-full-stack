@@ -247,6 +247,9 @@ $(function() {
             $(document.body).on("mouseleave", ".carousel-nav", function() {
                 $(this).css("opacity", "0");
             });
+            $("#random-movie-btn").on("click", function() {
+                Carousel.randomIndex(MyMovies.carouselRoot);
+            });
         }
     }
 

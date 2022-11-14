@@ -368,6 +368,10 @@ export const Carousel = {
     },
     modalClick(singleMovieModal){
         Utils.Modal.show(singleMovieModal);
+    },
+    randomIndex(carouselRoot) {
+        this.currImage += (2 * this.n) + (Math.floor(Math.random() * (this.n)));
+        this.rotate(this.currImage, carouselRoot);
     }
 }
 
