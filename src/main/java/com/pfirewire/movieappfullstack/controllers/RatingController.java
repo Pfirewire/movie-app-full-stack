@@ -3,7 +3,6 @@ package com.pfirewire.movieappfullstack.controllers;
 import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.Rating;
 import com.pfirewire.movieappfullstack.models.User;
-import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
 import com.pfirewire.movieappfullstack.repositories.RatingRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class RatingController {
 
 
-    private UserRepository userDao;
-    private MovieRepository movieDao;
-    private RatingRepository ratingDao;
+    private final UserRepository userDao;
+    private final MovieRepository movieDao;
+    private final RatingRepository ratingDao;
 
     public RatingController(UserRepository userDao, MovieRepository movieDao, RatingRepository ratingDao) {
         this.userDao = userDao;

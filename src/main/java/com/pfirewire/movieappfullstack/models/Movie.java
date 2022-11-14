@@ -1,17 +1,9 @@
 package com.pfirewire.movieappfullstack.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pfirewire.movieappfullstack.models.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Cascade;
-import org.springframework.beans.factory.annotation.Value;
-
-import javax.validation.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity

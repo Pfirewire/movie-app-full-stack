@@ -1,6 +1,5 @@
 package com.pfirewire.movieappfullstack.controllers;
 
-import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
@@ -19,15 +18,11 @@ import java.util.Set;
 @Controller
 public class MovieListController {
 
-    private UserRepository userDao;
-    private MovieRepository movieDao;
-    private MovieListRepository listDao;
+    private final MovieListRepository listDao;
     @Autowired
     private Url url;
 
-    public MovieListController(UserRepository userDao, MovieRepository movieDao, MovieListRepository listDao) {
-        this.userDao = userDao;
-        this.movieDao = movieDao;
+    public MovieListController(MovieListRepository listDao) {
         this.listDao = listDao;
     }
 

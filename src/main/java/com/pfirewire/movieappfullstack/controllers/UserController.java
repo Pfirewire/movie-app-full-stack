@@ -1,30 +1,26 @@
 package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.User;
-import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import com.pfirewire.movieappfullstack.services.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
 
     // Repositories and Services
-    private UserRepository userDao;
-    private MovieListRepository listDao;
-//    private MovieRepository movieDao;
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private Url url;
+    private final UserRepository userDao;
+    private final PasswordEncoder passwordEncoder;
 
     // Constructor
-    public UserController(UserRepository userDao, MovieListRepository listDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
-        this.listDao = listDao;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -45,10 +41,5 @@ public class UserController {
         user.setPassword(hash);
         userDao.save(user);
         return "redirect:/login";
-    }
-
-    @GetMapping("/reviews")
-    public String showMovieReviews() {
-        return "view-all";
     }
 }

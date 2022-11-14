@@ -1,7 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.Movie;
-import com.pfirewire.movieappfullstack.models.Rating;
 import com.pfirewire.movieappfullstack.models.Review;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.PreRemove;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,9 +20,9 @@ import java.util.Set;
 @Controller
 public class ReviewController {
 
-    private UserRepository userDao;
-    private MovieRepository movieDao;
-    private ReviewRepository reviewDao;
+    private final UserRepository userDao;
+    private final MovieRepository movieDao;
+    private final ReviewRepository reviewDao;
     @Autowired
     private Url url;
 

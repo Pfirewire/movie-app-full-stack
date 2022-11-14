@@ -1,45 +1,29 @@
 package com.pfirewire.movieappfullstack.controllers;
 
-import ch.qos.logback.core.util.CloseUtil;
-import com.pfirewire.movieappfullstack.models.*;
+import com.pfirewire.movieappfullstack.models.Movie;
+import com.pfirewire.movieappfullstack.models.MovieList;
+import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.*;
-import com.pfirewire.movieappfullstack.services.Url;
 import com.pfirewire.movieappfullstack.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @RestController
 public class MovieController {
 
-    private MovieRepository movieDao;
-    private UserRepository userDao;
-    private MovieListRepository listDao;
-    private RatingRepository ratingDao;
-    private ReviewRepository reviewDao;
+
+    // Private properties, mostly repositories
+    private final MovieRepository movieDao;
+    private final MovieListRepository listDao;
 
     public MovieController(
             MovieRepository movieDao,
-            UserRepository userDao,
-            MovieListRepository listDao,
-            RatingRepository ratingDao,
-            ReviewRepository reviewDao)
+            MovieListRepository listDao)
     {
         this.movieDao = movieDao;
-        this.userDao = userDao;
         this.listDao = listDao;
-        this.ratingDao = ratingDao;
-        this.reviewDao = reviewDao;
     }
 
     private Boolean isMember(Set<User> listMembers, User user) {
