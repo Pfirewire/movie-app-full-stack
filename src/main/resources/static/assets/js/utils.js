@@ -174,6 +174,7 @@ export const Utils = {
             modal.show();
         }
     },
+    // Math Methods
     Math: {
         // returns true if numbers are equal within error margin, default 0.001
         approximatelyEqual(v1, v2, epsilon = 0.001) {
@@ -353,12 +354,6 @@ export const Carousel = {
             $(this.images[i]).attr("data-degree", (i*this.theta));
         }
         this.rotate(this.currImage, carouselRoot);
-    },
-    spinRight() {
-        $("button.carousel-next").trigger("click");
-    },
-    spinLeft() {
-        $("button.carousel-prev").trigger("click");
     },
     isInFront(img) {
         let carouselDegree = parseFloat(img.parent().parent().attr("data-degree"));

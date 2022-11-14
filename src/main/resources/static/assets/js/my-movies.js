@@ -215,9 +215,11 @@ $(function() {
             });
             $(document.body).on("keyup", function(e) {
                 if(e.key === "Left" || e.key === "ArrowLeft") {
-                    Carousel.spinLeft();
+                    Carousel.currImage--;
+                    Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
                 } else if(e.key === "Right" || e.key === "ArrowRight") {
-                    Carousel.spinRight();
+                    Carousel.currImage++;
+                    Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
                 }
             });
             // Sets up event listeners for the buttons to rotate the carousel
