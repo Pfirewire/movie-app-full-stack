@@ -156,4 +156,9 @@ $(function() {
             $("#signupContainer").slideToggle();
         });
 
+    $(window).on("load", function() {
+        console.log("document ready");
+        $("#username").focus();
+    });
+
 });
