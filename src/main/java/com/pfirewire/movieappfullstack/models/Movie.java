@@ -45,12 +45,12 @@ public class Movie {
     @JsonIgnore
     private Set<MovieList> lists;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    @OneToMany(mappedBy = "movie")
 //    @JsonManagedReference(value = "movieRating")
     @JsonIgnore
     private Set<Rating> ratings;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    @OneToMany(mappedBy = "movie")
     @JsonBackReference(value = "movieReview")
     @JsonIgnore
     private Set<Review> reviews;

@@ -27,7 +27,7 @@ public class MovieList {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "lists_movies",
             joinColumns = {@JoinColumn(name = "list_id")},
@@ -36,7 +36,7 @@ public class MovieList {
     @JsonBackReference(value = "listMovies")
     private Set<Movie> movies;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "lists_users",
             joinColumns = {@JoinColumn(name = "list_id")},
