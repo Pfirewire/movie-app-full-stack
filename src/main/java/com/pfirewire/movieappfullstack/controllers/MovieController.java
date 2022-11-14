@@ -13,15 +13,10 @@ import java.util.Set;
 @RestController
 public class MovieController {
 
-
-    // Private properties, mostly repositories
     private final MovieRepository movieDao;
     private final MovieListRepository listDao;
 
-    public MovieController(
-            MovieRepository movieDao,
-            MovieListRepository listDao)
-    {
+    public MovieController(MovieRepository movieDao, MovieListRepository listDao) {
         this.movieDao = movieDao;
         this.listDao = listDao;
     }
@@ -34,6 +29,7 @@ public class MovieController {
         return userIsMemberOfList;
     }
 
+    // Health check to see if rest actions are working
     @GetMapping("/health")
     public String healthCheck() {
         return "health check complete";
@@ -53,14 +49,15 @@ public class MovieController {
 
     @PostMapping("/movie/{listId}/add")
     public Movie addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
+        // Add movie to database if not already present, otherwise set equal to object in database
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
             movieDao.save(movie);
         } else {
             movie = movieDao.getByTmdbId(movie.getTmdbId());
         }
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = Utils.currentUser();
         MovieList list = listDao.getById(listId);
-
+        // Checking if user is member of list to add movie
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
         if(userIsMemberOfList){
             list.getMovies().add(movie);
@@ -70,15 +67,15 @@ public class MovieController {
     }
 
     @DeleteMapping("/movie/{movieId}/{listId}/delete")
-    public String deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) {
+    public void deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) {
         User user = Utils.currentUser();
         Movie movie = movieDao.getById(movieId);
         MovieList list = listDao.getById(listId);
         Boolean userIsMemberOfList = isMember(list.getMembers(), user);
         if(userIsMemberOfList) {
+            // Removing movie from list instead of deleting from database
             list.getMovies().remove(movie);
             listDao.save(list);
-            return "movie deleted";
-        } else return "you are not a member of this list";
+        }
     }
 }

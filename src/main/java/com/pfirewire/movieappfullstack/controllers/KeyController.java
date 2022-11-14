@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class KeyController {
 
-    // Autowiring keys object
     @Autowired
     private Keys keys;
 
-    // Get response for returning private keys
     @GetMapping("/keys")
     public Keys getKeys() {
         return keys;

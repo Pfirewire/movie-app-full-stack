@@ -26,7 +26,6 @@ public class MovieListController {
         this.listDao = listDao;
     }
 
-
     @GetMapping("/movie/list/all")
 
     public @ResponseBody Set<MovieList> getAllMovieLists() {
