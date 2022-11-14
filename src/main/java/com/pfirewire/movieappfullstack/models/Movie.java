@@ -26,14 +26,15 @@ public class Movie {
     @Column
     private int year;
 
-    @Column
-    private String genre;
+    @ManyToMany(mappedBy = "movies")
+    @JsonManagedReference(value = "genreMovies")
+    private Set<Genre> genre;
 
     @Column(columnDefinition = "TEXT")
     private String plot;
 
     @ManyToMany(mappedBy = "movies")
-//    @JsonManagedReference(value = "listMovies")
+    @JsonManagedReference(value = "listMovies")
     @JsonIgnore
     private Set<MovieList> lists;
 
@@ -93,11 +94,11 @@ public class Movie {
         this.year = year;
     }
 
-    public String getGenre() {
+    public Set<Genre> getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Set<Genre> genre) {
         this.genre = genre;
     }
 
