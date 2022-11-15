@@ -63,12 +63,13 @@ $(function() {
             // contains movie info with no image
             let modalHeaderDiv = $("#single-movie-modal-header");
             let modalBodyDiv = $("#single-movie");
+            let genres = Utils.Convert.genreArrayToString(movie.genres);
             await Print.modalRating(modalHeaderDiv, movie);
             modalBodyDiv.empty();
             modalBodyDiv.attr("data-movie-id", movie.id);
             modalBodyDiv.append(`
                 <h5 class="modal-title text-light modal-overflow-wrap mb-2">${movie.title}</h5>
-                <p class="modal-overflow-wrap">Genres: ${movie.genres}</p>
+                <p class="modal-overflow-wrap">Genres: ${genres}</p>
                 <p class="modal-overflow-wrap">Plot: ${movie.plot}</p>
                 <p class="modal-overflow-wrap">Year: ${movie.year}</p>
                 <div class="d-flex justify-content-between">

@@ -28,7 +28,7 @@ public class Movie {
     private int year;
 
     @ManyToMany(mappedBy = "movies")
-    @JsonManagedReference(value = "genresMovies")
+    @JsonBackReference(value = "genresMovies")
     private Set<Genre> genres;
 
     @Column(columnDefinition = "TEXT")
