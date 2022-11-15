@@ -57,16 +57,17 @@ public class MovieController {
     public Movie addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
         // Add movie to database if not already present, otherwise set equal to object in database
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
+            movieDao.save(movie);
             for(Genre genre : movie.getGenres()) {
                 System.out.println(genre.getName());
                 if(genreDao.existsByName(genre.getName())) {
                     System.out.printf("Genre %s already exists.%n", genre.getName());
                     genre = genreDao.findByName(genre.getName());
                 }
-                movie.getGenres().add(genre);
+                genre.getMovies().add(movie);
+//                movie.getGenres().add(genre);
                 genreDao.save(genre);
             }
-            movieDao.save(movie);
         } else {
             movie = movieDao.getByTmdbId(movie.getTmdbId());
         }

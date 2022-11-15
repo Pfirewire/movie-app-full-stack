@@ -25,7 +25,7 @@ public class Genre {
             joinColumns = {@JoinColumn(name = "genre_id")},
             inverseJoinColumns = {@JoinColumn(name = "movie_id")}
     )
-    @JsonManagedReference(value = "genresMovies")
+    @JsonBackReference(value = "genresMovies")
     private Set<Movie> movies;
 
     public Genre() {
