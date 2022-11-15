@@ -6,6 +6,7 @@ export const Get = {
             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
             let response = await fetch(`${url}movies/${listId}`);
             let data = await response.json();
+            console.log(data);
             return data;
         } catch (err) {
             console.log(err);

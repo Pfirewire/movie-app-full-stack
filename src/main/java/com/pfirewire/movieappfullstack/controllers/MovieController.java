@@ -47,6 +47,9 @@ public class MovieController {
     public Set<Movie> getAllMovies(@PathVariable Long listId) {
         MovieList list = listDao.findById(listId).get();
         Set<Movie> userMovies = list.getMovies();
+//        for(Movie movie : userMovies) {
+//            movie.getGenres().add(genreDao.findAllByMovies(movie));
+//        }
         return userMovies;
     }
 
@@ -57,9 +60,9 @@ public class MovieController {
             movieDao.save(movie);
             for(Genre genre : movie.getGenres()) {
                 System.out.println(genre.getName());
-                if(!genreDao.existsByName(genre.getName())) {
-                    System.out.printf("Saving genre: %s%n", genre.getName());
-                    genreDao.save(genre);
+                if(genreDao.existsByName(genre.getName())) {
+                    System.out.printf("Genre %s already exists.%n", genre.getName());
+                    genre = genreDao.findByName(genre.getName());
                 }
                 genre.getMovies().add(movie);
                 genreDao.save(genre);
