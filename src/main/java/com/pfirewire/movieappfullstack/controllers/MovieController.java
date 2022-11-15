@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.pfirewire.movieappfullstack.models.Genre;
 import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
@@ -15,10 +16,12 @@ public class MovieController {
 
     private final MovieRepository movieDao;
     private final MovieListRepository listDao;
+    private final GenreRepository genreDao;
 
-    public MovieController(MovieRepository movieDao, MovieListRepository listDao) {
+    public MovieController(MovieRepository movieDao, MovieListRepository listDao, GenreRepository genreDao) {
         this.movieDao = movieDao;
         this.listDao = listDao;
+        this.genreDao = genreDao;
     }
 
     private Boolean isMember(Set<User> listMembers, User user) {
@@ -52,6 +55,15 @@ public class MovieController {
         // Add movie to database if not already present, otherwise set equal to object in database
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
             movieDao.save(movie);
+            for(Genre genre : movie.getGenres()) {
+                System.out.println(genre.getName());
+                if(!genreDao.existsByName(genre.getName())) {
+                    System.out.printf("Saving genre: %s%n", genre.getName());
+                    genreDao.save(genre);
+                }
+                genre.getMovies().add(movie);
+                genreDao.save(genre);
+            }
         } else {
             movie = movieDao.getByTmdbId(movie.getTmdbId());
         }

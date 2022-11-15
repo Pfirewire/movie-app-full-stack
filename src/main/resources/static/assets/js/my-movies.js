@@ -68,7 +68,7 @@ $(function() {
             modalBodyDiv.attr("data-movie-id", movie.id);
             modalBodyDiv.append(`
                 <h5 class="modal-title text-light modal-overflow-wrap mb-2">${movie.title}</h5>
-                <p class="modal-overflow-wrap">Genre: ${movie.genre}</p>
+                <p class="modal-overflow-wrap">Genres: ${movie.genres}</p>
                 <p class="modal-overflow-wrap">Plot: ${movie.plot}</p>
                 <p class="modal-overflow-wrap">Year: ${movie.year}</p>
                 <div class="d-flex justify-content-between">
@@ -90,7 +90,7 @@ $(function() {
             modalBodyDiv.empty();
             modalBodyDiv.attr("data-movie-id", movie.id);
             modalBodyDiv.append(`
-                 <input id="genre-input" class="modal-input border-dark bg-light" value="${movie.genre}">
+                 <input id="genre-input" class="modal-input border-dark bg-light" value="${movie.genres}">
                  <textarea id="plot-input" class="w-100 modal-input border-dark bg-light" rows="9">${movie.plot}</textarea>
                  <input id="year-input" class="modal-input border-dark bg-light" value="${movie.year}">
                  <div class="d-flex justify-content-center">

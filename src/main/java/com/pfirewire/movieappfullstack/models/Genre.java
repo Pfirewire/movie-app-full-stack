@@ -1,8 +1,11 @@
 package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,10 +25,13 @@ public class Genre {
             joinColumns = {@JoinColumn(name = "genre_id")},
             inverseJoinColumns = {@JoinColumn(name = "movie_id")}
     )
-    @JsonBackReference(value = "genreMovies")
+    @JsonManagedReference(value = "genreMovies")
+    @JsonIgnore
     private Set<Movie> movies;
 
-    public Genre() {}
+    public Genre() {
+        this.movies = new HashSet<>();
+    }
 
     public Genre(String name) {
         this.name = name;

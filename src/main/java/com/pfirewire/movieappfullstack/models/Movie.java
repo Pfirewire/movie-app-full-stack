@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -27,8 +28,8 @@ public class Movie {
     private int year;
 
     @ManyToMany(mappedBy = "movies")
-    @JsonManagedReference(value = "genreMovies")
-    private Set<Genre> genre;
+    @JsonBackReference(value = "genresMovies")
+    private Set<Genre> genres;
 
     @Column(columnDefinition = "TEXT")
     private String plot;
@@ -94,12 +95,12 @@ public class Movie {
         this.year = year;
     }
 
-    public Set<Genre> getGenre() {
-        return genre;
+    public Set<Genre> getGenres() {
+        return genres;
     }
 
-    public void setGenre(Set<Genre> genre) {
-        this.genre = genre;
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
     }
 
     public String getPlot() {

@@ -21,7 +21,7 @@ export const Get = {
             title: movieData.title,
             poster: `${tmdbPosterPath}${movieData.poster_path}`,
             year: parseInt(movieData.release_date.substring(0,4)),
-            genre: Utils.Convert.genreArrayToString(movieData.genres),
+            genres: movieData.genres,
             plot: movieData.overview,
             tmdbId: movieData.id
         }
@@ -224,7 +224,7 @@ export const User = {
     async editMovie(url, id, listId, button, csrfToken) {
         let newMovie = await Get.movieById(url, id, listId);
         newMovie.title = $("#title-input").val();
-        newMovie.genre = $("#genre-input").val();
+        newMovie.genres = $("#genre-input").val();
         newMovie.plot =  $("#plot-input").val();
         newMovie.year =  $("#year-input").val();
 

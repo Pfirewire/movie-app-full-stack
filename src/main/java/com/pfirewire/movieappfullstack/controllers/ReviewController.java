@@ -101,9 +101,7 @@ public class ReviewController {
     public @ResponseBody Set<Review> getAllReviews(Model model) {
         List<Review> reviewList = reviewDao.findAll();
         Set<Review> reviews = new HashSet<>();
-        for(Review review : reviewList) {
-            reviews.add(review);
-        }
+        reviews.addAll(reviewList);
         return reviews;
     }
 
