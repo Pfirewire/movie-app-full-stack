@@ -148,6 +148,17 @@ export const Get = {
         } catch (error) {
             console.log(error);
         }
+    },
+    async genresByMovieId(url, movieId) {
+        try {
+            // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
+            let response = await fetch(`${url}genre/${movieId}`);
+            let data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

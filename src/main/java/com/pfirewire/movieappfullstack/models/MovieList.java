@@ -1,6 +1,9 @@
 package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.pfirewire.movieappfullstack.Views;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -38,6 +41,7 @@ public class MovieList {
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     @JsonBackReference(value = "listMembers")
+    @JsonIgnore
     private Set<User> members;
 
     public MovieList() {

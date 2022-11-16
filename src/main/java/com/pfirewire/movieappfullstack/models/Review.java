@@ -1,6 +1,8 @@
 package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.pfirewire.movieappfullstack.Views;
 
 import javax.persistence.*;
 

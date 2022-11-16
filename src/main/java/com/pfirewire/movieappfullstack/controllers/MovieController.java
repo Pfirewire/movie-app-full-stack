@@ -59,14 +59,14 @@ public class MovieController {
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
             movieDao.save(movie);
             for(Genre genre : movie.getGenres()) {
-                System.out.println(genre.getName());
-                if(genreDao.existsByName(genre.getName())) {
-                    System.out.printf("Genre %s already exists.%n", genre.getName());
-                    genre = genreDao.findByName(genre.getName());
+                String name = genre.getName();
+                System.out.println(name);
+                if(!genreDao.existsByName(name)) {
+                    genre.getMovies().add(movie);
+                    genreDao.save(genre);
+                } else {
+                    genreDao.findByName(name).getMovies().add(movie);
                 }
-                genre.getMovies().add(movie);
-//                movie.getGenres().add(genre);
-                genreDao.save(genre);
             }
         } else {
             movie = movieDao.getByTmdbId(movie.getTmdbId());

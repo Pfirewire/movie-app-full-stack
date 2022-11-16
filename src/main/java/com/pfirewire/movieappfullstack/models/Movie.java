@@ -3,6 +3,8 @@ package com.pfirewire.movieappfullstack.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.pfirewire.movieappfullstack.Views;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -28,7 +30,7 @@ public class Movie {
     private int year;
 
     @ManyToMany(mappedBy = "movies")
-    @JsonManagedReference(value = "genresMovies")
+//    @JsonManagedReference(value = "genresMovies")
     private Set<Genre> genres;
 
     @Column(columnDefinition = "TEXT")
