@@ -1,9 +1,13 @@
 USE movieapp_db;
 
-TRUNCATE lists_movies;
+DROP TABLE genres_movies;
 
-TRUNCATE reviews;
+DROP TABLE lists_movies;
 
-TRUNCATE ratings;
+DROP TABLE genres;
+
+DROP TABLE reviews;
+
+DROP TABLE ratings;
 
 DROP TABLE movies;
