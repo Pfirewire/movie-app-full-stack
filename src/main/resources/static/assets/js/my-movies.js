@@ -256,8 +256,11 @@ $(function() {
             $("#random-movie-btn").on("click", function() {
                 Carousel.randomIndex(MyMovies.carouselRoot);
             });
-            $("#filter-movie-btn").on("click", function () {
+            $("#filter-movie-btn").on("click", function() {
                 Utils.Modal.show(MyMovies.Modals.filtersModal);
+            });
+            $("#apply-filters-btn").on("click", async function() {
+                User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, "");
             });
         }
     }

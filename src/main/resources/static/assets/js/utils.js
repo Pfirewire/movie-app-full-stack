@@ -332,6 +332,7 @@ export const User = {
     },
     async filterMovies(url, listId, filters) {
         let movies = await Get.allMovies(url, listId).then(res => res);
+        console.log("movies to filter: ")
         console.log(movies);
     }
 }
