@@ -92,18 +92,11 @@ $(function() {
                 $("#loading-div").addClass("d-none");
                 // Spins carousel every 2.4 seconds
                 setInterval(function() {
-                    // Only spins when window is active and user not hovering over a movie poster
-                    if(document.hasFocus() && $(".carousel div:hover").length === 0) {
+                    // Only spins when window is active
+                    if(document.hasFocus()) {
                         Carousel.spinRight();
                     }
-                }, 3600);
-            });
-            $(window).on("keyup", function(e) {
-                if(e.key === "Left" || e.key === "ArrowLeft") {
-                    Carousel.spinLeft();
-                } else if(e.key === "Right" || e.key === "ArrowRight") {
-                    Carousel.spinRight();
-                }
+                }, 2400);
             });
         }
     }
