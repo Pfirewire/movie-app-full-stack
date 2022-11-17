@@ -15,13 +15,16 @@ $(function() {
             tmdbPosterPath: "https://image.tmdb.org/t/p/original/",
             backendURLPath: $("#base-url").text(),
         },
+        // Modal Object
+        Modals: {
+            singleMovieModal: new bootstrap.Modal("#single-movie-modal"),
+            addMovieModal: new bootstrap.Modal("#add-movie-modal"),
+            filtersModal: new bootstrap.Modal("#filters-modal")
+        },
         // List id
         listId: $("#list-id").text(),
         // Root div of carousel
         carouselRoot: $(".carousel"),
-        // Modals on screen
-        singleMovieModal: new bootstrap.Modal("#single-movie-modal"),
-        addMovieModal: new bootstrap.Modal("#add-movie-modal"),
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // Prints current movie database on screen and initializes all event listeners
@@ -166,14 +169,14 @@ $(function() {
             $(document.body).on("click", "#movie-list .card", async function() {
                 await User.addMovie(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, $(this).attr("data-movie-tmdb-id"), MyMovies.listId, MyMovies.csrfToken);
                 await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
-                Utils.Modal.hide(MyMovies.addMovieModal);
+                Utils.Modal.hide(MyMovies.Modals.addMovieModal);
             });
             // Listens for click on delete button
             $(document.body).on("click", ".delete-btn", async function (){
                 $(this).attr("disabled", "");
                 await User.deleteMovie(MyMovies.urls.backendURLPath, $(this).parent().parent().attr("data-movie-id"), MyMovies.listId, $(this), MyMovies.csrfToken);
                 await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
-                Utils.Modal.hide(MyMovies.singleMovieModal);
+                Utils.Modal.hide(MyMovies.Modals.singleMovieModal);
             })
             // Listens for click of add button
             $("#add-movie-btn").on("click", function() {
@@ -186,7 +189,7 @@ $(function() {
             // Listens for click of any image of our full movie list
             $(document.body).on("click", ".carousel-cell img", function() {
                 if(Carousel.isInFront($(this))) {
-                    Carousel.modalClick(MyMovies.singleMovieModal);
+                    Carousel.modalClick(MyMovies.Modals.singleMovieModal);
                     Get.movieById(MyMovies.urls.backendURLPath, $(this).parent().attr("data-movie-id"), MyMovies.listId)
                         .then(res => Print.movieModal($("#single-movie-modal"), res));
                 }
@@ -252,6 +255,9 @@ $(function() {
             });
             $("#random-movie-btn").on("click", function() {
                 Carousel.randomIndex(MyMovies.carouselRoot);
+            });
+            $("#filter-movie-btn").on("click", function () {
+                Utils.Modal.show(MyMovies.Modals.filtersModal);
             });
         }
     }
