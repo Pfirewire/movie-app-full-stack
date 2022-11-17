@@ -47,14 +47,11 @@ public class MovieController {
     public Set<Movie> getAllMovies(@PathVariable Long listId) {
         MovieList list = listDao.findById(listId).get();
         Set<Movie> userMovies = list.getMovies();
-//        for(Movie movie : userMovies) {
-//            movie.getGenres().add(genreDao.findAllByMovies(movie));
-//        }
         return userMovies;
     }
 
     @PostMapping("/movie/{listId}/add")
-    public Movie addMovie (@RequestBody Movie movie, @PathVariable Long listId) {
+    public Movie addMovie(@RequestBody Movie movie, @PathVariable Long listId) {
         // Add movie to database if not already present, otherwise set equal to object in database
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
             movieDao.save(movie);

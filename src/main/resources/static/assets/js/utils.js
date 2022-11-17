@@ -197,6 +197,11 @@ export const Utils = {
 
 // User Object and Methods
 export const User = {
+    FilterBy: {
+        genre(movies, genre) {
+
+        }
+    },
     // Property to hold value to see if NSFW search is active
     overEighteen: false,
     // Adds movie to database
@@ -324,6 +329,10 @@ export const User = {
         let deleteData = await fetch(`${url}movie/list/${listId}/delete`, deleteOptions).then(results => results);
         // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
+    },
+    async filterMovies(url, listId, filters) {
+        let movies = await Get.allMovies(url, listId).then(res => res);
+        console.log(movies);
     }
 }
 

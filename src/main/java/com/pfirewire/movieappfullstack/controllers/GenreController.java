@@ -39,7 +39,7 @@ public class GenreController {
     }
 
     @GetMapping("/genre/movies/{genreId}")
-    public Set<Movie> getMoviesByGenre(@PathVariable Long genreId) {
+    public Set<Movie> getMoviesByGenres(@PathVariable Long genreId) {
         Set<Movie> movies = movieDao.findAllByGenres(genreDao.findById(genreId).get());
         return movies;
     }
