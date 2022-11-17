@@ -60,7 +60,7 @@
 }
 
 /*Stying sort select element*/
-#sort-select, #sort-select>option, #add-movie-btn, #random-movie-btn {
+#sort-select, #sort-select>option, #add-movie-btn, #random-movie-btn, #filter-movie-btn {
     background-color: #8096AD;
 }
 
