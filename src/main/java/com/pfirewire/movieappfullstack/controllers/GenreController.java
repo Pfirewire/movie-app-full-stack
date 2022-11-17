@@ -1,6 +1,7 @@
 package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.Genre;
+import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.repositories.GenreRepository;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
@@ -35,5 +36,11 @@ public class GenreController {
     public Set<Genre> getGenreByMovieId(@PathVariable Long movieId) {
         Set<Genre> genres = genreDao.findAllByMovies(movieDao.findById(movieId).get());
         return genres;
+    }
+
+    @GetMapping("/genre/movies/{genreId}")
+    public Set<Movie> getMoviesByGenre(@PathVariable Long genreId) {
+        Set<Movie> movies = movieDao.findAllByGenres(genreDao.findById(genreId).get());
+        return movies;
     }
 }
