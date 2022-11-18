@@ -95,6 +95,7 @@ export const Get = {
         let data = await response.json();
         return data.results;
     },
+    // gets all reviews
     async allReviews(url) {
         try {
             let reviewData = await fetch(`${url}reviews/all`);
@@ -105,6 +106,7 @@ export const Get = {
             console.log(err);
         }
     },
+    // gets all reviews by user
     async userReviews(url) {
         try {
             let reviewData = await fetch(`${url}reviews/user`);
@@ -114,6 +116,7 @@ export const Get = {
             console.log(err);
         }
     },
+    // gets movie rating with movie id and user id
     async movieRatingWithUserId(url, movieId, userId) {
         console.log(userId);
         let response = await fetch(`${url}rating/${movieId}/${userId}`);
@@ -130,6 +133,7 @@ export const Get = {
             console.log(`There was an error: ${error}`);
         }
     },
+    // gets all movies from single list
     async allMoviesFromList(url, listId) {
         try {
             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
@@ -140,6 +144,7 @@ export const Get = {
             console.log(error);
         }
     },
+    // gets movie list from list id
     async movieListById(url, listId) {
         try {
             let response = await fetch(`${url}movie/list/${listId}/get`);
@@ -149,6 +154,7 @@ export const Get = {
             console.log(error);
         }
     },
+    // gets genre by movie id
     async genresByMovieId(url, movieId) {
         try {
             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
@@ -179,9 +185,11 @@ export const Utils = {
     },
     // Modal Methods
     Modal: {
+        // hides modal
         hide(modal) {
             modal.hide();
         },
+        // shows modal
         show(modal) {
             modal.show();
         }
@@ -197,13 +205,25 @@ export const Utils = {
 
 // User Object and Methods
 export const User = {
+    // Filterby methods
     FilterBy: {
+        // Filter by genre
         genre(movies, genre) {
+
+        },
+        // Filter by name
+        name(movies, name) {
+
+        },
+        // Filter by before year
+        beforeYear(movies, year) {
+
+        },
+        // Filter by after year
+        afterYear(movies, year) {
 
         }
     },
-    // Property to hold value to see if NSFW search is active
-    overEighteen: false,
     // Adds movie to database
     async addMovie(url, tmdbUrl, tmdbId, listId, csrfToken) {
         let movie = await Get.scrapeSingleMovieData(url, tmdbUrl, tmdbId);
@@ -299,6 +319,7 @@ export const User = {
                 break;
         }
     },
+
     reviewForm(url, movieId) {
         window.location.href = `${url}review/${movieId}`;
     },
