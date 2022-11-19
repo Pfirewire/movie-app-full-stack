@@ -207,19 +207,31 @@ export const Utils = {
 export const User = {
     // Filterby methods
     FilterBy: {
-        // Filter by genre
-        genre(movies, genre) {
-
+        // Filter by genre, returns movies containing genre
+        genre(movies, genreName) {
+            let filteredMovies = [];
+            if(movies) {
+                for(let movie in movies){
+                    for(let genre in movies.genres){
+                        if(genre.name.toLowerCase() === genreName.toLowerCase()) {
+                            filteredMovies.push(movie);
+                        }
+                    }
+                }
+            } else {
+                console.log("No movies to filter");
+            }
+            return filteredMovies;
         },
         // Filter by name
-        name(movies, name) {
-
-        },
-        // Filter by before year
+        // name(movies, name) {
+        //
+        // },
+        // Filter by before year, returns movies before year
         beforeYear(movies, year) {
 
         },
-        // Filter by after year
+        // Filter by after year, returns movies after year
         afterYear(movies, year) {
 
         }
@@ -356,8 +368,26 @@ export const User = {
     // Function that filters movies based on array of filter objects passed in
     async filterMovies(url, listId, filters) {
         let movies = await Get.allMovies(url, listId).then(res => res);
-        console.log("movies to filter: ")
-        console.log(movies);
+        if(filters) {
+            for(let filter in filters) {
+                switch(filter.type) {
+                    case "genre":
+                        movies = User.FilterBy.genre(movies, filter.value);
+                        break;
+                    case "beforeYear":
+                        movies = User.FilterBy.beforeYear(movies, filter.value);
+                        break;
+                    case "afterYear":
+                        movies = User.FilterBy.afterYear(movies, filter.value);
+                        break;
+                    default:
+                        console.log("Unknown filter");
+                        break;
+                }
+            }
+        } else {
+            console.log("no filters chosen");
+        }
     }
 }
 
