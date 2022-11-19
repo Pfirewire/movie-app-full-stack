@@ -323,6 +323,7 @@ export const User = {
     reviewForm(url, movieId) {
         window.location.href = `${url}review/${movieId}`;
     },
+    // Edits movie list by name
     async editMovieList(url, listId, listName, button, csrfToken) {
         let newMovieList = await Get.movieListById(url, listId).then(res => res);
         newMovieList.name = listName;
@@ -339,6 +340,7 @@ export const User = {
         // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
     },
+    // Deletes movie list
     async deleteMovieList(url, listId, button, csrfToken) {
         let deleteOptions = {
             method: 'DELETE',
@@ -351,6 +353,7 @@ export const User = {
         // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
     },
+    // Function that filters movies based on array of filter objects passed in
     async filterMovies(url, listId, filters) {
         let movies = await Get.allMovies(url, listId).then(res => res);
         console.log("movies to filter: ")
