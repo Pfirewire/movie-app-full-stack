@@ -10,9 +10,11 @@ $(function() {
 
     // Check object for methods checking parameters
     const Check = {
+        // Checks if input is a number
         isNumber: input => {
             return !(isNaN(Number(input)));
         },
+        // Checks if length is at least eight characters
         atLeastEight: input => {
             if(input.length >= 8) {
                 return true;
@@ -20,6 +22,7 @@ $(function() {
                 return false;
             }
         },
+        // Checks if input contains a lowercase letter
         containsLowercase: input => {
             for(let i = 0; i < input.length; i++) {
                 if(input.charAt(i).toLowerCase() === input.charAt(i) && !(Check.isNumber(input.charAt(i))) && !(Check.containsSpecialCharacter(input.charAt(i)))) {
@@ -28,6 +31,7 @@ $(function() {
             }
             return false;
         },
+        // Checks if input contains an uppercase letter
         containsUppercase: input => {
             for(let i = 0; i < input.length; i++) {
                 if(input.charAt(i).toUpperCase() === input.charAt(i) && !(Check.isNumber(input.charAt(i))) && !(Check.containsSpecialCharacter(input.charAt(i)))) {
@@ -36,6 +40,7 @@ $(function() {
             }
             return false;
         },
+        // Checks if input contains a number
         containsNumber: input => {
             for(let i = 0; i < input.length; i++) {
                 if(Check.isNumber(input.charAt(i))) {
@@ -44,6 +49,7 @@ $(function() {
             }
             return false;
         },
+        // Checks if input contains a special character
         containsSpecialCharacter: input => {
             let specials = "!@#$%^&*()-=_+"
             for(let i = 0; i < input.length; i++) {
@@ -55,6 +61,7 @@ $(function() {
             }
             return false;
         },
+        // Checks if input meets requirements
         requirementsNotMet: input => {
             if(Check.atLeastEight(input) && Check.containsLowercase(input) && Check.containsUppercase(input) && Check.containsNumber(input) && Check.containsSpecialCharacter(input)){
                 return false;
@@ -62,6 +69,7 @@ $(function() {
                 return true;
             }
         },
+        // Checks if confirm password field matches password field
         confirmMatchesPassword: () => {
             return $("#signupConfirmPassword").val() === $("#signupPassword").val();
         }
