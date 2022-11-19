@@ -368,6 +368,10 @@ export const User = {
     // Function that filters movies based on array of filter objects passed in
     async filterMovies(url, listId, filters) {
         let movies = await Get.allMovies(url, listId).then(res => res);
+        filters = {
+            type: "genre",
+            value: "action"
+        };
         if(filters) {
             for(let filter in filters) {
                 switch(filter.type) {
@@ -388,6 +392,7 @@ export const User = {
         } else {
             console.log("no filters chosen");
         }
+        return movies;
     }
 }
 

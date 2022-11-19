@@ -260,7 +260,7 @@ $(function() {
                 Utils.Modal.show(MyMovies.Modals.filtersModal);
             });
             $("#apply-filters-btn").on("click", async function() {
-                User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, "");
+                Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, ""));
             });
         }
     }
