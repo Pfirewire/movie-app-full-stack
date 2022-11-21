@@ -229,7 +229,17 @@ export const User = {
         // },
         // Filter by before year, returns movies before year
         beforeYear(movies, year) {
-
+            let filteredMovies = [];
+            if(movies) {
+                for(let movie in movies) {
+                    if(movie.year < year) {
+                        filteredMovies.push(movie);
+                    }
+                }
+            } else {
+                console.log("No movies to filter");
+            }
+            return filteredMovies;
         },
         // Filter by after year, returns movies after year
         afterYear(movies, year) {
