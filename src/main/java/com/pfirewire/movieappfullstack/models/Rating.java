@@ -25,7 +25,7 @@ public class Rating {
     private User user;
 
     @ManyToOne
-    @JsonBackReference(value = "movieRating")
+//    @JsonBackReference(value = "movieRating")
 //    @JsonIgnore
     @JoinColumn(name="movie_id")
     private Movie movie;

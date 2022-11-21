@@ -37,12 +37,12 @@ public class Movie {
     private String plot;
 
     @ManyToMany(mappedBy = "movies")
-    @JsonManagedReference(value = "listMovies")
+//    @JsonManagedReference(value = "listMovies")
     @JsonIgnore
     private Set<MovieList> lists;
 
     @OneToMany(mappedBy = "movie")
-    @JsonManagedReference(value = "movieRating")
+//    @JsonManagedReference(value = "movieRating")
     @JsonIgnore
     private Set<Rating> ratings;
 

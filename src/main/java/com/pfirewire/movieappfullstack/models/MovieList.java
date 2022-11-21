@@ -31,7 +31,7 @@ public class MovieList {
             joinColumns = {@JoinColumn(name = "list_id")},
             inverseJoinColumns = {@JoinColumn(name = "movie_id")}
     )
-    @JsonBackReference(value = "listMovies")
+//    @JsonBackReference(value = "listMovies")
     private Set<Movie> movies;
 
     @ManyToMany
@@ -40,7 +40,7 @@ public class MovieList {
             joinColumns = {@JoinColumn(name = "list_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    @JsonBackReference(value = "listMembers")
+//    @JsonBackReference(value = "listMembers")
     @JsonIgnore
     private Set<User> members;
 
