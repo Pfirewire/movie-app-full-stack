@@ -34,7 +34,7 @@ public class User {
     private List<MovieList> listsOwned;
 
     @ManyToMany(mappedBy = "members")
-//    @JsonManagedReference(value = "listMembers")
+    @JsonManagedReference(value = "listMembers")
     @JsonIgnore
     private Set<MovieList> lists = new HashSet<>();
 

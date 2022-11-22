@@ -26,7 +26,7 @@ public class Review {
     private User user;
 
     @ManyToOne
-//    @JsonManagedReference(value = "movieReview")
+    @JsonManagedReference(value = "movieReview")
     @JoinColumn(name="movie_id")
     private Movie movie;
 

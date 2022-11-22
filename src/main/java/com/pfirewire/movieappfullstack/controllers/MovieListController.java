@@ -30,6 +30,7 @@ public class MovieListController {
 
     public @ResponseBody Set<MovieList> getAllMovieLists() {
         User user = Utils.currentUser();
+        System.out.println(user.getUsername());
         Set<MovieList> userMovieLists = listDao.findAllByMembers(user);
         return userMovieLists;
     }
