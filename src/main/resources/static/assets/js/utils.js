@@ -211,8 +211,8 @@ export const User = {
         genre(movies, genreName) {
             let filteredMovies = [];
             if(movies) {
-                for(let movie in movies){
-                    for(let genre in movies.genres){
+                for(let movie of movies){
+                    for(let genre of movies.genres){
                         if(genre.name.toLowerCase() === genreName.toLowerCase()) {
                             filteredMovies.push(movie);
                         }
