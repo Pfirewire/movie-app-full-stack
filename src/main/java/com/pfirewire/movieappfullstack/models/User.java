@@ -44,7 +44,7 @@ public class User {
     private Set<Rating> ratings = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonBackReference(value = "userReview")
+    @JsonManagedReference(value = "userReview")
     @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
     // Constructor functions

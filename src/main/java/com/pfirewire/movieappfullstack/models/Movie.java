@@ -47,8 +47,8 @@ public class Movie {
     private Set<Rating> ratings;
 
     @OneToMany(mappedBy = "movie")
-    @JsonBackReference(value = "movieReview")
-    @JsonIgnore
+    @JsonManagedReference(value = "movieReview")
+//    @JsonIgnore
     private Set<Review> reviews;
 
     // Constructor functions
