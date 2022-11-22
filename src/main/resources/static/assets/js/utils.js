@@ -388,12 +388,16 @@ export const User = {
     // Function that filters movies based on array of filter objects passed in
     async filterMovies(url, listId, filters) {
         let movies = await Get.allMovies(url, listId).then(res => res);
-        filters = {
+        filters = [
+            {
             type: "genre",
             value: "action"
-        };
+            }
+        ];
         if(filters) {
-            for(let filter in filters) {
+            console.log(filters)
+            for(let filter of filters) {
+                console.log(filter);
                 switch(filter.type) {
                     case "genre":
                         movies = User.FilterBy.genre(movies, filter.value);
