@@ -212,7 +212,7 @@ export const User = {
             let filteredMovies = [];
             if(movies) {
                 for(let movie of movies){
-                    for(let genre of movies.genres){
+                    for(let genre of movie.genres){
                         if(genre.name.toLowerCase() === genreName.toLowerCase()) {
                             filteredMovies.push(movie);
                         }
