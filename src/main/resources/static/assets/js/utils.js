@@ -390,8 +390,12 @@ export const User = {
         let movies = await Get.allMovies(url, listId).then(res => res);
         filters = [
             {
-            type: "genre",
-            value: "action"
+                type: "genre",
+                value: "action"
+            },
+            {
+                type: "afterYear",
+                value: 2002
             }
         ];
         if(filters) {
