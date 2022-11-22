@@ -231,7 +231,7 @@ export const User = {
         beforeYear(movies, year) {
             let filteredMovies = [];
             if(movies) {
-                for(let movie in movies) {
+                for(let movie of movies) {
                     if(movie.year < year) {
                         filteredMovies.push(movie);
                     }
@@ -245,7 +245,7 @@ export const User = {
         afterYear(movies, year) {
             let filteredMovies = [];
             if(movies) {
-                for(let movie in movies) {
+                for(let movie of movies) {
                     if(movie.year > year) {
                         filteredMovies.push(movie);
                     }
