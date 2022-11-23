@@ -152,6 +152,18 @@ $(function() {
                     $(`.modal-rating-${i}`).removeClass("bi-star-fill fs-1").addClass("bi-star fs-3");
                 }
             }
+        },
+        // prints chosen filter out on filter list
+        async chosenFilter() {
+
+        },
+        // clears all filters
+        async clearFilters() {
+
+        },
+        // clears single filter
+        async clearFilter() {
+
         }
     }
 
