@@ -155,15 +155,15 @@ $(function() {
         },
         // prints chosen filter out on filter list
         async chosenFilter() {
-
+            // Prints out all filters along with data to create filter object { type: 'val', value: 'val" }
         },
         // clears all filters
         async clearFilters() {
-
+            // clears all filters from list
         },
         // clears single filter
         async clearFilter() {
-
+            // clears a single filter from list
         }
     }
 
