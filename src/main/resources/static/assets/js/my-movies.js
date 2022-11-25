@@ -164,6 +164,18 @@ $(function() {
         // clears single filter
         async clearFilter() {
             // clears a single filter from list
+        },
+        // prints list with all genres
+        async allGenreList() {
+            // get all genres
+
+            // print list with all genres for user to choose
+        },
+        // prints list with all years included
+        async allYearList() {
+            // get all movies
+
+            // print list of years to include max and min years from movie list
         }
     }
 
