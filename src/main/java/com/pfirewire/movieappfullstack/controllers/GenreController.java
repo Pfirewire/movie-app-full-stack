@@ -18,10 +18,12 @@ public class GenreController {
 
     private final GenreRepository genreDao;
     private final MovieRepository movieDao;
+    private final MovieListRepository movieListDao;
 
-    public GenreController(GenreRepository genreDao, MovieRepository movieDao) {
+    public GenreController(GenreRepository genreDao, MovieRepository movieDao, MovieListRepository movieListDao) {
         this.genreDao = genreDao;
         this.movieDao = movieDao;
+        this.movieListDao = movieListDao;
     }
 
     @GetMapping("/genre/all")
@@ -30,6 +32,11 @@ public class GenreController {
         Set<Genre> genres = new HashSet<>();
         genres.addAll(genreList);
         return genres;
+    }
+
+    @GetMapping("/genre/{listId}/all")
+    public Set<Genre> getAllGenresByListId(@PathVariable Long listId) {
+
     }
 
     @GetMapping("/genre/{movieId}")
