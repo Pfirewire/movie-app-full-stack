@@ -2,6 +2,7 @@ package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.Genre;
 import com.pfirewire.movieappfullstack.models.Movie;
+import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.repositories.GenreRepository;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
@@ -36,7 +37,18 @@ public class GenreController {
 
     @GetMapping("/genre/{listId}/all")
     public Set<Genre> getAllGenresByListId(@PathVariable Long listId) {
+        MovieList list = movieListDao.findById(listId).get();
+        Set<Movie> movies = list.getMovies();
+        Set<Genre> genres = new HashSet<>();
+        for(Movie movie : movies) {
+            // get all genres in movie
 
+            // check to see if each genre exists in genres hashset
+
+            // if not, add to hashset
+
+        }
+        return genres;
     }
 
     @GetMapping("/genre/{movieId}")
