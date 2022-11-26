@@ -165,6 +165,10 @@ export const Get = {
         } catch (error) {
             console.log(error);
         }
+    },
+    // gets all genres in movie list
+    async genresByMovieListId(url, listId) {
+
     }
 }
 

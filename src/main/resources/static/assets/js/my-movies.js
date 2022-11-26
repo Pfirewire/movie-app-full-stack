@@ -176,6 +176,10 @@ $(function() {
             // get all movies
 
             // print list of years to include max and min years from movie list
+        },
+        // prints required filters when filtermodal opens
+        async filtersModal() {
+            let genres = await Get.
         }
     }
 
