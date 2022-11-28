@@ -172,7 +172,8 @@ export const Get = {
         return genres;
     },
     async backgroundImage(key) {
-
+        let photo = await fetch(`https://api.unsplash.com/photos/random/?topics=cinema?client_id=${key}`).then(res => res.json());
+        return photo;
     }
 }
 

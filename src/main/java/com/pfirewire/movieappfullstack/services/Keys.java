@@ -25,6 +25,14 @@ public class Keys {
         this.tmdbKey = tmdbKey;
     }
 
+    public String getUnsplashKey() {
+        return unsplashKey;
+    }
+
+    public void setUnsplashKey(String unsplashKey) {
+        this.unsplashKey = unsplashKey;
+    }
+
     public String getBackRoomKey() {
         return backRoomKey;
     }

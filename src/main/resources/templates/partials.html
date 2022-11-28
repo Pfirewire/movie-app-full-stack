@@ -121,7 +121,8 @@
 </div>
 <!--Scripts Fragment-->
 <div th:fragment="scripts" th:remove="tag">
-    <script th:src="@{/assets/js/sitebar.js}" />
+    <script th:src="@{/assets/js/sitebar.js}"></script>
+    <script type="module" th:src="@{/assets/js/background.js}"></script>
     <!-- jQuery CDN-->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <!-- Bootstrap Masonry CDN-->
