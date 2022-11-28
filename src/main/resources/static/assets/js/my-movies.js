@@ -179,7 +179,8 @@ $(function() {
         },
         // prints required filters when filtermodal opens
         async filtersModal() {
-            let genres = await Get.
+            let genres = await Get.genresByMovieListId(MyMovies.urls.backendURLPath, MyMovies.listId);
+            console.log(genres);
         }
     }
 
@@ -286,6 +287,7 @@ $(function() {
             });
             $("#filter-movie-btn").on("click", function() {
                 Utils.Modal.show(MyMovies.Modals.filtersModal);
+                Print.filtersModal();
             });
             $("#apply-filters-btn").on("click", async function() {
                 Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, ""), MyMovies.carouselRoot);
