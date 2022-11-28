@@ -271,6 +271,9 @@ export const User = {
     },
     // Adds movie to database
     async addMovie(url, tmdbUrl, tmdbId, listId, csrfToken) {
+        console.log("Inside User.addMovie");
+        console.log("CSRF Token:");
+        console.log(csrfToken);
         let movie = await Get.scrapeSingleMovieData(url, tmdbUrl, tmdbId);
         const postOptions = {
             method: 'POST',

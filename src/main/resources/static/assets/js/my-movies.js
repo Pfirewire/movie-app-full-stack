@@ -296,10 +296,8 @@ $(function() {
             });
             $("#apply-filters-btn").on("click", async function() {
                 let genreChoices = $("#filters-modal-selections").children();
-                console.log(genreChoices);
                 let filters = [];
                 for(let genreChoice of genreChoices) {
-                    console.log(genreChoice);
                     let filter = {
                         type: "genre",
                         value: genreChoice.innerText
@@ -309,7 +307,6 @@ $(function() {
                 Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters), MyMovies.carouselRoot);
             });
             $(document).on("click", ".filter-modal-genre-btn", function() {
-                console.log("Genre button clicked");
                 $("#filters-modal-selections").append(`
                     <button class="btn btn-light chosen-genre-filter" data-genre-name="${$(this).attr("data-genre-name")}" disabled>${$(this).attr("data-genre-name")}</button>
                 `);
