@@ -5,10 +5,10 @@
 
     <div th:replace="partials :: metaTags" />
     <meta name="_csrf" data-th-content="${_csrf.token}" />
-    <div th:replace="partials :: links" />
 
     <title>Movie Lists</title>
 
+    <div th:replace="partials :: links" />
     <link rel="stylesheet" th:href="@{/assets/css/movie-lists.css}">
 </head>
 <body>

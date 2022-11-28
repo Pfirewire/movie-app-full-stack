@@ -181,6 +181,11 @@ $(function() {
         async filtersModal() {
             let genres = await Get.genresByMovieListId(MyMovies.urls.backendURLPath, MyMovies.listId);
             console.log(genres);
+            for(let genre of genres) {
+                $("#filters-modal-genres").append(`
+                    <button class="btn btn-light filter-modal-genre-btn" data-genre-name="${genre.name}" data-genre-id="${genre.id}">${genre.name}</button>
+                `);
+            }
         }
     }
 
@@ -291,6 +296,9 @@ $(function() {
             });
             $("#apply-filters-btn").on("click", async function() {
                 Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, ""), MyMovies.carouselRoot);
+            });
+            $(document).on("click", ".filter-modal-genre-button", function() {
+
             });
         }
     }
