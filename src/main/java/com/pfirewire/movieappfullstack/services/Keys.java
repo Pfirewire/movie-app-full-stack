@@ -9,6 +9,9 @@ public class Keys {
     @Value("${tmdbKey}")
     private String tmdbKey;
 
+    @Value("${unsplashKey}")
+    private String unsplashKey;
+
     @Value("${backRoomKey}")
     private String backRoomKey;
 

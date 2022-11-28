@@ -170,6 +170,9 @@ export const Get = {
     async genresByMovieListId(url, listId) {
         let genres = await fetch(`${url}genre/${listId}/all`).then(res => res.json());
         return genres;
+    },
+    async backgroundImage(key) {
+
     }
 }
 
