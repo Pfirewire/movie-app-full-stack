@@ -401,16 +401,6 @@ export const User = {
     // Function that filters movies based on array of filter objects passed in
     async filterMovies(url, listId, filters) {
         let movies = await Get.allMovies(url, listId).then(res => res);
-        filters = [
-            {
-                type: "genre",
-                value: "action"
-            },
-            {
-                type: "afterYear",
-                value: 2002
-            }
-        ];
         if(filters) {
             console.log(filters)
             for(let filter of filters) {
