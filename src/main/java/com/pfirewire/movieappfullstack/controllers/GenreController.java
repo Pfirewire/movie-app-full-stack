@@ -41,12 +41,12 @@ public class GenreController {
         Set<Movie> movies = list.getMovies();
         Set<Genre> genres = new HashSet<>();
         for(Movie movie : movies) {
-            // get all genres in movie
-
-            // check to see if each genre exists in genres hashset
-
-            // if not, add to hashset
-
+            Set<Genre> movieGenres = genreDao.findAllByMovies(movie);
+            for(Genre genre : movieGenres) {
+                if(!genres.contains(genre)) {
+                    genres.add(genre);
+                }
+            }
         }
         return genres;
     }
