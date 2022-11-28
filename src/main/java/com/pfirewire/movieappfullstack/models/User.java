@@ -1,10 +1,7 @@
 package com.pfirewire.movieappfullstack.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.pfirewire.movieappfullstack.Views;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -61,11 +58,7 @@ public class User {
         this.email = copy.email;
         this.username = copy.username;
         this.password = copy.password;
-//        this.lists = copy.lists;
-//        this.ratings = copy.ratings;
-//        this.reviews = copy.reviews;
     }
-
 
     // Getters and Setters
     public Long getId() { return this.id; }

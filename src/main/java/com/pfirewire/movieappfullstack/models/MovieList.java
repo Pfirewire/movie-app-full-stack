@@ -1,9 +1,6 @@
 package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.pfirewire.movieappfullstack.Views;
 
 import javax.persistence.*;
 import java.util.HashSet;
