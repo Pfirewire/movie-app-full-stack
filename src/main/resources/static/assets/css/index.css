@@ -2,9 +2,9 @@
     box-sizing: border-box;
 }
 /*Background for loading div*/
-.normal-bg {
-    background-color: #8096AD;
-}
+/*.normal-bg {*/
+/*    background-color: #8096AD;*/
+/*}*/
 
 /*Loading image div wrapper styling*/
 #loading-div {
