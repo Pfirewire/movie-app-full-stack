@@ -7,8 +7,6 @@ $(function() {
         async initialize() {
             let unsplashKey = await Get.unsplashKey(this.backendURLPath);
             let photo = await Get.backgroundImage(unsplashKey);
-            console.log(photo);
-            // $("body").css("background", `url('${photo.urls.regular}') no-repeat center center`);
             $('head').append(`
                 <style>
                     body:before{
@@ -28,8 +26,6 @@ $(function() {
                     }
                 </style>
             `);
-
-            console.log("Background changed?");
         }
     }
 

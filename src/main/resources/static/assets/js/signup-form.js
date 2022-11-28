@@ -164,7 +164,7 @@ $(function() {
             $("#signupContainer").slideToggle();
         });
 
-    $(window).on("load", function() {
+    $(window).ready( function() {
         console.log("document ready");
         $("#username").focus();
     });

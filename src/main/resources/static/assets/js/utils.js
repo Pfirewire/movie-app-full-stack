@@ -172,7 +172,7 @@ export const Get = {
         return genres;
     },
     async backgroundImage(key) {
-        let photo = await fetch(`https://api.unsplash.com/photos/random/?client_id=${key}&collections=1145548&orientation=landscape`).then(res => res.json());
+        let photo = await fetch(`https://api.unsplash.com/photos/random/?client_id=${key}&collections=10544471&orientation=landscape`).then(res => res.json());
         return photo;
     },
     async unsplashKey(url) {
