@@ -275,6 +275,7 @@ export const User = {
         console.log("CSRF Token:");
         console.log(csrfToken);
         let movie = await Get.scrapeSingleMovieData(url, tmdbUrl, tmdbId);
+
         const postOptions = {
             method: 'POST',
             headers: {
@@ -283,6 +284,7 @@ export const User = {
             },
             body: JSON.stringify(movie)
         }
+        console.log(postOptions);
         let results = await fetch(`${url}movie/${listId}/add`, postOptions).then(res => {
             $("#add-movie-text").val('');
             $("#movie-list").empty();

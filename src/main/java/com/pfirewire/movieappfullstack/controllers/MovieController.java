@@ -53,6 +53,7 @@ public class MovieController {
     @PostMapping("/movie/{listId}/add")
     public Movie addMovie(@RequestBody Movie movie, @PathVariable Long listId) {
         // Add movie to database if not already present, otherwise set equal to object in database
+        System.out.println("Inside addMovie");
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
             movieDao.save(movie);
             for(Genre genre : movie.getGenres()) {
