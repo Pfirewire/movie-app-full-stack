@@ -30,6 +30,7 @@ $(function() {
         // Prints current movie database on screen and initializes all event listeners
         async initialize() {
             await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+            await Print.filtersModal();
             Events.initialize();
         },
     }
@@ -166,10 +167,17 @@ $(function() {
             // clears a single filter from list
         },
         // prints list with all genres
-        async allGenreList() {
-            // get all genres
-
-            // print list with all genres for user to choose
+        async allGenreButtons() {
+            let genres = await Get.genresByMovieListId(MyMovies.urls.backendURLPath, MyMovies.listId);
+            for(let genre of genres) {
+                Print.singleGenreButton(genre);
+            }
+        },
+        // prints single genre button
+        async singleGenreButton(genre) {
+            $("#filters-modal-genres").append(`
+                    <button class="btn btn-light filter-modal-genre-btn" data-genre-name="${genre.name}">${genre.name}</button>
+                `);
         },
         // prints list with all years included
         async allYearList() {
@@ -179,13 +187,7 @@ $(function() {
         },
         // prints required filters when filtermodal opens
         async filtersModal() {
-            let genres = await Get.genresByMovieListId(MyMovies.urls.backendURLPath, MyMovies.listId);
-            console.log(genres);
-            for(let genre of genres) {
-                $("#filters-modal-genres").append(`
-                    <button class="btn btn-light filter-modal-genre-btn" data-genre-name="${genre.name}" data-genre-id="${genre.id}">${genre.name}</button>
-                `);
-            }
+            await Print.allGenreButtons();
         }
     }
 
@@ -292,7 +294,6 @@ $(function() {
             });
             $("#filter-movie-btn").on("click", function() {
                 Utils.Modal.show(MyMovies.Modals.filtersModal);
-                Print.filtersModal();
             });
             $("#apply-filters-btn").on("click", async function() {
                 let genreChoices = $("#filters-modal-selections").children();
@@ -304,11 +305,18 @@ $(function() {
                     };
                     filters.push(filter);
                 }
-                Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters), MyMovies.carouselRoot);
+                await Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters), MyMovies.carouselRoot);
+                Utils.Modal.hide(MyMovies.Modals.filtersModal);
             });
             $(document).on("click", ".filter-modal-genre-btn", function() {
                 $("#filters-modal-selections").append(`
-                    <button class="btn btn-light chosen-genre-filter" data-genre-name="${$(this).attr("data-genre-name")}" disabled>${$(this).attr("data-genre-name")}</button>
+                    <button class="btn btn-info chosen-genre-filter" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
+                `);
+                $(this).remove();
+            });
+            $(document).on("click", ".chosen-genre-filter", function() {
+                $("#filters-modal-genres").append(`
+                    <button class="btn btn-light filter-modal-genre-btn" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
                 `);
                 $(this).remove();
             });
