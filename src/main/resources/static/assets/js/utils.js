@@ -168,7 +168,8 @@ export const Get = {
     },
     // gets all genres in movie list
     async genresByMovieListId(url, listId) {
-
+        let genres = await fetch(`${url}genre/${listId}/all`).then(res => res.json());
+        return genres;
     }
 }
 
