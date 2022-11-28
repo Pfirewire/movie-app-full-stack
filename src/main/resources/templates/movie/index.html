@@ -3,10 +3,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 
-    <div th:replace="partials :: metaTags" />
-    <div th:replace="partials :: links" />
+<!--    <div th:replace="partials :: metaTags" />-->
+<!--    <div th:replace="partials :: links" />-->
 
-    <title>Pfirewire's Movie App</title>
+<!--    <title>Pfirewire's Movie App</title>-->
+    <div th:replace="partials :: headFragment('Pfirewire\'s Movie App')"></div>
 
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/background.css}">
     <link rel="stylesheet" th:href="@{/assets/css/index.css}">

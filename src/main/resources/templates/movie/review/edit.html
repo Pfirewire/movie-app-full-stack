@@ -3,10 +3,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 
-    <div th:replace="partials :: metaTags" />
-    <div th:replace="partials :: links" />
+<!--    <div th:replace="partials :: metaTags" />-->
+<!--    <div th:replace="partials :: links" />-->
 
-    <title>Write Review</title>
+<!--    <title>Write Review</title>-->
+    <div th:replace="partials :: headFragment('Write Review')"></div>
 
     <link rel="stylesheet" th:href="@{/assets/css/review-form.css}">
 </head>

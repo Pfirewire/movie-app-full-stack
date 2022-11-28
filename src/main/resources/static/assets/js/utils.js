@@ -171,10 +171,12 @@ export const Get = {
         let genres = await fetch(`${url}genre/${listId}/all`).then(res => res.json());
         return genres;
     },
+    // gets url for background image
     async backgroundImage(key) {
         let photo = await fetch(`https://api.unsplash.com/photos/random/?client_id=${key}&collections=10544471&orientation=landscape`).then(res => res.json());
         return photo;
     },
+
     async unsplashKey(url) {
         let keys = await fetch(`${url}keys`).then(res => res.json());
         return keys.unsplashKey;
@@ -486,5 +488,3 @@ export const Carousel = {
         this.rotate(this.currImage, carouselRoot);
     }
 }
-
-

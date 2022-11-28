@@ -3,10 +3,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 
-    <div th:replace="partials :: metaTags" />
-    <div th:replace="partials :: links" />
+<!--    <div th:replace="partials :: metaTags" />-->
+<!--    <div th:replace="partials :: links" />-->
 
-    <title>Single Review</title>
+<!--    <title>Single Review</title>-->
+    <div th:replace="partials :: headFragment('Single Review')"></div>
 
     <link rel="stylesheet" th:href="@{/assets/css/single-review.css}">
 </head>

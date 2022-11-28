@@ -3,12 +3,13 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 
-    <div th:replace="partials :: metaTags" />
-    <meta name="_csrf" data-th-content="${_csrf.token}" />
+<!--    <div th:replace="partials :: metaTags" />-->
+<!--    <meta name="_csrf" data-th-content="${_csrf.token}" />-->
 
-    <title>Movie Lists</title>
+<!--    <title>Movie Lists</title>-->
 
-    <div th:replace="partials :: links" />
+<!--    <div th:replace="partials :: links" />-->
+    <div th:replace="partials :: headFragment('Movie Lists')"></div>
     <link rel="stylesheet" th:href="@{/assets/css/movie-lists.css}">
 </head>
 <body>
