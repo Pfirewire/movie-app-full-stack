@@ -249,20 +249,45 @@ $(function() {
 
     // Events Object and Methods
     const Events = {
-        // Initializes all event listeners
-        initialize() {
+        // Initializes event listeners for add movie modal
+        addMovieModalOn() {
             // Listens for keyup in the add movie text input
-            $("#add-movie-text").keyup(e => {
-                if(e.key === "Enter" || e.key === " "){
-                    Print.moviesList($("#add-movie-text").val());
-                }
-            });
-            // Listens for click on add movie card
-            $(document.body).on("click", "#movie-list .card", async function() {
-                await User.addMovie(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, $(this).attr("data-movie-tmdb-id"), MyMovies.listId, MyMovies.csrfToken);
-                await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
-                Utils.Modal.hide(MyMovies.Modals.addMovieModal);
-            });
+            $(document)
+                .on("keyup", "#add-movie-text", function(e) {
+                    if(e.key === "Enter" || e.key === " "){
+                        Print.moviesList($("#add-movie-text").val());
+                    }
+                })
+                // Listens for click on add movie card
+                .on("click", "#movie-list .card", async function() {
+                    await User.addMovie(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, $(this).attr("data-movie-tmdb-id"), MyMovies.listId, MyMovies.csrfToken);
+                    await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+                    Utils.Modal.hide(MyMovies.Modals.addMovieModal);
+                    Events.addMovieModalOff();
+                })
+            ;
+        },
+        // Turns off event listeners for add movie modal
+        addMovieModalOff() {
+            $(document)
+                .off("keyup", "#add-movie-text")
+                .off("click", "#movie-list .card")
+            ;
+        },
+        // Initializes all default event listeners
+        initialize() {
+            // // Listens for keyup in the add movie text input
+            // $("#add-movie-text").keyup(e => {
+            //     if(e.key === "Enter" || e.key === " "){
+            //         Print.moviesList($("#add-movie-text").val());
+            //     }
+            // });
+            // // Listens for click on add movie card
+            // $(document.body).on("click", "#movie-list .card", async function() {
+            //     await User.addMovie(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, $(this).attr("data-movie-tmdb-id"), MyMovies.listId, MyMovies.csrfToken);
+            //     await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+            //     Utils.Modal.hide(MyMovies.Modals.addMovieModal);
+            // });
             // Listens for click on delete button
             $(document.body).on("click", ".delete-btn", async function (){
                 $(this).attr("disabled", "");
@@ -272,6 +297,7 @@ $(function() {
             })
             // Listens for click of add button
             $("#add-movie-btn").on("click", function() {
+                Events.addMovieModalOn();
                 $("#add-movie-text").val("").text("");
                 $("#movie-list").html("");
                 setTimeout(function() {

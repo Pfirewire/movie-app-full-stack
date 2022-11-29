@@ -6,7 +6,6 @@ export const Get = {
             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
             let response = await fetch(`${url}movies/${listId}`);
             let data = await response.json();
-            console.log(data);
             return data;
         } catch (err) {
             console.log(err);
@@ -100,7 +99,6 @@ export const Get = {
         try {
             let reviewData = await fetch(`${url}reviews/all`);
             let reviewList = await reviewData.json();
-            console.log(reviewList);
             return reviewList
         } catch (err) {
             console.log(err);
@@ -118,7 +116,6 @@ export const Get = {
     },
     // gets movie rating with movie id and user id
     async movieRatingWithUserId(url, movieId, userId) {
-        console.log(userId);
         let response = await fetch(`${url}rating/${movieId}/${userId}`);
         let data = await response.json();
         return data;
@@ -160,7 +157,6 @@ export const Get = {
             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
             let response = await fetch(`${url}genre/${movieId}`);
             let data = await response.json();
-            console.log(data);
             return data;
         } catch (error) {
             console.log(error);
@@ -258,38 +254,21 @@ export const User = {
         },
         // Filter by after year, returns movies after year
         afterYear(movies, year) {
-            console.log("Inside FilterBy.afterYear");
-            console.log("After year " + year);
-            console.log("Movies sent in:");
-            console.log(movies);
             let filteredMovies = [];
             if(movies) {
-                console.log("Movies exist");
                 for(let movie of movies) {
-                    console.log("Movie:");
-                    console.log(movie);
-                    console.log("Movie year:");
-                    console.log(movie.year);
                     if(movie.year > year) {
-                        console.log("Movie year is after filter year");
                         filteredMovies.push(movie);
-                        console.log("Filtered movies array:");
-                        console.log(filteredMovies);
                     }
                 }
             } else {
                 console.log("No movies to filter");
             }
-            console.log("After year filtered movies");
-            console.log(filteredMovies);
             return filteredMovies;
         }
     },
     // Adds movie to database
     async addMovie(url, tmdbUrl, tmdbId, listId, csrfToken) {
-        console.log("Inside User.addMovie");
-        console.log("CSRF Token:");
-        console.log(csrfToken);
         let movie = await Get.scrapeSingleMovieData(url, tmdbUrl, tmdbId);
 
         const postOptions = {
@@ -300,7 +279,6 @@ export const User = {
             },
             body: JSON.stringify(movie)
         }
-        console.log(postOptions);
         let results = await fetch(`${url}movie/${listId}/add`, postOptions).then(res => {
             $("#add-movie-text").val('');
             $("#movie-list").empty();
@@ -361,7 +339,6 @@ export const User = {
     },
     // Sorts movies based on user choice. returns new array of movies
     async sortMovies(movies) {
-        // console.log(movies);
         // Checks which value user selected and sorts
         switch($("#sort-select").children("option:selected").val()){
             case "1":
@@ -423,9 +400,7 @@ export const User = {
     async filterMovies(url, listId, filters) {
         let movies = await Get.allMovies(url, listId).then(res => res);
         if(filters) {
-            console.log(filters)
             for(let filter of filters) {
-                console.log(filter);
                 switch(filter.type) {
                     case "genre":
                         movies = User.FilterBy.genre(movies, filter.value);

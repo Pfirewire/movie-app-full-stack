@@ -165,7 +165,6 @@ $(function() {
         });
 
     $(window).ready( function() {
-        console.log("document ready");
         $("#username").focus();
     });
 
