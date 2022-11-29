@@ -27,6 +27,19 @@ $(function() {
         carouselRoot: $(".carousel"),
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
+        // reads chosen filters and returns array of filter objects
+        findChosenFilters() {
+            let genreChoices = $("#filters-modal-selections").children();
+            let filters = [];
+            for(let genreChoice of genreChoices) {
+                let filter = {
+                    type: "genre",
+                    value: genreChoice.innerText
+                };
+                filters.push(filter);
+            }
+            return filters;
+        },
         // Prints current movie database on screen and initializes all event listeners
         async initialize() {
             await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
@@ -295,30 +308,21 @@ $(function() {
             $("#filter-movie-btn").on("click", function() {
                 Utils.Modal.show(MyMovies.Modals.filtersModal);
             });
-            $("#apply-filters-btn").on("click", async function() {
-                let genreChoices = $("#filters-modal-selections").children();
-                let filters = [];
-                for(let genreChoice of genreChoices) {
-                    let filter = {
-                        type: "genre",
-                        value: genreChoice.innerText
-                    };
-                    filters.push(filter);
-                }
-                await Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters), MyMovies.carouselRoot);
-                Utils.Modal.hide(MyMovies.Modals.filtersModal);
-            });
-            $(document).on("click", ".filter-modal-genre-btn", function() {
+            $(document).on("click", ".filter-modal-genre-btn", async function() {
                 $("#filters-modal-selections").append(`
                     <button class="btn btn-info chosen-genre-filter" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
                 `);
                 $(this).remove();
+                let filters = MyMovies.findChosenFilters();
+                await Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters), MyMovies.carouselRoot);
             });
-            $(document).on("click", ".chosen-genre-filter", function() {
+            $(document).on("click", ".chosen-genre-filter", async function() {
                 $("#filters-modal-genres").append(`
                     <button class="btn btn-light filter-modal-genre-btn" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
                 `);
                 $(this).remove();
+                let filters = MyMovies.findChosenFilters();
+                await Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters), MyMovies.carouselRoot);
             });
         }
     }

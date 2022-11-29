@@ -125,6 +125,11 @@
     cursor: pointer;
 }
 
+#filters-modal-header {
+    display: flex;
+    justify-content: center;
+}
+
 #filters-modal-genres>button, #filters-modal-selections>button {
     margin: .5em;
 }
