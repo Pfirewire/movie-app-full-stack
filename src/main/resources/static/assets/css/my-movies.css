@@ -135,6 +135,11 @@
     margin: .5em;
 }
 
+.form-select {
+    width: calc(100% - 1em);
+    margin: .5em;
+}
+
 #carousel-buttons {
     /*display: flex;*/
     /*position: fixed;*/
