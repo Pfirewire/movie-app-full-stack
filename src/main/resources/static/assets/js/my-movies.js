@@ -369,10 +369,12 @@ $(function() {
             });
             $(document).on("change", ".filters-year-select", async function() {
                 if($(this).attr("id") === "before-year-select") {
+                    $(".chosen-before-year-filter").remove();
                     $("#filters-modal-selections").prepend(`
                         <button class="btn btn-info chosen-year-filter chosen-before-year-filter" data-filter-year="${$(this).find(":selected").val()}">Before ${$(this).find(":selected").val()}</button>
                     `);
                 } else if($(this).attr("id") === "after-year-select") {
+                    $(".chosen-after-year-filter").remove();
                     $("#filters-modal-selections").prepend(`
                         <button class="btn btn-info chosen-year-filter chosen-after-year-filter" data-filter-year="${$(this).find(":selected").val()}">After ${$(this).find(":selected").val()}</button>
                     `);
