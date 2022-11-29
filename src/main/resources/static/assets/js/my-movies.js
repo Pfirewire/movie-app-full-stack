@@ -265,6 +265,12 @@ $(function() {
                     Utils.Modal.hide(MyMovies.Modals.addMovieModal);
                     Events.addMovieModalOff();
                 })
+                .on("click", function(e) {
+                    if(!$(e.target).closest("#add-movie-modal .modal-content").length && $("#add-movie-modal").is(":visible")) {
+                        console.log("clicked outside add movie modal. turning off event listeners");
+                        Events.addMovieModalOff();
+                    }
+                })
             ;
         },
         // Turns off event listeners for add movie modal
@@ -274,145 +280,175 @@ $(function() {
                 .off("click", "#movie-list .card")
             ;
         },
+        singleMovieModalOn() {
+            $(document)
+                // Listens for click on delete button
+                .on("click", ".delete-btn", async function (){
+                    $(this).attr("disabled", "");
+                    await User.deleteMovie(MyMovies.urls.backendURLPath, $(this).parent().parent().attr("data-movie-id"), MyMovies.listId, $(this), MyMovies.csrfToken);
+                    await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+                    Utils.Modal.hide(MyMovies.Modals.singleMovieModal);
+                    Events.singleMovieModalOff();
+                })
+                .on("click", ".review-btn", function() {
+                    User.reviewForm(MyMovies.urls.backendURLPath, $(this).parent().parent().attr("data-movie-id"));
+                })
+                .on("mouseenter", ".modal-rating-star", function() {
+                    let rating = $(this).attr("data-rating-star");
+                    Print.starFill(rating);
+                })
+                .on("mouseleave", "#single-movie-modal-header", async function() {
+                    // get the saved rating and display it correctly
+                    let movieId = $("#single-movie").attr("data-movie-id");
+                    let ratingData = await Get.movieRating(MyMovies.urls.backendURLPath, movieId);
+                    let rating = ratingData.value;
+                    Print.starFill(rating);
+                })
+                .on("click", ".modal-rating-star", function() {
+                    let rating = $(this).attr("data-rating-star");
+                    let movieId = $(this).attr("data-movie-id");
+                    User.setRating(MyMovies.urls.backendURLPath, movieId, parseInt(rating), MyMovies.csrfToken);
+                })
+                .on("click", function(e) {
+                    if(!$(e.target).closest("#single-movie-modal .modal-content").length && $("#single-movie-modal").is(":visible")) {
+                        console.log("clicked outside single movie modal. turning off event listeners");
+                        Events.singleMovieModalOff();
+                    }
+                })
+            ;
+        },
+        singleMovieModalOff() {
+            $(document)
+                .off("click", ".delete-btn")
+                .off("click", ".review-btn")
+                .off("mouseenter", ".modal-rating-star")
+                .off("mouseleave", "#single-movie-modal-header")
+                .off("click", ".modal-rating-star")
+            ;
+        },
+        filterMovieModalOn() {
+            $(document)
+                .on("click", ".filter-modal-genre-btn", async function() {
+                    $("#filters-modal-selections").append(`
+                        <button class="btn btn-info chosen-genre-filter" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
+                    `);
+                    $(this).remove();
+                    await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                    await Print.allYearLists();
+                })
+                .on("click", ".chosen-genre-filter", async function() {
+                    $("#filters-modal-genres").append(`
+                        <button class="btn btn-light filter-modal-genre-btn" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
+                    `);
+                    $(this).remove();
+                    await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                    await Print.allYearLists();
+                })
+                .on("change", ".filters-year-select", async function() {
+                    if($(this).attr("id") === "before-year-select") {
+                        $(".chosen-before-year-filter").remove();
+                        $("#filters-modal-selections").prepend(`
+                            <button class="btn btn-info chosen-year-filter chosen-before-year-filter" data-filter-year="${$(this).find(":selected").val()}">Before ${$(this).find(":selected").val()}</button>
+                        `);
+                    } else if($(this).attr("id") === "after-year-select") {
+                        $(".chosen-after-year-filter").remove();
+                        $("#filters-modal-selections").prepend(`
+                            <button class="btn btn-info chosen-year-filter chosen-after-year-filter" data-filter-year="${$(this).find(":selected").val()}">After ${$(this).find(":selected").val()}</button>
+                        `);
+                    }
+                    await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                    await Print.allYearLists();
+                })
+                .on("click", ".chosen-year-filter", async function() {
+                    $(this).remove();
+                    await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                    await Print.allYearLists();
+                })
+                .on("click", function(e) {
+                    if(!$(e.target).closest("#filters-modal .modal-content").length && $("#filters-modal").is(":visible")) {
+                        console.log("clicked outside filter movie modal. turning off event listeners");
+                        Events.filterMovieModalOff();
+                    }
+                })
+            ;
+        },
+        filterMovieModalOff() {
+            $(document)
+                .off("click", ".filter-modal-genre-btn")
+                .off("click", ".chosen-genre-filter")
+                .off("change", ".filters-year-select")
+                .off("click", ".chosen-year-filter")
+            ;
+        },
         // Initializes all default event listeners
         initialize() {
-            // // Listens for keyup in the add movie text input
-            // $("#add-movie-text").keyup(e => {
-            //     if(e.key === "Enter" || e.key === " "){
-            //         Print.moviesList($("#add-movie-text").val());
-            //     }
-            // });
-            // // Listens for click on add movie card
-            // $(document.body).on("click", "#movie-list .card", async function() {
-            //     await User.addMovie(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, $(this).attr("data-movie-tmdb-id"), MyMovies.listId, MyMovies.csrfToken);
-            //     await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
-            //     Utils.Modal.hide(MyMovies.Modals.addMovieModal);
-            // });
-            // Listens for click on delete button
-            $(document.body).on("click", ".delete-btn", async function (){
-                $(this).attr("disabled", "");
-                await User.deleteMovie(MyMovies.urls.backendURLPath, $(this).parent().parent().attr("data-movie-id"), MyMovies.listId, $(this), MyMovies.csrfToken);
-                await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
-                Utils.Modal.hide(MyMovies.Modals.singleMovieModal);
-            })
             // Listens for click of add button
-            $("#add-movie-btn").on("click", function() {
-                Events.addMovieModalOn();
-                $("#add-movie-text").val("").text("");
-                $("#movie-list").html("");
-                setTimeout(function() {
-                    $("#add-movie-text").focus();
-                }, 500);
-            });
-            // Listens for click of any image of our full movie list
-            $(document.body).on("click", ".carousel-cell img", function() {
-                if(Carousel.isInFront($(this))) {
-                    Carousel.modalClick(MyMovies.Modals.singleMovieModal);
-                    Get.movieById(MyMovies.urls.backendURLPath, $(this).parent().attr("data-movie-id"), MyMovies.listId)
-                        .then(res => Print.movieModal($("#single-movie-modal"), res));
-                }
-            });
-            $(document.body).on("click", ".review-btn", function() {
-                User.reviewForm(MyMovies.urls.backendURLPath, $(this).parent().parent().attr("data-movie-id"));
-            });
-            // Listens for change in sort select
-            $("#sort-select").change(function() {
-                Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
-            });
-            $(document.body).on("mouseenter", ".modal-rating-star", function() {
-                let rating = $(this).attr("data-rating-star");
-                Print.starFill(rating);
-            });
-            $(document.body).on("mouseleave", "#single-movie-modal-header", async function() {
-                // get the saved rating and display it correctly
-                let movieId = $("#single-movie").attr("data-movie-id");
-                let ratingData = await Get.movieRating(MyMovies.urls.backendURLPath, movieId);
-                let rating = ratingData.value;
-                Print.starFill(rating);
-            });
-            $(document.body).on("click", ".modal-rating-star", function() {
-                let rating = $(this).attr("data-rating-star");
-                let movieId = $(this).attr("data-movie-id");
-                User.setRating(MyMovies.urls.backendURLPath, movieId, parseInt(rating), MyMovies.csrfToken);
-            });
-            $(document.body).on("keyup", function(e) {
-                if(e.key === "Left" || e.key === "ArrowLeft") {
-                    Carousel.currImage--;
-                    Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
-                } else if(e.key === "Right" || e.key === "ArrowRight") {
+            $(document)
+                .on("click", "#add-movie-btn", function() {
+                    Events.addMovieModalOn();
+                    $("#add-movie-text").val("").text("");
+                    $("#movie-list").html("");
+                    setTimeout(function() {
+                        $("#add-movie-text").focus();
+                    }, 500);
+                })
+                // Listens for click of any image of our full movie list
+                .on("click", ".carousel-cell img", function() {
+                    if(Carousel.isInFront($(this))) {
+                        Events.singleMovieModalOn();
+                        Carousel.modalClick(MyMovies.Modals.singleMovieModal);
+                        Get.movieById(MyMovies.urls.backendURLPath, $(this).parent().attr("data-movie-id"), MyMovies.listId)
+                            .then(res => Print.movieModal($("#single-movie-modal"), res));
+                    }
+                })
+                // Listens for change in sort select
+                .on("change", "#sort-select", function() {
+                    Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                })
+                .on("keyup", function(e) {
+                    if(e.key === "Left" || e.key === "ArrowLeft") {
+                        Carousel.currImage--;
+                        Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
+                    } else if(e.key === "Right" || e.key === "ArrowRight") {
+                        Carousel.currImage++;
+                        Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
+                    }
+                })
+                // Sets up event listeners for the buttons to rotate the carousel
+                .on("click", ".carousel-next", function() {
                     Carousel.currImage++;
                     Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
-                }
-            });
-            // Sets up event listeners for the buttons to rotate the carousel
-            $(".carousel-next").on("click", function() {
-                Carousel.currImage++;
-                Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
-            });
-            $(".carousel-prev").on("click", function() {
-                Carousel.currImage--;
-                Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
-            });
-            // Hover over front movie in carousel
-            $(document.body).on("mouseenter", ".carousel-cell img", function() {
-                if(Carousel.isInFront($(this))) {
-                    $(this).toggleClass("big-movie");
-                }
-            });
-            $(document.body).on("mouseleave", ".carousel-cell img", function() {
-                if(Carousel.isInFront($(this))) {
-                    $(this).toggleClass("big-movie");
-                }
-            });
-            // Hover over prev-next buttons
-            $(document.body).on("mouseenter", ".carousel-nav", function() {
-                $(this).css("opacity", "75");
-            });
-            $(document.body).on("mouseleave", ".carousel-nav", function() {
-                $(this).css("opacity", "0");
-            });
-            $("#random-movie-btn").on("click", function() {
-                Carousel.randomIndex(MyMovies.carouselRoot);
-            });
-            $("#filter-movie-btn").on("click", function() {
-                Utils.Modal.show(MyMovies.Modals.filtersModal);
-            });
-            $(document).on("click", ".filter-modal-genre-btn", async function() {
-                $("#filters-modal-selections").append(`
-                    <button class="btn btn-info chosen-genre-filter" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
-                `);
-                $(this).remove();
-                await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
-                await Print.allYearLists();
-            });
-            $(document).on("click", ".chosen-genre-filter", async function() {
-                $("#filters-modal-genres").append(`
-                    <button class="btn btn-light filter-modal-genre-btn" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
-                `);
-                $(this).remove();
-                await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
-                await Print.allYearLists();
-            });
-            $(document).on("change", ".filters-year-select", async function() {
-                if($(this).attr("id") === "before-year-select") {
-                    $(".chosen-before-year-filter").remove();
-                    $("#filters-modal-selections").prepend(`
-                        <button class="btn btn-info chosen-year-filter chosen-before-year-filter" data-filter-year="${$(this).find(":selected").val()}">Before ${$(this).find(":selected").val()}</button>
-                    `);
-                } else if($(this).attr("id") === "after-year-select") {
-                    $(".chosen-after-year-filter").remove();
-                    $("#filters-modal-selections").prepend(`
-                        <button class="btn btn-info chosen-year-filter chosen-after-year-filter" data-filter-year="${$(this).find(":selected").val()}">After ${$(this).find(":selected").val()}</button>
-                    `);
-                }
-                await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
-                await Print.allYearLists();
-            });
-            $(document).on("click", ".chosen-year-filter", async function() {
-                $(this).remove();
-                await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
-                await Print.allYearLists();
-            });
+                })
+                .on("click", ".carousel-prev", function() {
+                    Carousel.currImage--;
+                    Carousel.rotate(Carousel.currImage, MyMovies.carouselRoot);
+                })
+                // Hover over front movie in carousel
+                .on("mouseenter", ".carousel-cell img", function() {
+                    if(Carousel.isInFront($(this))) {
+                        $(this).toggleClass("big-movie");
+                    }
+                })
+                .on("mouseleave", ".carousel-cell img", function() {
+                    if(Carousel.isInFront($(this))) {
+                        $(this).toggleClass("big-movie");
+                    }
+                })
+                // Hover over prev-next buttons
+                .on("mouseenter", ".carousel-nav", function() {
+                    $(this).css("opacity", "75");
+                })
+                .on("mouseleave", ".carousel-nav", function() {
+                    $(this).css("opacity", "0");
+                })
+                .on("click", "#random-movie-btn", function() {
+                    Carousel.randomIndex(MyMovies.carouselRoot);
+                })
+                .on("click", "#filter-movie-btn", function() {
+                    Events.filterMovieModalOn();
+                    Utils.Modal.show(MyMovies.Modals.filtersModal);
+                })
+            ;
         }
     }
 
