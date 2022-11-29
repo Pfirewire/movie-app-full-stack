@@ -125,6 +125,10 @@
     cursor: pointer;
 }
 
+#filters-modal-genres>button, #filters-modal-selections>button {
+    margin: .5em;
+}
+
 #carousel-buttons {
     /*display: flex;*/
     /*position: fixed;*/
