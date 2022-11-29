@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -36,12 +37,12 @@ public class User {
     private Set<MovieList> lists = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonManagedReference(value = "userRating")
+//    @JsonManagedReference(value = "userRating")
     @JsonIgnore
     private Set<Rating> ratings = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonManagedReference(value = "userReview")
+//    @JsonManagedReference(value = "userReview")
     @JsonIgnore
     private Set<Review> reviews = new HashSet<>();
     // Constructor functions

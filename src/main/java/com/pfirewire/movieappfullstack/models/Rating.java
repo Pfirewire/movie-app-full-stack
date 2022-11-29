@@ -1,6 +1,8 @@
 package com.pfirewire.movieappfullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -16,14 +18,14 @@ public class Rating {
     private int value;
 
     @ManyToOne
-    @JsonBackReference(value = "userRating")
-//    @JsonIgnore
+//    @JsonBackReference(value = "userRating")
+    @JsonIgnore
     @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-    @JsonBackReference(value = "movieRating")
-//    @JsonIgnore
+//    @JsonBackReference(value = "movieRating")
+    @JsonIgnore
     @JoinColumn(name="movie_id")
     private Movie movie;
 
