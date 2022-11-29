@@ -234,15 +234,11 @@ $(function() {
         async allYearLists() {
             // get all movies
             let years = await MyMovies.findYears().then(res => res);
-            console.log("First and last years:");
-            console.log(years);
             // print list of years to include max and min years from movie list
             this.allYearList($("#before-year-select"), years);
             this.allYearList($("#after-year-select"), years);
         },
         allYearList(div, years) {
-            console.log("Printing single year list. first and last years:");
-            console.log(years);
             div.empty();
             div.append(`
                 <option selected>Choose Year</option>
@@ -381,14 +377,17 @@ $(function() {
                 await Print.allYearLists();
             });
             $(document).on("change", ".filters-year-select", async function() {
-                console.log($(this));
                 if($(this).attr("id") === "before-year-select") {
-                    console.log("Before year select");
-
+                    $("#filters-modal-selections").prepend(`
+                        <button class="btn btn-info chosen-before-year-filter" data-filter-year="${$(this).find(":selected").val()}">Before ${$(this).find(":selected").val()}</button>
+                    `);
+                } else if($(this).attr("id") === "after-year-select") {
+                    $("#filters-modal-selections").prepend(`
+                        <button class="btn btn-info chosen-after-year-filter" data-filter-year="${$(this).find(":selected").val()}">After ${$(this).find(":selected").val()}</button>
+                    `);
                 }
-                // $("#filters-modal-selections").prepend(`
-                //     <button class="btn btn-info
-                // `);
+                await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                await Print.allYearLists();
             });
         }
     }
