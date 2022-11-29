@@ -251,6 +251,7 @@ $(function() {
     const Events = {
         // Initializes event listeners for add movie modal
         addMovieModalOn() {
+            console.log("Add movie modal events ON");
             Events.defaultsOff();
             // Listens for keyup in the add movie text input
             $(document)
@@ -275,6 +276,7 @@ $(function() {
         },
         // Turns off event listeners for add movie modal
         addMovieModalOff() {
+            console.log("Add movie modal events OFF");
             $(document)
                 .off("keyup", "#add-movie-text")
                 .off("click", "#movie-list .card")
@@ -282,6 +284,7 @@ $(function() {
             Events.defaultsOn();
         },
         singleMovieModalOn() {
+            console.log("Single movie modal events ON");
             Events.defaultsOff();
             $(document)
                 // Listens for click on delete button
@@ -319,6 +322,7 @@ $(function() {
             ;
         },
         singleMovieModalOff() {
+            console.log("Single movie modal events OFF");
             $(document)
                 .off("click", ".delete-btn")
                 .off("click", ".review-btn")
@@ -329,6 +333,7 @@ $(function() {
             Events.defaultsOn();
         },
         filterMovieModalOn() {
+            console.log("Filter movie modal events ON");
             Events.defaultsOff();
             $(document)
                 .on("click", ".filter-modal-genre-btn", async function() {
@@ -375,6 +380,7 @@ $(function() {
             ;
         },
         filterMovieModalOff() {
+            console.log("Filter movie modal events OFF");
             $(document)
                 .off("click", ".filter-modal-genre-btn")
                 .off("click", ".chosen-genre-filter")
@@ -385,6 +391,7 @@ $(function() {
         },
         // Initializes all default event listeners
         defaultsOn() {
+            console.log("Default events ON");
             // Listens for click of add button
             $(document)
                 .on("click", "#add-movie-btn", function() {
@@ -454,6 +461,7 @@ $(function() {
             ;
         },
         defaultsOff() {
+            console.log("Default events OFF");
             $(document)
                 .off("click", "#add-movie-btn")
                 .off("click", ".carousel-cell img")
