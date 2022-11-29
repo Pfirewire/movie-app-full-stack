@@ -34,10 +34,25 @@ $(function() {
             for(let choice of choices) {
                 console.log("Single choice:");
                 console.log(choice);
-                let filter = {
-                    type: "genre",
-                    value: choice.innerText
-                };
+                if(choice.classList.includes("chosen-genre-filter")){
+                    console.log("Filter is a genre");
+                    let filter = {
+                        type: "genre",
+                        value: choice.innerText
+                    };
+                } else if(choice.classList.includes("chosen-before-year-filter")) {
+                    console.log("Filter is a before year");
+                    let filter = {
+                        type: "beforeYear",
+                        value: choice.innerText
+                    };
+                } else if(choice.classList.includes("chosen-after-year-filter")) {
+                    console.log("Filter is a after year");
+                    let filter = {
+                        type: "afterYear",
+                        value: choice.innerText
+                    };
+                }
                 filters.push(filter);
             }
             return filters;
@@ -364,6 +379,16 @@ $(function() {
                 $(this).remove();
                 await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
                 await Print.allYearLists();
+            });
+            $(document).on("change", ".filters-year-select", async function() {
+                console.log($(this));
+                if($(this).attr("id") === "before-year-select") {
+                    console.log("Before year select");
+
+                }
+                // $("#filters-modal-selections").prepend(`
+                //     <button class="btn btn-info
+                // `);
             });
         }
     }
