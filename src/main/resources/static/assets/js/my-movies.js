@@ -291,7 +291,7 @@ $(function() {
             });
             // Listens for change in sort select
             $("#sort-select").change(function() {
-                Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+                Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
             });
             $(document.body).on("mouseenter", ".modal-rating-star", function() {
                 let rating = $(this).attr("data-rating-star");
