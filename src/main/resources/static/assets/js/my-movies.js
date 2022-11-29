@@ -196,17 +196,10 @@ $(function() {
                 }
             }
         },
-        // prints chosen filter out on filter list
-        async chosenFilter() {
-            // Prints out all filters along with data to create filter object { type: 'val', value: 'val" }
-        },
         // clears all filters
         async clearFilters() {
-            // clears all filters from list
-        },
-        // clears single filter
-        async clearFilter() {
-            // clears a single filter from list
+            $("#filters-modal-genres").empty();
+            $("#filters-modal-selections").empty();
         },
         // prints list with all genres
         async allGenreButtons() {
@@ -240,10 +233,11 @@ $(function() {
                 `);
             }
         },
-        // prints required filters when filtermodal opens
+        // prints required filters when filter modal opens
         async filtersModal() {
+            Print.clearFilters();
             await Print.allGenreButtons();
-            await Print.allYearLists()
+            await Print.allYearLists();
         }
     }
 
@@ -263,6 +257,7 @@ $(function() {
                 .on("click", "#movie-list .card", async function() {
                     await User.addMovie(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, $(this).attr("data-movie-tmdb-id"), MyMovies.listId, MyMovies.csrfToken);
                     await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+                    Print.filtersModal();
                     Utils.Modal.hide(MyMovies.Modals.addMovieModal);
                     Events.addMovieModalOff();
                 })
