@@ -128,6 +128,7 @@
 #filters-modal-header {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 #filters-modal-genres>button, #filters-modal-selections>button {

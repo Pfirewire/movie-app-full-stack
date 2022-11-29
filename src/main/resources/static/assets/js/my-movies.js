@@ -40,6 +40,27 @@ $(function() {
             }
             return filters;
         },
+        // returns movie list of current movies filtered
+        async findActiveMovies() {
+            let filters = MyMovies.findChosenFilters();
+            return User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters);
+        },
+        // finds movies currently in list and returns array with first year and last year
+        async findYears() {
+            let movies = await this.findActiveMovies().then(res => res);
+            let firstAndLastYear = [];
+            for(let movie of movies) {
+                if(firstAndLastYear.length === 0) {
+                    firstAndLastYear.push(movie.year);
+                    firstAndLastYear.push(movie.year);
+                } else if(movie.year < firstAndLastYear[0]) {
+                    firstAndLastYear[0] = movie.year;
+                } else if(movie.year > firstAndLastYear[1]) {
+                    firstAndLastYear[1] = movie.year;
+                }
+            }
+            return firstAndLastYear;
+        },
         // Prints current movie database on screen and initializes all event listeners
         async initialize() {
             await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
@@ -193,14 +214,17 @@ $(function() {
                 `);
         },
         // prints list with all years included
-        async allYearList() {
+        async allYearLists() {
             // get all movies
-
+            let years = await MyMovies.findYears().then(res => res);
+            console.log("First and last years:");
+            console.log(years);
             // print list of years to include max and min years from movie list
         },
         // prints required filters when filtermodal opens
         async filtersModal() {
             await Print.allGenreButtons();
+            await Print.allYearLists()
         }
     }
 
@@ -313,20 +337,19 @@ $(function() {
                     <button class="btn btn-info chosen-genre-filter" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
                 `);
                 $(this).remove();
-                let filters = MyMovies.findChosenFilters();
-                await Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters), MyMovies.carouselRoot);
+                await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                await Print.allYearLists();
             });
             $(document).on("click", ".chosen-genre-filter", async function() {
                 $("#filters-modal-genres").append(`
                     <button class="btn btn-light filter-modal-genre-btn" data-genre-name="${$(this).attr("data-genre-name")}">${$(this).attr("data-genre-name")}</button>
                 `);
                 $(this).remove();
-                let filters = MyMovies.findChosenFilters();
-                await Print.allMovies(User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters), MyMovies.carouselRoot);
+                await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                await Print.allYearLists();
             });
         }
     }
-
 
     // Initialize MyMovies
     MyMovies.initialize();
