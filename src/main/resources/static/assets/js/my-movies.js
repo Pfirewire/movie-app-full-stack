@@ -29,12 +29,14 @@ $(function() {
         csrfToken: $("meta[name='_csrf']").attr("content"),
         // reads chosen filters and returns array of filter objects
         findChosenFilters() {
-            let genreChoices = $("#filters-modal-selections").children();
+            let choices = $("#filters-modal-selections").children();
             let filters = [];
-            for(let genreChoice of genreChoices) {
+            for(let choice of choices) {
+                console.log("Single choice:");
+                console.log(choice);
                 let filter = {
                     type: "genre",
-                    value: genreChoice.innerText
+                    value: choice.innerText
                 };
                 filters.push(filter);
             }
@@ -220,6 +222,21 @@ $(function() {
             console.log("First and last years:");
             console.log(years);
             // print list of years to include max and min years from movie list
+            this.allYearList($("#before-year-select"), years);
+            this.allYearList($("#after-year-select"), years);
+        },
+        allYearList(div, years) {
+            console.log("Printing single year list. first and last years:");
+            console.log(years);
+            div.empty();
+            div.append(`
+                <option selected>Choose Year</option>
+            `);
+            for(let i = years[0]; i <= years[1]; i++) {
+                div.append(`
+                    <option value="${i}">${i}</option>
+                `);
+            }
         },
         // prints required filters when filtermodal opens
         async filtersModal() {
