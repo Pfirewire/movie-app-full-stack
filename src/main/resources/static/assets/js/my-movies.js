@@ -32,26 +32,16 @@ $(function() {
             let choices = $("#filters-modal-selections").children();
             let filters = [];
             for(let choice of choices) {
-                console.log("Single choice:");
-                console.log(choice);
-                if(choice.classList.includes("chosen-genre-filter")){
-                    console.log("Filter is a genre");
-                    let filter = {
-                        type: "genre",
-                        value: choice.innerText
-                    };
-                } else if(choice.classList.includes("chosen-before-year-filter")) {
-                    console.log("Filter is a before year");
-                    let filter = {
-                        type: "beforeYear",
-                        value: choice.innerText
-                    };
-                } else if(choice.classList.includes("chosen-after-year-filter")) {
-                    console.log("Filter is a after year");
-                    let filter = {
-                        type: "afterYear",
-                        value: choice.innerText
-                    };
+                let filter = {}
+                if(choice.className.includes("chosen-genre-filter")){
+                    filter.type = "genre";
+                    filter.value = choice.innerText;
+                } else if(choice.className.includes("chosen-before-year-filter")) {
+                    filter.type = "beforeYear";
+                    filter.value = choice.innerText;
+                } else if(choice.className.includes("chosen-after-year-filter")) {
+                    filter.type = "afterYear";
+                    filter.value = choice.innerText;
                 }
                 filters.push(filter);
             }
@@ -379,13 +369,18 @@ $(function() {
             $(document).on("change", ".filters-year-select", async function() {
                 if($(this).attr("id") === "before-year-select") {
                     $("#filters-modal-selections").prepend(`
-                        <button class="btn btn-info chosen-before-year-filter" data-filter-year="${$(this).find(":selected").val()}">Before ${$(this).find(":selected").val()}</button>
+                        <button class="btn btn-info chosen-year-filter chosen-before-year-filter" data-filter-year="${$(this).find(":selected").val()}">Before ${$(this).find(":selected").val()}</button>
                     `);
                 } else if($(this).attr("id") === "after-year-select") {
                     $("#filters-modal-selections").prepend(`
-                        <button class="btn btn-info chosen-after-year-filter" data-filter-year="${$(this).find(":selected").val()}">After ${$(this).find(":selected").val()}</button>
+                        <button class="btn btn-info chosen-year-filter chosen-after-year-filter" data-filter-year="${$(this).find(":selected").val()}">After ${$(this).find(":selected").val()}</button>
                     `);
                 }
+                await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                await Print.allYearLists();
+            });
+            $(document).on("click", ".chosen-year-filter", async function() {
+                $(this).remove();
                 await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
                 await Print.allYearLists();
             });
