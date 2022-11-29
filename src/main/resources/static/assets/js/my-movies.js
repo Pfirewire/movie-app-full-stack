@@ -251,6 +251,7 @@ $(function() {
     const Events = {
         // Initializes event listeners for add movie modal
         addMovieModalOn() {
+            Events.defaultsOff();
             // Listens for keyup in the add movie text input
             $(document)
                 .on("keyup", "#add-movie-text", function(e) {
@@ -265,9 +266,8 @@ $(function() {
                     Utils.Modal.hide(MyMovies.Modals.addMovieModal);
                     Events.addMovieModalOff();
                 })
-                .on("click", function(e) {
+                .on("mousedown", function(e) {
                     if(!$(e.target).closest("#add-movie-modal .modal-content").length && $("#add-movie-modal").is(":visible")) {
-                        console.log("clicked outside add movie modal. turning off event listeners");
                         Events.addMovieModalOff();
                     }
                 })
@@ -279,8 +279,10 @@ $(function() {
                 .off("keyup", "#add-movie-text")
                 .off("click", "#movie-list .card")
             ;
+            Events.defaultsOn();
         },
         singleMovieModalOn() {
+            Events.defaultsOff();
             $(document)
                 // Listens for click on delete button
                 .on("click", ".delete-btn", async function (){
@@ -309,9 +311,8 @@ $(function() {
                     let movieId = $(this).attr("data-movie-id");
                     User.setRating(MyMovies.urls.backendURLPath, movieId, parseInt(rating), MyMovies.csrfToken);
                 })
-                .on("click", function(e) {
+                .on("mousedown", function(e) {
                     if(!$(e.target).closest("#single-movie-modal .modal-content").length && $("#single-movie-modal").is(":visible")) {
-                        console.log("clicked outside single movie modal. turning off event listeners");
                         Events.singleMovieModalOff();
                     }
                 })
@@ -325,8 +326,10 @@ $(function() {
                 .off("mouseleave", "#single-movie-modal-header")
                 .off("click", ".modal-rating-star")
             ;
+            Events.defaultsOn();
         },
         filterMovieModalOn() {
+            Events.defaultsOff();
             $(document)
                 .on("click", ".filter-modal-genre-btn", async function() {
                     $("#filters-modal-selections").append(`
@@ -364,9 +367,8 @@ $(function() {
                     await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
                     await Print.allYearLists();
                 })
-                .on("click", function(e) {
+                .on("mousedown", function(e) {
                     if(!$(e.target).closest("#filters-modal .modal-content").length && $("#filters-modal").is(":visible")) {
-                        console.log("clicked outside filter movie modal. turning off event listeners");
                         Events.filterMovieModalOff();
                     }
                 })
@@ -379,9 +381,10 @@ $(function() {
                 .off("change", ".filters-year-select")
                 .off("click", ".chosen-year-filter")
             ;
+            Events.defaultsOn();
         },
         // Initializes all default event listeners
-        initialize() {
+        defaultsOn() {
             // Listens for click of add button
             $(document)
                 .on("click", "#add-movie-btn", function() {
@@ -449,6 +452,25 @@ $(function() {
                     Utils.Modal.show(MyMovies.Modals.filtersModal);
                 })
             ;
+        },
+        defaultsOff() {
+            $(document)
+                .off("click", "#add-movie-btn")
+                .off("click", ".carousel-cell img")
+                .off("change", "#sort-select")
+                .off("keyup")
+                .off("click", ".carousel-next")
+                .off("click", ".carousel-prev")
+                .off("mouseenter", ".carousel-cell img")
+                .off("mouseleave", ".carousel-cell img")
+                .off("mouseenter", ".carousel-nav")
+                .off("mouseleave", ".carousel-nav")
+                .off("click", "#random-movie-btn")
+                .off("click", "#filter-movie-btn")
+            ;
+        },
+        initialize() {
+            Events.defaultsOn();
         }
     }
 
