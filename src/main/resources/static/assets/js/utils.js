@@ -258,16 +258,30 @@ export const User = {
         },
         // Filter by after year, returns movies after year
         afterYear(movies, year) {
+            console.log("Inside FilterBy.afterYear");
+            console.log("After year " + year);
+            console.log("Movies sent in:");
+            console.log(movies);
             let filteredMovies = [];
             if(movies) {
+                console.log("Movies exist");
                 for(let movie of movies) {
+                    console.log("Movie:");
+                    console.log(movie);
+                    console.log("Movie year:");
+                    console.log(movie.year);
                     if(movie.year > year) {
+                        console.log("Movie year is after filter year");
                         filteredMovies.push(movie);
+                        console.log("Filtered movies array:");
+                        console.log(filteredMovies);
                     }
                 }
             } else {
                 console.log("No movies to filter");
             }
+            console.log("After year filtered movies");
+            console.log(filteredMovies);
             return filteredMovies;
         }
     },

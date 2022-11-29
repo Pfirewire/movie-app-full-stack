@@ -38,10 +38,11 @@ $(function() {
                     filter.value = choice.innerText;
                 } else if(choice.className.includes("chosen-before-year-filter")) {
                     filter.type = "beforeYear";
-                    filter.value = choice.innerText;
+                    filter.value = choice.dataset.filterYear;
                 } else if(choice.className.includes("chosen-after-year-filter")) {
+                    console.log(choice);
                     filter.type = "afterYear";
-                    filter.value = choice.innerText;
+                    filter.value = choice.dataset.filterYear;
                 }
                 filters.push(filter);
             }
