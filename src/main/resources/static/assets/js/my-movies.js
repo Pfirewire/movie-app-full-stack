@@ -85,13 +85,14 @@ $(function() {
             // prints all movies in our database on screen
             const cardDiv = $(".carousel");
             cardDiv.empty();
-            await dataPromise.then(async function(movieData) {
-                let sortedMovies = await User.sortMovies(movieData);
-                for(let movie of sortedMovies){
-                    Print.singleMovie(cardDiv, movie);
-                }
-                $("#loading-div").addClass("d-none");
-            });
+            let movieData = await dataPromise.then(res => res);
+            // await dataPromise.then(async function(movieData) {
+            let sortedMovies = await User.sortMovies(movieData);
+            for(let movie of sortedMovies){
+                Print.singleMovie(cardDiv, movie);
+            }
+            $("#loading-div").addClass("d-none");
+            // });
 
             Carousel.initialize(carouselRoot);
             Carousel.rotateToBeginning(carouselRoot);
@@ -396,6 +397,7 @@ $(function() {
                 // Listens for click of any image of our full movie list
                 .on("click", ".carousel-cell img", function() {
                     if(Carousel.isInFront($(this))) {
+                        $(this).toggleClass("big-movie");
                         Events.singleMovieModalOn();
                         Carousel.modalClick(MyMovies.Modals.singleMovieModal);
                         Get.movieById(MyMovies.urls.backendURLPath, $(this).parent().attr("data-movie-id"), MyMovies.listId)

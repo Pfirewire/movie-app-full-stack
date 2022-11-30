@@ -454,7 +454,12 @@ export const Carousel = {
     setupCarousel(n, s, carouselRoot) {
         // Sets up and updates carousel css styling
         // Math stuff for transforming our carousel images
-        let apothem = s / (2 * Math.tan(Math.PI / n));
+        let apothem;
+        if(n < 3) {
+            apothem = 1;
+        } else {
+            apothem = s / (2 * Math.tan(Math.PI / n));
+        }
         for (let i = 0; i < n; i++) {
             $(this.images[i]).css("padding", `0 ${this.gap}px`);
             $(this.images[i]).css("border-radius", "1em");
