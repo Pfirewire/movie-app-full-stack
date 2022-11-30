@@ -8,33 +8,26 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 // Security configuration for application
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsLoader usersLoader;
-
-    public SecurityConfiguration(UserDetailsLoader usersLoader) {
-        this.usersLoader = usersLoader;
-    }
+//    private UserDetailsLoader usersLoader;
+//
+//    public SecurityConfiguration(UserDetailsLoader usersLoader) {
+//        this.usersLoader = usersLoader;
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(usersLoader)
-                .passwordEncoder(passwordEncoder())
-        ;
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
 //            .csrf()
 //                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -45,11 +38,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .permitAll()
                 // Logout configuration
-            .and()
+                .and()
                 .logout()
                 .logoutSuccessUrl("/login?logout")
                 // Pages only viewable when logged in
-            .and()
+                .and()
                 .authorizeRequests()
                 .antMatchers(
                         "/movie/list/*",
@@ -59,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 )
                 .authenticated()
                 // Pages viewable without logging in
-            .and()
+                .and()
                 .authorizeRequests()
                 .antMatchers(
                         "/",
@@ -69,5 +62,52 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 )
                 .permitAll()
         ;
+        return http.build();
     }
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .userDetailsService(usersLoader)
+//                .passwordEncoder(passwordEncoder())
+//        ;
+//    }
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+////            .csrf()
+////                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                // Login configuration
+////            .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .defaultSuccessUrl("/")
+//                .permitAll()
+//                // Logout configuration
+//            .and()
+//                .logout()
+//                .logoutSuccessUrl("/login?logout")
+//                // Pages only viewable when logged in
+//            .and()
+//                .authorizeRequests()
+//                .antMatchers(
+//                        "/movie/list/*",
+//                        "/movies",
+//                        "/movie/list",
+//                        "/review/user/view"
+//                )
+//                .authenticated()
+//                // Pages viewable without logging in
+//            .and()
+//                .authorizeRequests()
+//                .antMatchers(
+//                        "/",
+//                        "/index",
+//                        "/reviews",
+//                        "/review/all/view"
+//                )
+//                .permitAll()
+//        ;
+//    }
 }
