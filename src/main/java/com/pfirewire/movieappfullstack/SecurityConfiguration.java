@@ -15,12 +15,6 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Configuration
 public class SecurityConfiguration {
 
-//    private UserDetailsLoader usersLoader;
-//
-//    public SecurityConfiguration(UserDetailsLoader usersLoader) {
-//        this.usersLoader = usersLoader;
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -64,50 +58,4 @@ public class SecurityConfiguration {
         ;
         return http.build();
     }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .userDetailsService(usersLoader)
-//                .passwordEncoder(passwordEncoder())
-//        ;
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-////            .csrf()
-////                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                // Login configuration
-////            .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/")
-//                .permitAll()
-//                // Logout configuration
-//            .and()
-//                .logout()
-//                .logoutSuccessUrl("/login?logout")
-//                // Pages only viewable when logged in
-//            .and()
-//                .authorizeRequests()
-//                .antMatchers(
-//                        "/movie/list/*",
-//                        "/movies",
-//                        "/movie/list",
-//                        "/review/user/view"
-//                )
-//                .authenticated()
-//                // Pages viewable without logging in
-//            .and()
-//                .authorizeRequests()
-//                .antMatchers(
-//                        "/",
-//                        "/index",
-//                        "/reviews",
-//                        "/review/all/view"
-//                )
-//                .permitAll()
-//        ;
-//    }
 }
