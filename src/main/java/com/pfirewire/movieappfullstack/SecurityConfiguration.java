@@ -48,16 +48,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
                 .logout()
                 .logoutSuccessUrl("/login?logout")
-                // Pages viewable without logging in
-            .and()
-                .authorizeRequests()
-                .antMatchers(
-                        "/",
-                        "/index",
-                        "/reviews",
-                        "/review/all/view"
-                )
-                .permitAll()
                 // Pages only viewable when logged in
             .and()
                 .authorizeRequests()
@@ -68,6 +58,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/review/user/view"
                 )
                 .authenticated()
+                // Pages viewable without logging in
+            .and()
+                .authorizeRequests()
+                .antMatchers(
+                        "/",
+                        "/index",
+                        "/reviews",
+                        "/review/all/view"
+                )
+                .permitAll()
         ;
     }
 }
