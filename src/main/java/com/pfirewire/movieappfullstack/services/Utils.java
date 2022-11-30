@@ -1,4 +1,4 @@
-package com.pfirewire.movieappfullstack.utils;
+package com.pfirewire.movieappfullstack.services;
 
 import com.pfirewire.movieappfullstack.models.User;
 import org.springframework.security.core.context.SecurityContextHolder;

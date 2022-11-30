@@ -20,19 +20,19 @@ public class SecurityConfiguration {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
 //            .csrf()
-//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                // Login configuration
+//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()
 //            .and()
+                // Login configuration
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
                 .permitAll()
                 // Logout configuration
-                .and()
+            .and()
                 .logout()
                 .logoutSuccessUrl("/login?logout")
                 // Pages only viewable when logged in
-                .and()
+            .and()
                 .authorizeRequests()
                 .antMatchers(
                         "/movie/list/*",
@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 )
                 .authenticated()
                 // Pages viewable without logging in
-                .and()
+            .and()
                 .authorizeRequests()
                 .antMatchers(
                         "/",
