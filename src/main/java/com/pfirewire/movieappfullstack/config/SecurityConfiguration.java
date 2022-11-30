@@ -1,4 +1,4 @@
-package com.pfirewire.movieappfullstack;
+package com.pfirewire.movieappfullstack.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
