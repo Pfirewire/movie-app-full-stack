@@ -4,7 +4,7 @@
 <head>
     <div th:replace="partials :: headFragment('My Reviews')"></div>
 
-    <link rel="stylesheet" th:href="@{/assets/css/reviews.css}">
+    <link rel="stylesheet" th:href="@{/css/reviews.css}">
 </head>
 <body>
 <div hidden th:object="${url}">
@@ -19,7 +19,7 @@
 </div>
 
 <div th:replace="partials :: scripts" />
-<script type="module" th:src="@{/assets/js/reviews.js}"></script>
+<script type="module" th:src="@{/js/reviews.js}"></script>
 
 </body>
 </html>
