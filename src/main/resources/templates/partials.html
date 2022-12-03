@@ -25,8 +25,8 @@
     <div class="container-fluid">
         <div class="navbar-collapse collapse w-100 order-1 order-lg-0 ms-3 collapse-portion">
             <ul class="navbar-nav me-auto">
-                <span sec:authorize="isAuthenticated()">
-                    <li class="nav-item dropdown">
+<!--                <span sec:authorize="isAuthenticated()">-->
+                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             Reviews
                         </a>
@@ -35,15 +35,15 @@
                             <li><a class="dropdown-item" th:href="@{/review/user/view}">My Reviews</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
                         <a id="nav-create-list-link" class="nav-link" th:href="@{/movie/list}">Movie Lists</a>
                     </li>
-                </span>
-                <span sec:authorize="isAnonymous()">
+<!--                </span>-->
+<!--                <span sec:authorize="isAnonymous()">-->
                     <li class="nav-item">
                         <a id="nav-reviews-link" class="nav-link" th:href="@{/review/all/view}">Reviews</a>
                     </li>
-                </span>
+<!--                </span>-->
             </ul>
         </div>
         <div class="mx-auto order-0">
@@ -55,21 +55,21 @@
 
         <div class="navbar-collapse collapse w-100 order-3 collapse-portion">
             <ul class="navbar-nav ms-auto">
-                <span sec:authorize="isAuthenticated()">
-                    <li>
+<!--                <span sec:authorize="isAuthenticated()">-->
+                    <li sec:authorize="isAuthenticated()">
                         <form id="site-bar-logout-form" th:action="@{/logout}" th:method="post">
                             <a id="site-bar-logout-link" role="button" class="nav-link" href="#">Logout</a>
                         </form>
                     </li>
-                </span>
-                <span sec:authorize="isAnonymous()">
-                    <li class="nav-item">
+<!--                </span>-->
+<!--                <span sec:authorize="isAnonymous()">-->
+                    <li sec:authorize="isAnonymous()" class="nav-item">
                         <a class="nav-link" th:href="@{/signup}">Signup</a>
                     </li>
-                    <li class="nav-item">
+                    <li sec:authorize="isAnonymous()" class="nav-item">
                         <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
-                </span>
+<!--                </span>-->
             </ul>
 <!--            <span sec:authorize="isAuthenticated()">-->
 <!--                <ul class="navbar-nav">-->
