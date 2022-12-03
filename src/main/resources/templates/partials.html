@@ -30,7 +30,7 @@
     <div class="collapse navbar-collapse ms-3" id="site-bar-content">
         <div class="d-flex justify-content-between">
             <span sec:authorize="isAuthenticated()">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav justify-content-center">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             Reviews
@@ -43,6 +43,8 @@
                     <li class="nav-item">
                         <a id="nav-create-list-link" class="nav-link" th:href="@{/movie/list}">Movie Lists</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav justify-content-end">
                     <li>
                         <form id="site-bar-logout-form" th:action="@{/logout}" th:method="post">
                             <a id="site-bar-logout-link" role="button" class="nav-link" href="#">Logout</a>
@@ -51,10 +53,12 @@
                 </ul>
             </span>
             <span sec:authorize="isAnonymous()">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav justify-content-center">
                     <li class="nav-item">
                         <a id="nav-reviews-link" class="nav-link" th:href="@{/review/all/view}">Reviews</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav justify-content-end">
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/signup}">Signup</a>
                     </li>
