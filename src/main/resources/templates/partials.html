@@ -23,6 +23,7 @@
 <!--Sitebar Fragment-->
 <nav id="site-bar" th:fragment="siteBar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
+        <!-- Links on Left -->
         <div class="navbar-collapse collapse w-100 order-1 order-lg-0 collapse-portion">
             <ul class="navbar-nav me-auto">
                 <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
@@ -42,13 +43,14 @@
                 </li>
             </ul>
         </div>
+        <!-- Center Name Link -->
         <div class="mx-auto order-0">
             <a class="navbar-brand mx-auto ps-3" th:href="@{/}">Pfirewire's Movies</a>
             <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target=".collapse-portion">
                 <img th:src="@{/megamanicon.png}" style="max-height: 1.75em; max-width: 1.75em;">
             </button>
         </div>
-
+        <!-- Links on Right -->
         <div class="navbar-collapse collapse w-100 order-3 collapse-portion">
             <ul class="navbar-nav ms-auto">
                 <li sec:authorize="isAuthenticated()">
