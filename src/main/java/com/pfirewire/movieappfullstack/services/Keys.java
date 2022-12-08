@@ -12,9 +12,6 @@ public class Keys {
     @Value("${unsplashKey}")
     private String unsplashKey;
 
-    @Value("${backRoomKey}")
-    private String backRoomKey;
-
     public Keys() {}
 
     public String getTmdbKey() {
@@ -31,13 +28,5 @@ public class Keys {
 
     public void setUnsplashKey(String unsplashKey) {
         this.unsplashKey = unsplashKey;
-    }
-
-    public String getBackRoomKey() {
-        return backRoomKey;
-    }
-
-    public void setBackRoomKey(String backRoomKey) {
-        this.backRoomKey = backRoomKey;
     }
 }
