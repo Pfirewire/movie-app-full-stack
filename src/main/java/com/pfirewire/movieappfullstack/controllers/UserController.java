@@ -2,13 +2,13 @@ package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
+import com.pfirewire.movieappfullstack.services.MailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -16,11 +16,13 @@ public class UserController {
     // Repositories and Services
     private final UserRepository userDao;
     private final PasswordEncoder passwordEncoder;
+    private final MailService mailService;
 
     // Constructor
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, MailService mailService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.mailService = mailService;
     }
 
     // Shows form to sign up as a user
