@@ -1,7 +1,9 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.pfirewire.movieappfullstack.models.PasswordReset;
 import com.pfirewire.movieappfullstack.repositories.PasswordResetRepository;
 import com.pfirewire.movieappfullstack.services.MailService;
+import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,7 @@ public class PasswordResetController {
 
     @PostMapping("/pwreset")
     public String sendResetPasswordEmail(@RequestParam(name = "email") String email) {
+        PasswordReset passwordReset = new PasswordReset(email, Utils.generatePasswordResetToken(), Utils.generatePasswordResetTimestamp());
         mailService.passwordReset(email);
         return "user/pw-reset-sent";
     }

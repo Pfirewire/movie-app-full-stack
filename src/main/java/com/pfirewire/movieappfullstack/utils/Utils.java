@@ -14,7 +14,7 @@ public class Utils {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public static String createPasswordResetToken() {
+    public static String generatePasswordResetToken() {
         return UUID.randomUUID().toString();
     }
 
