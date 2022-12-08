@@ -35,20 +35,4 @@ public class MailService {
             System.err.println(ex.getMessage());
         }
     }
-
-    // Prepares and sends email with subject and body parameters
-//    public void prepareAndSend(Post post, String subject, String body) {
-//
-//        SimpleMailMessage msg = new SimpleMailMessage();
-//        msg.setFrom(from);
-//        msg.setTo(post.getUser().getEmail());
-//        msg.setSubject(subject);
-//        msg.setText(body);
-//
-//        try {
-//            this.emailSender.send(msg);
-//        } catch (MailException ex) {
-//            System.err.println(ex.getMessage());
-//        }
-//    }
 }
