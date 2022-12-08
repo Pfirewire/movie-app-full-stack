@@ -28,7 +28,7 @@ public class PasswordResetController {
     @PostMapping("/pwreset")
     public String sendResetPasswordEmail(@RequestParam(name = "email") String email) {
         PasswordReset passwordReset = new PasswordReset(email, Utils.generatePasswordResetToken(), Utils.generatePasswordResetTimestamp());
-        mailService.passwordReset(email);
+        mailService.passwordReset(passwordReset);
         return "user/pw-reset-sent";
     }
 
