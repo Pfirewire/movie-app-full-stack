@@ -4,7 +4,7 @@ import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.services.Url;
-import com.pfirewire.movieappfullstack.services.Utils;
+import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

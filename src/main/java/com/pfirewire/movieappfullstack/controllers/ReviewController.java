@@ -7,7 +7,7 @@ import com.pfirewire.movieappfullstack.repositories.MovieRepository;
 import com.pfirewire.movieappfullstack.repositories.ReviewRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import com.pfirewire.movieappfullstack.services.Url;
-import com.pfirewire.movieappfullstack.services.Utils;
+import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
