@@ -17,13 +17,11 @@ public class UserController {
     // Repositories and Services
     private final UserRepository userDao;
     private final PasswordEncoder passwordEncoder;
-    private final MailService mailService;
 
     // Constructor
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, MailService mailService) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
-        this.mailService = mailService;
     }
 
     // Shows form to sign up as a user
@@ -43,17 +41,6 @@ public class UserController {
         user.setPassword(hash);
         userDao.save(user);
         return "redirect:/login";
-    }
-
-    @GetMapping("/pwreset")
-    public String resetPasswordForm() {
-        return "user/pw-reset";
-    }
-
-    @PostMapping("/pwreset")
-    public String sendResetPasswordEmail(@RequestParam(name = "email") String email) {
-        mailService.passwordReset(email);
-        return "user/pw-reset-sent";
     }
 
 }
