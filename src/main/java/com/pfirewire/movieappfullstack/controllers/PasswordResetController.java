@@ -6,6 +6,7 @@ import com.pfirewire.movieappfullstack.services.MailService;
 import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,12 +29,16 @@ public class PasswordResetController {
     @PostMapping("/pwreset")
     public String sendForgotPasswordEmail(@RequestParam(name = "email") String email) {
         PasswordReset passwordReset = new PasswordReset(email, Utils.generatePasswordResetToken(), Utils.generatePasswordResetTimestamp());
+        passwordResetDao.save(passwordReset);
         mailService.passwordReset(passwordReset);
         return "user/pw-reset-sent";
     }
 
     @GetMapping("/pwreset/{token}")
-    public String resetPasswordForm() {
+    public String resetPasswordForm(@PathVariable String token) {
+        PasswordReset passwordReset = passwordResetDao.findByToken(token);
+        System.out.println(passwordReset.toString());
+        System.out.printf("Email associated with this link: %s%n", passwordReset.getEmail());
         return "user/pw-reset";
     }
 

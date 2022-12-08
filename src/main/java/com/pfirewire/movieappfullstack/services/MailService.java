@@ -28,7 +28,7 @@ public class MailService {
         msg.setText("" +
                 "<h2>Please click this link to reset your password:</h2>" +
                 "<br>" +
-                "localhost:8080/" + passwordReset.getToken()
+                "localhost:8080/pwreset/" + passwordReset.getToken()
         );
 
         try {
