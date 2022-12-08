@@ -53,7 +53,7 @@ public class UserController {
     @PostMapping("/pwreset")
     public String sendResetPasswordEmail(@RequestParam(name = "email") String email) {
         mailService.passwordReset(email);
-        return "user/pwreset-sent";
+        return "user/pw-reset-sent";
     }
 
 }
