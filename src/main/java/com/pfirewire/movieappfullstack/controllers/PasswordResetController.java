@@ -21,15 +21,20 @@ public class PasswordResetController {
     }
 
     @GetMapping("/pwreset")
-    public String resetPasswordForm() {
-        return "user/pw-reset";
+    public String forgotPasswordLink() {
+        return "user/forgot-pw";
     }
 
     @PostMapping("/pwreset")
-    public String sendResetPasswordEmail(@RequestParam(name = "email") String email) {
+    public String sendForgotPasswordEmail(@RequestParam(name = "email") String email) {
         PasswordReset passwordReset = new PasswordReset(email, Utils.generatePasswordResetToken(), Utils.generatePasswordResetTimestamp());
         mailService.passwordReset(passwordReset);
         return "user/pw-reset-sent";
+    }
+
+    @GetMapping("/pwreset/{token}")
+    public String resetPasswordForm() {
+        return "user/pw-reset";
     }
 
 }
