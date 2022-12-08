@@ -12,9 +12,7 @@
 </head>
 <body>
 
-<div hidden th:object="${url}">
-    <div id="base-url" th:text="*{baseUrl}"></div>
-</div>
+<div th:replace="partials :: baseUrlFragment"></div>
 <div hidden th:object="${list}">
     <div id="list-id" th:text="*{id}"></div>
 </div>

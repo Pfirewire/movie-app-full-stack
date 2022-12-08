@@ -68,14 +68,6 @@ public class MovieListController {
         return list;
     }
 
-    // Probably don't even need this method
-//    @GetMapping("movie/list/{listId}/edit")
-//    public String showEditMovieListForm(@PathVariable Long listId, Model model) {
-//        MovieList list = listDao.getById(listId);
-//        model.addAttribute("list", list);
-//        return "movie/list/edit";
-//    }
-
     @PostMapping("movie/list/{listId}/edit")
     public @ResponseBody void editMovieList(@PathVariable Long listId, @RequestBody MovieList newList) {
         System.out.println("Inside editMovieList");

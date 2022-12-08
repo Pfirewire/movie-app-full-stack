@@ -6,6 +6,7 @@
 
 </head>
 <body>
+<div th:replace="partials :: baseUrlFragment"></div>
 <div id="page-wrapper">
     <nav th:replace="partials :: siteBar" />
 
@@ -23,7 +24,7 @@
                             <label for="email" class="form-label">Enter your email to send reset password link</label>
                             <input type="text" class="form-control" id="email" name="email" autocomplete="off">
                         </div>
-                        <button id="reset-password-submit" type="submit" class="btn btn-primary">Reset Password</button>
+                        <button id="reset-password-submit" type="submit" class="btn btn-primary">Send Reset Email</button>
                     </form>
                 </div>
             </div>

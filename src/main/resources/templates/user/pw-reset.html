@@ -6,7 +6,9 @@
 
 </head>
 <body>
+<div th:replace="partials :: baseUrlFragment"></div>
 <div id="page-wrapper">
+
     <nav th:replace="partials :: siteBar" />
 
 
@@ -18,13 +20,16 @@
                 <div class="container bg-dark rounded-3 p-5">
                     <h1 class="text-center text-light">Reset Password</h1>
 
-<!--                    <form id="reset-password-form" th:action="@{/pwreset/reset}" th:method="post">-->
-<!--                        <div class="mb-3">-->
+                    <form id="reset-password-form" th:action="@{|/pwreset/${passwordReset.token}|}" th:method="post" th:object="${passwordReset}">
+                        <div class="mb-3">
+                            <input type="hidden" th:field="*{email}">
+                            <input type="hidden" th:field="*{token}">
+                            <input type="hidden" th:field="*{expirationDate}">
 <!--                            <label for="password" class="form-label">Enter your password to send reset password link</label>-->
 <!--                            <input type="password" class="form-control" id="password" name="password" autocomplete="off">-->
-<!--                        </div>-->
-<!--                        <button id="reset-password-submit" type="submit" class="btn btn-primary">Reset Password</button>-->
-<!--                    </form>-->
+                        </div>
+                        <button id="reset-password-submit" type="submit" class="btn btn-primary">Reset Password</button>
+                    </form>
                 </div>
             </div>
         </div>
