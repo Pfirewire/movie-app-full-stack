@@ -164,6 +164,10 @@ $(function() {
             $("#signupContainer").slideToggle();
         });
 
+    $("#forgot-password-link").on("click", function() {
+        window.location.href = "/pwreset";
+    });
+
     $(window).ready( function() {
         $("#username").focus();
     });
