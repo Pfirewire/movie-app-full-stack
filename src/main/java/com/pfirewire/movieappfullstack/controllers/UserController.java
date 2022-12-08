@@ -40,4 +40,10 @@ public class UserController {
         userDao.save(user);
         return "redirect:/login";
     }
+
+    @GetMapping("/pwreset")
+    public String resetPasswordForm(Model model) {
+        model.addAttribute("email", "");
+        return "user/pw-reset";
+    }
 }

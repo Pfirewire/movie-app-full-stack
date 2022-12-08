@@ -20,7 +20,14 @@ public class MailService {
 
     // Prepares and sends password recovery email
     public void passwordReset(String email) {
-
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom(from);
+        msg.setTo(email);
+        msg.setSubject("Password Reset Request");
+        msg.setText("" +
+                "This is a test email." +
+                "Eventually it will include a link to reset email."
+        );
     }
 
     // Prepares and sends email with subject and body parameters
