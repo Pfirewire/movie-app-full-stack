@@ -28,6 +28,12 @@ public class MailService {
                 "This is a test email." +
                 "Eventually it will include a link to reset email."
         );
+
+        try {
+            this.emailSender.send(msg);
+        } catch (MailException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
 
     // Prepares and sends email with subject and body parameters
