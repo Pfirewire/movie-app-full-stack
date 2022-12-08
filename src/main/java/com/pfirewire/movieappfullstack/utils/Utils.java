@@ -15,14 +15,10 @@ public class Utils {
     }
 
     public static String generatePasswordResetToken() {
-        String uuid = UUID.randomUUID().toString();
-        System.out.printf("Token created: %s%n", uuid);
-        return uuid;
+        return  UUID.randomUUID().toString();
     }
 
     public static Timestamp generatePasswordResetTimestamp() {
-        Timestamp timestamp = new Timestamp(new Date().getTime() + TimeUnit.MINUTES.toMillis(5));
-        System.out.printf("Timestamp: ", timestamp.toLocalDateTime().toString());
-        return timestamp;
+        return new Timestamp(new Date().getTime() + TimeUnit.MINUTES.toMillis(5));
     }
 }
