@@ -50,7 +50,8 @@ public class SecurityConfiguration {
                         "/",
                         "/index",
                         "/reviews",
-                        "/review/all/view"
+                        "/review/all/view",
+                        "/pwreset"
                 )
                 .permitAll()
         ;
