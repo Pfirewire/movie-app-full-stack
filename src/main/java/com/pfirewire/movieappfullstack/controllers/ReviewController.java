@@ -47,6 +47,7 @@ public class ReviewController {
     @GetMapping("/review/{reviewId}/view")
     public String viewReview(@PathVariable Long reviewId, Model model) {
         Review review = reviewDao.getById(reviewId);
+        model.addAttribute("url", url);
         model.addAttribute("review", review);
         model.addAttribute("movie", review.getMovie());
         model.addAttribute("reviewUser", review.getUser());
@@ -58,6 +59,7 @@ public class ReviewController {
         User user = Utils.currentUser();
         Movie movie = movieDao.getById(movieId);
         Review review = reviewDao.findByUserAndMovie(user, movie);
+        model.addAttribute("url", url);
         model.addAttribute("movie", movie);
         if(review == null) {
             System.out.println("review does not exist, redirecting to add review");
@@ -77,6 +79,7 @@ public class ReviewController {
         review.setUser(user);
         review.setMovie(movie);
         reviewDao.save(review);
+        model.addAttribute("url", url);
         model.addAttribute("movie", movie);
         model.addAttribute("review", review);
         model.addAttribute("reviewUser", review.getUser());
@@ -91,6 +94,7 @@ public class ReviewController {
         oldReview.setBody(newReview.getBody());
         oldReview.setTitle(newReview.getTitle());
         reviewDao.save(oldReview);
+        model.addAttribute("url", url);
         model.addAttribute("movie", movie);
         model.addAttribute("review", oldReview);
         model.addAttribute("reviewUser", oldReview.getUser());
