@@ -20,15 +20,30 @@
                 <div class="container bg-dark rounded-3 p-5">
                     <h1 class="text-center text-light">Reset Password</h1>
 
-                    <form id="reset-password-form" th:action="@{|/pwreset/${passwordReset.token}|}" th:method="post" th:object="${passwordReset}">
+                    <form id="reset-password-form" th:action="@{|/pwreset/${passwordReset.token}|}" th:method="post" th:object="${user}">
                         <div class="mb-3">
-                            <input type="hidden" th:field="*{email}">
-                            <input type="hidden" th:field="*{token}">
-                            <input type="hidden" th:field="*{expirationDate}">
-<!--                            <label for="password" class="form-label">Enter your password to send reset password link</label>-->
-<!--                            <input type="password" class="form-control" id="password" name="password" autocomplete="off">-->
+                            <label for="signupEmailAddress" class="form-label" th:text="${user.email}"></label>
+                            <input type="hidden" class="form-control" id="signupEmailAddress" th:field="*{email}" autocomplete="off">
                         </div>
-                        <button id="reset-password-submit" type="submit" class="btn btn-primary">Reset Password</button>
+                        <div class="mb-3">
+                            <label for="signupUsername" class="form-label"th:text="${user.username}">Username</label>
+                            <input type="hidden" class="form-control" id="signupUsername" th:field="*{username}" autocomplete="off">
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" th:field="*{password}" autocomplete="off">
+                            <div id="signupPasswordHelpLength" class="form-text">Must be at least 8 characters long</div>
+                            <div id="signupPasswordHelpUppercaseLetter" class="form-text">Must contain at least 1 uppercase letter</div>
+                            <div id="signupPasswordHelpLowercaseLetter" class="form-text">Must contain at least 1 lowercase letter</div>
+                            <div id="signupPasswordHelpNumber" class="form-text">Must contain at least 1 number</div>
+                            <div id="signupPasswordHelpSpecialCharacters" class="form-text">Must contain at least 1 special character: !@#$%^&*()-=_+</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="signupConfirmPassword">
+                            <div id="passwordsMustMatch" class="form-text d-none" style="color: #F00;">Passwords must match</div>
+                        </div>
+                        <button id="signupPasswordSubmit" type="submit" class="btn btn-primary" disabled>Reset Password</button>
                     </form>
                 </div>
             </div>
@@ -39,7 +54,7 @@
 
 <div th:replace="partials :: scripts" />
 
-<script th:src="@{/js/signup-form.js}" />
+<script th:src="@{/js/signup-form.js}"></script>
 
 </body>
 </html>

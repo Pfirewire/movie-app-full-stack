@@ -1,11 +1,14 @@
 package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.PasswordReset;
+import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.PasswordResetRepository;
+import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import com.pfirewire.movieappfullstack.services.MailService;
 import com.pfirewire.movieappfullstack.services.Url;
 import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +19,17 @@ import java.util.Date;
 public class PasswordResetController {
 
     private final PasswordResetRepository passwordResetDao;
+    private final UserRepository userDao;
     private final MailService mailService;
+    private final PasswordEncoder passwordEncoder;
     @Autowired
     private Url url;
 
-    public PasswordResetController(PasswordResetRepository passwordResetDao, MailService mailService) {
+    public PasswordResetController(PasswordResetRepository passwordResetDao, UserRepository userDao, MailService mailService, PasswordEncoder passwordEncoder) {
         this.passwordResetDao = passwordResetDao;
+        this.userDao = userDao;
         this.mailService = mailService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/pwreset")
@@ -49,19 +56,26 @@ public class PasswordResetController {
         else if(new Date().getTime() > passwordReset.getExpirationDate().getTime()) {
             return "redirect:/pwreset?expired";
         }
+        User user = userDao.findByEmail(passwordReset.getEmail());
+        model.addAttribute("user", user);
         model.addAttribute("passwordReset", passwordReset);
         model.addAttribute("url", url);
         return "reset/pw-reset";
     }
 
     @PostMapping("pwreset/{token}")
-    public String resetPassword(@ModelAttribute PasswordReset passwordReset) {
-        System.out.println(passwordReset.toString());
-        System.out.println(passwordReset.getEmail());
-        System.out.println(passwordReset.getToken());
-        System.out.println(passwordReset.getExpirationDate().toString());
-//        System.out.printf("Email associated with this link: %s%n", passwordReset.getEmail());
-        return "redirect:/";
+    public String resetPassword(@ModelAttribute User user, @PathVariable String token) {
+        PasswordReset passwordReset = passwordResetDao.findByToken(token);
+        if(passwordReset == null) {
+            return "redirect:/pwreset?invalid";
+        }
+        else if(new Date().getTime() > passwordReset.getExpirationDate().getTime()) {
+            return "redirect:/pwreset?expired";
+        }
+        User newUser = userDao.findByUsername(user.getUsername());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDao.save(newUser);
+        return "redirect:/login?reset";
     }
 
 }
