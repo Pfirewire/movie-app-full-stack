@@ -44,10 +44,10 @@ public class PasswordResetController {
     public String resetPasswordForm(@PathVariable String token, Model model) {
         PasswordReset passwordReset = passwordResetDao.findByToken(token);
         if(passwordReset == null) {
-            return "redirect:/";
+            return "redirect:/pwreset?invalid";
         }
         else if(new Date().getTime() > passwordReset.getExpirationDate().getTime()) {
-            return "reset/forgot-pw?expired";
+            return "redirect:/pwreset?expired";
         }
         model.addAttribute("passwordReset", passwordReset);
         model.addAttribute("url", url);
