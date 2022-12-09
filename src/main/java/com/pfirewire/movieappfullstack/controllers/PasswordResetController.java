@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @Controller
 public class PasswordResetController {
 
@@ -41,7 +43,12 @@ public class PasswordResetController {
     @GetMapping("/pwreset/{token}")
     public String resetPasswordForm(@PathVariable String token, Model model) {
         PasswordReset passwordReset = passwordResetDao.findByToken(token);
-
+        if(passwordReset == null) {
+            return "redirect:/";
+        }
+        else if(new Date().getTime() > passwordReset.getExpirationDate().getTime()) {
+            return "reset/forgot-pw?expired";
+        }
         model.addAttribute("passwordReset", passwordReset);
         model.addAttribute("url", url);
         return "reset/pw-reset";
