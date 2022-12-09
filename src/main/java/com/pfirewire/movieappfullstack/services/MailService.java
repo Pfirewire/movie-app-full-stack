@@ -19,6 +19,7 @@ public class MailService {
     private String from;
 
 
+    // TODO: Format password reset email with hyperlink
     // Prepares and sends password recovery email
     public void passwordReset(PasswordReset passwordReset) {
         SimpleMailMessage msg = new SimpleMailMessage();
