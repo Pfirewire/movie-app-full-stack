@@ -19,6 +19,6 @@ public class Utils {
     }
 
     public static Timestamp generatePasswordResetTimestamp() {
-        return new Timestamp(new Date().getTime() + TimeUnit.MINUTES.toMillis(5));
+        return new Timestamp(new Date().getTime() + TimeUnit.MINUTES.toMillis(10));
     }
 }

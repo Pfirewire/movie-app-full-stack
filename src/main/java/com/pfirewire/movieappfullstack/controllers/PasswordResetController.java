@@ -26,7 +26,7 @@ public class PasswordResetController {
     @GetMapping("/pwreset")
     public String forgotPasswordLink(Model model) {
         model.addAttribute("url", url);
-        return "user/forgot-pw";
+        return "reset/forgot-pw";
     }
 
     @PostMapping("/pwreset")
@@ -35,15 +35,16 @@ public class PasswordResetController {
         passwordResetDao.save(passwordReset);
         mailService.passwordReset(passwordReset);
         model.addAttribute("url", url);
-        return "user/pw-reset-sent";
+        return "reset/pw-reset-sent";
     }
 
     @GetMapping("/pwreset/{token}")
     public String resetPasswordForm(@PathVariable String token, Model model) {
         PasswordReset passwordReset = passwordResetDao.findByToken(token);
+
         model.addAttribute("passwordReset", passwordReset);
         model.addAttribute("url", url);
-        return "user/pw-reset";
+        return "reset/pw-reset";
     }
 
     @PostMapping("pwreset/{token}")
