@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.Date;
 
 @Controller
@@ -39,7 +40,7 @@ public class PasswordResetController {
     }
 
     @PostMapping("/pwreset")
-    public String sendForgotPasswordEmail(@RequestParam(name = "email") String email, Model model) {
+    public String sendForgotPasswordEmail(@RequestParam(name = "email") String email, Model model) throws MessagingException {
         PasswordReset passwordReset = new PasswordReset(email, Utils.generatePasswordResetToken(), Utils.generatePasswordResetTimestamp());
         passwordResetDao.save(passwordReset);
         mailService.passwordReset(passwordReset);

@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 
 @Service("mailService")
@@ -26,17 +30,20 @@ public class MailService {
 
 
     // Prepares and sends password recovery email
-    public void passwordReset(PasswordReset passwordReset) {
+    public void passwordReset(PasswordReset passwordReset) throws MessagingException {
         String processedHTMLTemplate = this.constructHTMLTemplate(passwordReset.getToken());
 
-        SimpleMailMessage msg = new SimpleMailMessage();
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        MimeMessageHelper msg = new MimeMessageHelper(mimeMessage, "UTF-8");
+
+//        SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
         msg.setTo(passwordReset.getEmail());
         msg.setSubject("Password Reset Request");
-        msg.setText(processedHTMLTemplate);
+        msg.setText(processedHTMLTemplate, true);
 
         try {
-            this.emailSender.send(msg);
+            this.emailSender.send(mimeMessage);
         } catch (MailException ex) {
             System.err.println(ex.getMessage());
         }
