@@ -33,9 +33,7 @@ public class MailService {
         msg.setFrom(from);
         msg.setTo(passwordReset.getEmail());
         msg.setSubject("Password Reset Request");
-        msg.setText("" +
-                "localhost:8080/pwreset/" + passwordReset.getToken()
-        );
+        msg.setText(processedHTMLTemplate);
 
         try {
             this.emailSender.send(msg);
