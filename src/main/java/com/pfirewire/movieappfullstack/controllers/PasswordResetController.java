@@ -75,7 +75,7 @@ public class PasswordResetController {
         User newUser = userDao.findByUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.save(newUser);
-        return "redirect:/login?reset";
+        return "redirect:/login?reset.html";
     }
 
 }
