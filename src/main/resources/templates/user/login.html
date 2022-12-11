@@ -29,6 +29,9 @@
                     <div th:if="${param.reset}" class="text-light">
                         Password Reset successful.
                     </div>
+                    <div th:if="${param.registered}" class="text-light">
+                        You have signed up successfully. Please log in with the username and password you just created.
+                    </div>
 
                     <div th:replace="partials :: loginForm" />
                     <p id="notAUserToggle" class="text-light mt-5" style="cursor: pointer;">

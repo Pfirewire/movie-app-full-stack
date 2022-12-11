@@ -45,7 +45,7 @@ public class UserController {
         // Setting user password to the hash and saving user to table
         user.setPassword(hash);
         userDao.save(user);
-        return "redirect:/login";
+        return "redirect:/login?registered";
     }
 
 }
