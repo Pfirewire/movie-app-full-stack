@@ -124,7 +124,7 @@ export const Get = {
     async movieLists(url) {
         try {
             let results = await fetch(`${url}movie/list/all`);
-            let data = results.json();
+            let data = await results.json();
             console.log("Movie lists JSON");
             console.log(data);
             return data;
