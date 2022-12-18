@@ -48,4 +48,9 @@ public class UserController {
         return "redirect:/login?registered";
     }
 
+    @GetMapping("/profile")
+    public String showProfile() {
+        return "user/profile";
+    }
+
 }
