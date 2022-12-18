@@ -6,11 +6,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class Keys {
 
+
+
     @Value("${tmdbKey}")
     private String tmdbKey;
 
     @Value("${unsplashKey}")
     private String unsplashKey;
+
+    @Value("${filestackKey}")
+    private String filestackKey;
 
     public Keys() {}
 
@@ -28,5 +33,13 @@ public class Keys {
 
     public void setUnsplashKey(String unsplashKey) {
         this.unsplashKey = unsplashKey;
+    }
+
+    public String getFilestackKey() {
+        return filestackKey;
+    }
+
+    public void setFilestackKey(String filestackKey) {
+        this.filestackKey = filestackKey;
     }
 }

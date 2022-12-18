@@ -20,7 +20,7 @@ $(function() {
     const Print = {
         async trendingPosters(trendingPromise) {
             MovieIndex.carouselRoot.empty();
-            let trendingMovies = await trendingPromise.then(res => res);
+            let trendingMovies = await trendingPromise.then(function(res) { return res});
             for(let [i, movie] of trendingMovies.entries()) {
                 if(i < 12) {
                     Print.poster(movie.poster_path)
