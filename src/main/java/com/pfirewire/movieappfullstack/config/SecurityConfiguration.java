@@ -34,8 +34,8 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-//                .cors().configurationSource(corsConfigurationSource())
-//            .and()
+                .cors().configurationSource(corsConfigurationSource())
+            .and()
 //            .csrf()
 //                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()
 //            .and()
