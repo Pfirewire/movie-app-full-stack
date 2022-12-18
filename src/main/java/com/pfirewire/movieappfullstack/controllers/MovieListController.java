@@ -1,5 +1,7 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
@@ -25,11 +27,13 @@ public class MovieListController {
     }
 
     @GetMapping("/movie/list/all")
-
-    public @ResponseBody Set<MovieList> getAllMovieLists() {
+    public @ResponseBody Set<MovieList> getAllMovieLists() throws JsonProcessingException {
+        System.out.println("Inside getAllMovieLists");
         User user = Utils.currentUser();
         System.out.println(user.getUsername());
         Set<MovieList> userMovieLists = listDao.findAllByMembers(user);
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(userMovieLists));
         return userMovieLists;
     }
 

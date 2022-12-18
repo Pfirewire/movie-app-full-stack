@@ -125,6 +125,8 @@ export const Get = {
         try {
             let results = await fetch(`${url}movie/list/all`);
             let data = results.json();
+            console.log("Movie lists JSON");
+            console.log(data);
             return data;
         } catch(error) {
             console.log(`There was an error: ${error}`);
