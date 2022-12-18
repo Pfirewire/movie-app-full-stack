@@ -19,8 +19,8 @@ public class SchedulerConfiguration {
         this.passwordResetDao = passwordResetDao;
     }
 
-//    @Scheduled(cron = "0 0 0 ? * * *")
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(cron = "0 0 0 * * ?")
+//    @Scheduled(fixedRate = 10000)
     public void clearPasswordResetTable() {
         System.out.println("Scheduled event. Clearing password reset tokens");
         List<PasswordReset> pwTokens = passwordResetDao.findAll();
