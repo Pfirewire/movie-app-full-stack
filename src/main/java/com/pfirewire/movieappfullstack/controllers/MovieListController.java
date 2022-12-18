@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @Controller
+@CrossOrigin(origins = {"https://pfirewire.com", "https://www.pfirewire.com"})
 public class MovieListController {
 
     private final MovieListRepository listDao;

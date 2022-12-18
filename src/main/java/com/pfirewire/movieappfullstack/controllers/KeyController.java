@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = {"https://pfirewire.com", "https://www.pfirewire.com"})
 public class KeyController {
 
     @Autowired
