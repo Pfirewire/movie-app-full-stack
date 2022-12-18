@@ -49,7 +49,8 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String showProfile() {
+    public String showProfile(Model model) {
+        model.addAttribute("url", url);
         return "user/profile";
     }
 
