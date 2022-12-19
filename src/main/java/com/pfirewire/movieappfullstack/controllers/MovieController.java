@@ -5,9 +5,7 @@ import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.*;
-import com.pfirewire.movieappfullstack.services.Url;
 import com.pfirewire.movieappfullstack.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;

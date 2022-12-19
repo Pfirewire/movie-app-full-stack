@@ -2,8 +2,6 @@ package com.pfirewire.movieappfullstack.controllers;
 
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
-import com.pfirewire.movieappfullstack.services.MailService;
-import com.pfirewire.movieappfullstack.services.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -19,8 +16,6 @@ public class UserController {
     // Repositories and Services
     private final UserRepository userDao;
     private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private Url url;
 
     // Constructor
     public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
@@ -33,7 +28,6 @@ public class UserController {
     public String showSignupForm(Model model) {
         // Sending empty user to template
         model.addAttribute("user", new User());
-        model.addAttribute("url", url);
         return "user/signup";
     }
 
@@ -50,7 +44,6 @@ public class UserController {
 
     @GetMapping("/profile")
     public String showProfile(Model model) {
-        model.addAttribute("url", url);
         return "user/profile";
     }
 

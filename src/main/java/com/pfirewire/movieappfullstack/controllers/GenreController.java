@@ -6,8 +6,6 @@ import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.repositories.GenreRepository;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
 import com.pfirewire.movieappfullstack.repositories.MovieRepository;
-import com.pfirewire.movieappfullstack.services.Url;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfirewire.movieappfullstack.models.MovieList;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.MovieListRepository;
-import com.pfirewire.movieappfullstack.services.Url;
 import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,8 +19,6 @@ import java.util.Set;
 public class MovieListController {
 
     private final MovieListRepository listDao;
-    @Autowired
-    private Url url;
 
     public MovieListController(MovieListRepository listDao) {
         this.listDao = listDao;
@@ -40,7 +37,6 @@ public class MovieListController {
 
     @GetMapping("/movie/list")
     public String showMovieLists(Model model) {
-        model.addAttribute("url", url);
         model.addAttribute("list", new MovieList());
         return "movie/list/movie-lists";
     }
@@ -53,7 +49,6 @@ public class MovieListController {
         list.getMembers().add(user);
         listDao.save(list);
         model.addAttribute("list", list);
-        model.addAttribute("url", url);
         return "movie/list/my-movies";
     }
 
@@ -61,7 +56,6 @@ public class MovieListController {
     public String showMovieList(@PathVariable Long listId, Model model) {
         MovieList list = listDao.getById(listId);
         model.addAttribute("list", list);
-        model.addAttribute("url", url);
         return "movie/list/my-movies";
     }
 

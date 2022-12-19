@@ -5,7 +5,6 @@ import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.PasswordResetRepository;
 import com.pfirewire.movieappfullstack.repositories.UserRepository;
 import com.pfirewire.movieappfullstack.services.MailService;
-import com.pfirewire.movieappfullstack.services.Url;
 import com.pfirewire.movieappfullstack.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,8 +22,6 @@ public class PasswordResetController {
     private final UserRepository userDao;
     private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private Url url;
 
     public PasswordResetController(PasswordResetRepository passwordResetDao, UserRepository userDao, MailService mailService, PasswordEncoder passwordEncoder) {
         this.passwordResetDao = passwordResetDao;
@@ -35,7 +32,6 @@ public class PasswordResetController {
 
     @GetMapping("/pwreset")
     public String forgotPasswordLink(Model model) {
-        model.addAttribute("url", url);
         return "reset/forgot-pw";
     }
 
@@ -44,7 +40,6 @@ public class PasswordResetController {
         PasswordReset passwordReset = new PasswordReset(email, Utils.generatePasswordResetToken(), Utils.generatePasswordResetTimestamp());
         passwordResetDao.save(passwordReset);
         mailService.passwordReset(passwordReset);
-        model.addAttribute("url", url);
         return "reset/pw-reset-sent";
     }
 
@@ -60,7 +55,6 @@ public class PasswordResetController {
         User user = userDao.findByEmail(passwordReset.getEmail());
         model.addAttribute("user", user);
         model.addAttribute("passwordReset", passwordReset);
-        model.addAttribute("url", url);
         return "reset/pw-reset";
     }
 
