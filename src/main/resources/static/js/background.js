@@ -3,9 +3,8 @@ import { Get } from "./utils.js";
 $(function() {
 
     const Background = {
-        backendURLPath: $("#base-url").text(),
         async initialize() {
-            let unsplashKey = await Get.unsplashKey(this.backendURLPath);
+            let unsplashKey = await Get.unsplashKey();
             let photo = await Get.backgroundImage(unsplashKey);
             $('head').append(`
                 <style>

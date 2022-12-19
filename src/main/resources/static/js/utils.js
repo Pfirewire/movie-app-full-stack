@@ -1,10 +1,10 @@
 // Get Object and Methods
 export const Get = {
     // Gets all movies from our database
-    async allMovies(url, listId) {
+    async allMovies(listId) {
         try {
             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-            let response = await fetch(`${url}movies/${listId}`);
+            let response = await fetch(`${Utils.url()}movies/${listId}`);
             let data = await response.json();
             return data;
         } catch (err) {
@@ -12,10 +12,10 @@ export const Get = {
         }
     },
     // Gets only the data we need for our database from the TMDB database from the TMDB id input
-    async scrapeSingleMovieData(url, tmdbUrl, tmdbId) {
+    async scrapeSingleMovieData(tmdbUrl, tmdbId) {
         let tmdbPosterPath = "https://image.tmdb.org/t/p/original/";
         // Receives the full TMDB data
-        let movieData = await Get.tmdbMovieById(url, tmdbUrl, tmdbId);
+        let movieData = await Get.tmdbMovieById(tmdbUrl, tmdbId);
         // Scrapes necessary movie data
         let movieToAdd = {
             title: movieData.title,
@@ -29,8 +29,8 @@ export const Get = {
         return movieToAdd;
     },
     // finds and returns movie data for movie in our database
-    async movieById(url, id, listId) {
-        let allMoviesData = await this.allMovies(url, listId);
+    async movieById(id, listId) {
+        let allMoviesData = await this.allMovies(listId);
         for(let movie of allMoviesData) {
             if(movie.id === parseInt(id)) {
                 return movie;
@@ -38,11 +38,11 @@ export const Get = {
         }
     },
     // finds movie from TMDB database
-    async tmdbMovieById(url, tmdbUrl, id) {
+    async tmdbMovieById(tmdbUrl, id) {
         // uses TMDB id
         // returns data inside a promise
         try {
-            let tmdbKey = await Get.tmdbKey(url);
+            let tmdbKey = await Get.tmdbKey(Utils.url());
             let response = await fetch(`${tmdbUrl}${id}${tmdbKey}`);
             let data = await response.json();
             return data;
@@ -51,11 +51,11 @@ export const Get = {
         }
     },
     // finds movies from TMDB database
-    async movieByTitle(url, tmdbUrl, title) {
+    async movieByTitle(tmdbUrl, title) {
         // inputs string with movie title
         // returns data array inside a promise
         try {
-            let tmdbKey = await Get.tmdbKey(url);
+            let tmdbKey = await Get.tmdbKey(Utils.url());
             let response = await fetch(`${tmdbUrl}${tmdbKey}&query=${title}`);
             let data = await response.json();
             return data;
@@ -64,14 +64,14 @@ export const Get = {
         }
     },
     // gets api key
-    async tmdbKey(url) {
-        let response = await fetch(`${url}keys`);
+    async tmdbKey() {
+        let response = await fetch(`${Utils.url()}keys`);
         let data = await response.json();
         return data.tmdbKey;
     },
     // gets movie list
-    async movieList(url) {
-        let response = await fetch(`${url}list`);
+    async movieList() {
+        let response = await fetch(`${Utils.url()}list`);
         let data = await response.json();
         return data.id;
     },
@@ -82,22 +82,22 @@ export const Get = {
     //     return data.backRoomKey;
     // },
     // gets movie rating from id
-    async movieRating(url, id) {
-        let response = await fetch(`${url}rating/${id}`);
+    async movieRating(id) {
+        let response = await fetch(`${Utils.url()}rating/${id}`);
         let data = await response.json();
         return data;
     },
     // gets trending movie list
-    async trendingMovies(url, trendingUrl) {
-        let tmdbKey = await Get.tmdbKey(url);
+    async trendingMovies(trendingUrl) {
+        let tmdbKey = await Get.tmdbKey(Utils.url());
         let response = await fetch(`${trendingUrl}${tmdbKey}`);
         let data = await response.json();
         return data.results;
     },
     // gets all reviews
-    async allReviews(url) {
+    async allReviews() {
         try {
-            let reviewData = await fetch(`${url}reviews/all`);
+            let reviewData = await fetch(`${Utils.url()}reviews/all`);
             let reviewList = await reviewData.json();
             return reviewList
         } catch (err) {
@@ -105,9 +105,9 @@ export const Get = {
         }
     },
     // gets all reviews by user
-    async userReviews(url) {
+    async userReviews() {
         try {
-            let reviewData = await fetch(`${url}reviews/user`);
+            let reviewData = await fetch(`${Utils.url()}reviews/user`);
             let reviewList = await reviewData.json();
             return reviewList
         } catch (err) {
@@ -115,31 +115,26 @@ export const Get = {
         }
     },
     // gets movie rating with movie id and user id
-    async movieRatingWithUserId(url, movieId, userId) {
-        let response = await fetch(`${url}rating/${movieId}/${userId}`);
+    async movieRatingWithUserId(movieId, userId) {
+        let response = await fetch(`${Utils.url()}rating/${movieId}/${userId}`);
         let data = await response.json();
         return data;
     },
     // Get user's movie lists
-    async movieLists(url) {
-        let protocol = window.location.protocol;
-        url = window.location.host;
-        console.log(url);
+    async movieLists() {
         try {
-            let results = await fetch(`${protocol}//${url}/movie/list/all`);
+            let results = await fetch(`${Utils.url()}movie/list/all`);
             let data = await results.json();
-            console.log("Movie lists JSON");
-            console.log(data);
             return data;
         } catch(error) {
             console.log(`There was an error: ${error}`);
         }
     },
     // gets all movies from single list
-    async allMoviesFromList(url, listId) {
+    async allMoviesFromList(listId) {
         try {
             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-            let response = await fetch(`${url}movies/${listId}`);
+            let response = await fetch(`${Utils.url()}movies/${listId}`);
             let data = await response.json();
             return data;
         } catch (error) {
@@ -147,9 +142,9 @@ export const Get = {
         }
     },
     // gets movie list from list id
-    async movieListById(url, listId) {
+    async movieListById(listId) {
         try {
-            let response = await fetch(`${url}movie/list/${listId}/get`);
+            let response = await fetch(`${Utils.url()}movie/list/${listId}/get`);
             let data = await response.json();
             return data;
         } catch (error) {
@@ -157,10 +152,10 @@ export const Get = {
         }
     },
     // gets genre by movie id
-    async genresByMovieId(url, movieId) {
+    async genresByMovieId(movieId) {
         try {
             // let response = await fetch(MovieApp.GlobalURLs.moviesURL);
-            let response = await fetch(`${url}genre/${movieId}`);
+            let response = await fetch(`${Utils.url()}genre/${movieId}`);
             let data = await response.json();
             return data;
         } catch (error) {
@@ -168,8 +163,8 @@ export const Get = {
         }
     },
     // gets all genres in movie list
-    async genresByMovieListId(url, listId) {
-        let genres = await fetch(`${url}genre/${listId}/all`).then(res => res.json());
+    async genresByMovieListId(listId) {
+        let genres = await fetch(`${Utils.url()}genre/${listId}/all`).then(res => res.json());
         return genres;
     },
     // gets url for background image
@@ -178,8 +173,8 @@ export const Get = {
         return photo;
     },
 
-    async unsplashKey(url) {
-        let keys = await fetch(`${url}keys`).then(res => res.json());
+    async unsplashKey() {
+        let keys = await fetch(`${Utils.url()}keys`).then(res => res.json());
         return keys.unsplashKey;
     }
 }
@@ -216,6 +211,9 @@ export const Utils = {
         approximatelyEqual(v1, v2, epsilon = 0.001) {
             return Math.abs(v1 - v2) < epsilon;
         }
+    },
+    url() {
+        return `${window.location.protocol}//${window.location.host}/`;
     }
 }
 
@@ -273,8 +271,8 @@ export const User = {
         }
     },
     // Adds movie to database
-    async addMovie(url, tmdbUrl, tmdbId, listId, csrfToken) {
-        let movie = await Get.scrapeSingleMovieData(url, tmdbUrl, tmdbId);
+    async addMovie(tmdbUrl, tmdbId, listId, csrfToken) {
+        let movie = await Get.scrapeSingleMovieData(tmdbUrl, tmdbId);
 
         const postOptions = {
             method: 'POST',
@@ -284,7 +282,7 @@ export const User = {
             },
             body: JSON.stringify(movie)
         }
-        let results = await fetch(`${url}movie/${listId}/add`, postOptions).then(res => {
+        let results = await fetch(`${Utils.url()}movie/${listId}/add`, postOptions).then(res => {
             $("#add-movie-text").val('');
             $("#movie-list").empty();
             // Print.allMovies(Get.allMovies(url, listId));
@@ -294,7 +292,7 @@ export const User = {
         postOptions.body = JSON.stringify({rating: 5});
     },
     // Deletes movie from database
-    async deleteMovie(url, movieId, listId, button, csrfToken) {
+    async deleteMovie(movieId, listId, button, csrfToken) {
         let deleteOptions = {
             method: 'DELETE',
             headers: {
@@ -302,13 +300,13 @@ export const User = {
                 'X-CSRF-TOKEN' : csrfToken
             }
         }
-        let deleteData = await fetch(`${url}movie/${movieId}/${listId}/delete`, deleteOptions).then(results => results);
+        let deleteData = await fetch(`${Utils.url()}movie/${movieId}/${listId}/delete`, deleteOptions).then(results => results);
         // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
     },
     // Edits movie in database
-    async editMovie(url, id, listId, button, csrfToken) {
-        let newMovie = await Get.movieById(url, id, listId);
+    async editMovie(id, listId, button, csrfToken) {
+        let newMovie = await Get.movieById(id, listId);
         newMovie.title = $("#title-input").val();
         newMovie.genres = $("#genre-input").val();
         newMovie.plot =  $("#plot-input").val();
@@ -326,8 +324,8 @@ export const User = {
         button.removeAttr("disabled");
     },
     // Calls add or edit rating based on if a rating exists
-    async setRating(url, movieId, rating, csrfToken) {
-        let ratingData = await Get.movieRating(url, movieId);
+    async setRating(movieId, rating, csrfToken) {
+        let ratingData = await Get.movieRating(movieId);
         let oldRating = ratingData.value;
         let ratingObject = {
             value: rating
@@ -340,7 +338,7 @@ export const User = {
             body: JSON.stringify(ratingObject)
         }
         oldRating < 0 ? postOptions.method = 'POST' : postOptions.method = 'PATCH';
-        await fetch(`${url}rating/${movieId}`, postOptions);
+        await fetch(`${Utils.url()}rating/${movieId}`, postOptions);
     },
     // Sorts movies based on user choice. returns new array of movies
     async sortMovies(movies) {
@@ -368,12 +366,12 @@ export const User = {
         }
     },
 
-    reviewForm(url, movieId) {
-        window.location.href = `${url}review/${movieId}`;
+    reviewForm(movieId) {
+        window.location.href = `${Utils.url()}review/${movieId}`;
     },
     // Edits movie list by name
-    async editMovieList(url, listId, listName, button, csrfToken) {
-        let newMovieList = await Get.movieListById(url, listId).then(res => res);
+    async editMovieList(listId, listName, button, csrfToken) {
+        let newMovieList = await Get.movieListById(listId).then(res => res);
         newMovieList.name = listName;
 
         let editOptions = {
@@ -384,12 +382,12 @@ export const User = {
             },
             body : JSON.stringify(newMovieList)
         }
-        await fetch(`${url}movie/list/${listId}/edit`, editOptions);
+        await fetch(`${Utils.url()}movie/list/${listId}/edit`, editOptions);
         // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
     },
     // Deletes movie list
-    async deleteMovieList(url, listId, button, csrfToken) {
+    async deleteMovieList(listId, button, csrfToken) {
         let deleteOptions = {
             method: 'DELETE',
             headers: {
@@ -397,13 +395,13 @@ export const User = {
                 'X-CSRF-TOKEN' : csrfToken
             }
         }
-        let deleteData = await fetch(`${url}movie/list/${listId}/delete`, deleteOptions).then(results => results);
+        let deleteData = await fetch(`${Utils.url()}movie/list/${listId}/delete`, deleteOptions).then(results => results);
         // Print.allMovies(Get.allMovies(url, listId));
         button.removeAttr("disabled");
     },
     // Function that filters movies based on array of filter objects passed in
-    async filterMovies(url, listId, filters) {
-        let movies = await Get.allMovies(url, listId).then(res => res);
+    async filterMovies(listId, filters) {
+        let movies = await Get.allMovies(listId).then(res => res);
         if(filters) {
             for(let filter of filters) {
                 switch(filter.type) {

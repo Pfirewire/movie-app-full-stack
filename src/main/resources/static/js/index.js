@@ -6,13 +6,12 @@ $(function() {
     const MovieIndex = {
         GlobalURLs: {
             tmdbTrendingUrl: "https://api.themoviedb.org/3/trending/movie/week",
-            tmdbPosterPath: "https://image.tmdb.org/t/p/original/",
-            backendURLPath: $("#base-url").text()
+            tmdbPosterPath: "https://image.tmdb.org/t/p/original/"
         },
         carouselRoot: $(".carousel"),
         spinInterval: null,
         async initialize() {
-            await Print.trendingPosters(Get.trendingMovies(MovieIndex.GlobalURLs.backendURLPath, MovieIndex.GlobalURLs.tmdbTrendingUrl));
+            await Print.trendingPosters(Get.trendingMovies(MovieIndex.GlobalURLs.tmdbTrendingUrl));
             Events.initialize();
         }
     }

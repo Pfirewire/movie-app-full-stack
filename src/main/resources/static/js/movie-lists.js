@@ -5,16 +5,12 @@ $(function() {
 
     // MovieLists object and globals
     const MovieLists = {
-        // Storing all the URL const variablers
-        GlobalURLs: {
-            backendURLPath: $("#base-url").text()
-        },
         movieListDiv: $("#all-movie-lists-div"),
         // CSRF Token
         csrfToken: $("meta[name='_csrf']").attr("content"),
         async initialize() {
             // Print lists in div
-            Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath));
+            Print.allMovieLists(Get.movieLists());
             // Initialize event listeners
             Events.initialize();
         }
@@ -28,7 +24,7 @@ $(function() {
                 movieListData.forEach(function(movieList) {
                     Print.singleMovieList(MovieLists.movieListDiv, movieList);
                     let movieListCardDiv = MovieLists.movieListDiv.children().last().children(".movie-list-card");
-                    let movieListMovies = Get.allMoviesFromList(MovieLists.GlobalURLs.backendURLPath, movieList.id);
+                    let movieListMovies = Get.allMoviesFromList(movieList.id);
                     Print.singleMovieListPosters(movieListCardDiv, movieListMovies);
                 })
             });
@@ -88,16 +84,15 @@ $(function() {
             // Click event for movie list
             $(document.body).on("click", ".delete-movie-list-button", async function() {
                 await User.deleteMovieList(
-                    MovieLists.GlobalURLs.backendURLPath,
                     $(this).parent().parent().parent().attr("data-list-id"),
                     $(this),
                     MovieLists.csrfToken
                 );
-                Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath));
+                Print.allMovieLists(Get.movieLists());
             });
             $(document.body).on("click", ".edit-movie-list-button", async function() {
                 let listId = $(this).parent().parent().parent().attr("data-list-id");
-                let listObject = await Get.movieListById(MovieLists.GlobalURLs.backendURLPath, listId).then(res => res);
+                let listObject = await Get.movieListById(listId).then(res => res);
                 Print.singleMovieListEdit($(this).parent().parent(), listObject);
             });
             $(document.body).on("click", ".edit-movie-list-button-confirm", async function() {
@@ -105,13 +100,12 @@ $(function() {
                 let listId = $(this).parent().parent().parent().attr("data-list-id");
                 let listName = $(this).parent().siblings("h3").children("input").val();
                 await User.editMovieList(
-                    MovieLists.GlobalURLs.backendURLPath,
                     listId,
                     listName,
                     $(this),
                     MovieLists.csrfToken
                 );
-                Print.allMovieLists(Get.movieLists(MovieLists.GlobalURLs.backendURLPath))
+                Print.allMovieLists(Get.movieLists())
             });
         }
     }

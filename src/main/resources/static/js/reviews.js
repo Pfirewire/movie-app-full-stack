@@ -2,17 +2,14 @@ import { Get } from "./utils.js";
 
 $(function() {
     const MovieReviews = {
-        Urls: {
-            backendPath: $("#base-url").text()
-        },
         Divs: {
             reviewList: $("#reviews-div")
         },
         initialize() {
             if($("title").text().includes("My")) {
-                Print.allReviews(Get.userReviews(MovieReviews.Urls.backendPath));
+                Print.allReviews(Get.userReviews());
             } else {
-                Print.allReviews(Get.allReviews(MovieReviews.Urls.backendPath));
+                Print.allReviews(Get.allReviews());
             }
         }
     }
@@ -21,7 +18,7 @@ $(function() {
         async allReviews(promise) {
             await promise.then(reviewData => {
                 reviewData.forEach(async function(review) {
-                    let rating = await Get.movieRatingWithUserId(MovieReviews.Urls.backendPath, review.movie.id, review.user.id).then(res => res);
+                    let rating = await Get.movieRatingWithUserId(review.movie.id, review.user.id).then(res => res);
                     Print.singleReview(review, rating, MovieReviews.Divs.reviewList);
                 });
             });

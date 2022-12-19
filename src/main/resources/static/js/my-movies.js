@@ -13,7 +13,6 @@ $(function() {
             searchTMDBURL: "https://api.themoviedb.org/3/search/movie",
             findTMDBURL: "https://api.themoviedb.org/3/movie/",
             tmdbPosterPath: "https://image.tmdb.org/t/p/original/",
-            backendURLPath: $("#base-url").text(),
         },
         // Modal Object
         Modals: {
@@ -51,7 +50,7 @@ $(function() {
         // returns movie list of current movies filtered
         async findActiveMovies() {
             let filters = MyMovies.findChosenFilters();
-            return User.filterMovies(MyMovies.urls.backendURLPath, MyMovies.listId, filters);
+            return User.filterMovies(MyMovies.listId, filters);
         },
         // finds movies currently in list and returns array with first year and last year
         async findYears() {
@@ -71,7 +70,7 @@ $(function() {
         },
         // Prints current movie database on screen and initializes all event listeners
         async initialize() {
-            await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+            await Print.allMovies(Get.allMovies(MyMovies.listId), MyMovies.carouselRoot);
             await Print.filtersModal();
             Events.initialize();
         },
@@ -149,7 +148,7 @@ $(function() {
         // prints modal with movies from TMDB database
         async moviesList(title) {
             // shows the top 6 from search results
-            let movieList = await Get.movieByTitle(MyMovies.urls.backendURLPath, MyMovies.urls.searchTMDBURL, title).then(results => results);
+            let movieList = await Get.movieByTitle(MyMovies.urls.searchTMDBURL, title).then(results => results);
             $("#movie-list").empty();
             movieList.results.forEach((movie, index) => {
                 if(index < 6) {
@@ -166,7 +165,7 @@ $(function() {
         // prints rating in the movie modal
         async modalRating(div, movie) {
             // get rating for movie
-            let ratingData = await Get.movieRating(MyMovies.urls.backendURLPath, movie.id);
+            let ratingData = await Get.movieRating(movie.id);
             let rating = ratingData.value;
             div.empty();
             if(rating < 0) {
@@ -204,7 +203,7 @@ $(function() {
         },
         // prints list with all genres
         async allGenreButtons() {
-            let genres = await Get.genresByMovieListId(MyMovies.urls.backendURLPath, MyMovies.listId);
+            let genres = await Get.genresByMovieListId(MyMovies.listId);
             for(let genre of genres) {
                 Print.singleGenreButton(genre);
             }
@@ -256,8 +255,8 @@ $(function() {
                 })
                 // Listens for click on add movie card
                 .on("click", "#movie-list .card", async function() {
-                    await User.addMovie(MyMovies.urls.backendURLPath, MyMovies.urls.findTMDBURL, $(this).attr("data-movie-tmdb-id"), MyMovies.listId, MyMovies.csrfToken);
-                    await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+                    await User.addMovie(MyMovies.urls.findTMDBURL, $(this).attr("data-movie-tmdb-id"), MyMovies.listId, MyMovies.csrfToken);
+                    await Print.allMovies(Get.allMovies(MyMovies.listId), MyMovies.carouselRoot);
                     Print.filtersModal();
                     Utils.Modal.hide(MyMovies.Modals.addMovieModal);
                     Events.addMovieModalOff();
@@ -284,13 +283,13 @@ $(function() {
                 // Listens for click on delete button
                 .on("click", ".delete-btn", async function (){
                     $(this).attr("disabled", "");
-                    await User.deleteMovie(MyMovies.urls.backendURLPath, $(this).parent().parent().attr("data-movie-id"), MyMovies.listId, $(this), MyMovies.csrfToken);
-                    await Print.allMovies(Get.allMovies(MyMovies.urls.backendURLPath, MyMovies.listId), MyMovies.carouselRoot);
+                    await User.deleteMovie($(this).parent().parent().attr("data-movie-id"), MyMovies.listId, $(this), MyMovies.csrfToken);
+                    await Print.allMovies(Get.allMovies(MyMovies.listId), MyMovies.carouselRoot);
                     Utils.Modal.hide(MyMovies.Modals.singleMovieModal);
                     Events.singleMovieModalOff();
                 })
                 .on("click", ".review-btn", function() {
-                    User.reviewForm(MyMovies.urls.backendURLPath, $(this).parent().parent().attr("data-movie-id"));
+                    User.reviewForm($(this).parent().parent().attr("data-movie-id"));
                 })
                 .on("mouseenter", ".modal-rating-star", function() {
                     let rating = $(this).attr("data-rating-star");
@@ -299,14 +298,14 @@ $(function() {
                 .on("mouseleave", "#single-movie-modal-header", async function() {
                     // get the saved rating and display it correctly
                     let movieId = $("#single-movie").attr("data-movie-id");
-                    let ratingData = await Get.movieRating(MyMovies.urls.backendURLPath, movieId);
+                    let ratingData = await Get.movieRating(movieId);
                     let rating = ratingData.value;
                     Print.starFill(rating);
                 })
                 .on("click", ".modal-rating-star", function() {
                     let rating = $(this).attr("data-rating-star");
                     let movieId = $(this).attr("data-movie-id");
-                    User.setRating(MyMovies.urls.backendURLPath, movieId, parseInt(rating), MyMovies.csrfToken);
+                    User.setRating(movieId, parseInt(rating), MyMovies.csrfToken);
                 })
                 .on("mousedown", function(e) {
                     if(!$(e.target).closest("#single-movie-modal .modal-content").length && $("#single-movie-modal").is(":visible")) {
@@ -400,7 +399,7 @@ $(function() {
                         $(this).toggleClass("big-movie");
                         Events.singleMovieModalOn();
                         Carousel.modalClick(MyMovies.Modals.singleMovieModal);
-                        Get.movieById(MyMovies.urls.backendURLPath, $(this).parent().attr("data-movie-id"), MyMovies.listId)
+                        Get.movieById($(this).parent().attr("data-movie-id"), MyMovies.listId)
                             .then(res => Print.movieModal($("#single-movie-modal"), res));
                     }
                 })
