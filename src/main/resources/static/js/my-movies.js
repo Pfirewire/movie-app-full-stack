@@ -238,6 +238,10 @@ $(function() {
             Print.clearFilters();
             await Print.allGenreButtons();
             await Print.allYearLists();
+        },
+        // clears all selected filters
+        async clearSelectedFilters() {
+
         }
     }
 
@@ -369,6 +373,10 @@ $(function() {
                         Events.filterMovieModalOff();
                     }
                 })
+                .on("click", "#filters-modal-clear-all-button", async function() {
+                    await Print.filtersModal();
+                    await Print.allMovies(MyMovies.findActiveMovies(), MyMovies.carouselRoot);
+                })
             ;
         },
         filterMovieModalOff() {
@@ -378,6 +386,7 @@ $(function() {
                 .off("change", ".filters-year-select")
                 .off("click", ".chosen-year-filter")
                 .off("mousedown")
+                .off("click", "#filters-modal-clear-all-button")
             ;
             Events.defaultsOn();
         },
