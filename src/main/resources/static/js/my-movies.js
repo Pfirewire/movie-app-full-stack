@@ -177,7 +177,7 @@ $(function() {
             } else {
                 for(let i = 1; i <= rating; i++) {
                     div.append(`
-                        <i class="bi bi-star-fill px-1 fs-1 modal-rating-star modal-rating-${i}" data-rating-star="${i}" data-movie-id="${movie.id}"></i>
+                        <i class="bi bi-star-fill px-1 fs-3 modal-rating-star modal-rating-${i}" data-rating-star="${i}" data-movie-id="${movie.id}"></i>
                     `);
                 }
                 for(let i = rating + 1; i < 6; i++) {
@@ -190,7 +190,7 @@ $(function() {
         starFill(rating) {
             for(let i = 1; i < 6; i++) {
                 if(i <= rating) {
-                    $(`.modal-rating-${i}`).removeClass("bi-star fs-3").addClass("bi-star-fill fs-1");
+                    $(`.modal-rating-${i}`).removeClass("bi-star fs-3").addClass("bi-star-fill fs-3");
                 } else {
                     $(`.modal-rating-${i}`).removeClass("bi-star-fill fs-1").addClass("bi-star fs-3");
                 }
