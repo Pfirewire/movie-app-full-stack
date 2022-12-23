@@ -176,6 +176,11 @@ export const Get = {
     async unsplashKey() {
         let keys = await fetch(`${Utils.url()}keys`).then(res => res.json());
         return keys.unsplashKey;
+    },
+
+    async filestackKey() {
+        let keys = await fetch(`${Utils.url()}keys`).then(res => res.json());
+        return keys.filestackKey;
     }
 }
 
