@@ -10,7 +10,10 @@ $(async function() {
         initialize() {
             console.log("inside initialize");
             const client = filestack.init(this.filestackKey);
-            client.picker().open();
+            const options = {
+                fromSources: ["local_file_system"]
+            }
+            client.picker(options).open();
         },
         filestackKey: await Get.filestackKey().then(res => res)
     };
