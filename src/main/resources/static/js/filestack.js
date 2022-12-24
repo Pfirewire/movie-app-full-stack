@@ -11,7 +11,13 @@ $(async function() {
             console.log("inside initialize");
             const client = filestack.init(this.filestackKey);
             const options = {
-                fromSources: ["local_file_system"]
+                fromSources: ["local_file_system", "url"],
+                accept: ["image/*"],
+                transformations: {
+                    crop: false,
+                    circle: true,
+                    rotate: false
+                }
             }
             client.picker(options).open();
         },
