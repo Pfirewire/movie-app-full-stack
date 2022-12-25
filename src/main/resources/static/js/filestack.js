@@ -17,6 +17,9 @@ $(async function() {
                     crop: false,
                     circle: true,
                     rotate: false
+                },
+                onFileUploadFinished: file => {
+                    console.log(file);
                 }
             }
             client.picker(options).open();
