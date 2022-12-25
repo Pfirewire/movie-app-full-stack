@@ -20,6 +20,9 @@ $(async function() {
                 },
                 onFileUploadFinished: file => {
                     console.log(file);
+                    $("#pic-div").append(`
+                        <img src="${file.url}" alt="uploaded file" height="600" width="600">
+                    `);
                 }
             }
             client.picker(options).open();
