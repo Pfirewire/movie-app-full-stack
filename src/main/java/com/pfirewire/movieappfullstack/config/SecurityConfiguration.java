@@ -56,7 +56,8 @@ public class SecurityConfiguration {
                         "/movies",
                         "/movie/list",
                         "/review/user/view",
-                        "/profile"
+                        "/profile",
+                        "user/picture"
                 )
                 .authenticated()
                 // Pages viewable without logging in
