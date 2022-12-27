@@ -1,7 +1,5 @@
 package com.pfirewire.movieappfullstack.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfirewire.movieappfullstack.models.ProfilePicture;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.ProfilePictureRepository;
@@ -30,22 +28,13 @@ public class ProfilePictureController {
     }
 
     @PostMapping("/user/picture")
-    public ProfilePicture setProfilePicture(@RequestBody ProfilePicture picture) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println("inside setProfilePicture");
+    public ProfilePicture setProfilePicture(@RequestBody ProfilePicture picture) {
         User user = userDao.findById(Utils.currentUser().getId()).get();
-        System.out.println("user: ");
-        System.out.println(mapper.writeValueAsString(user));
         ProfilePicture currentPicture = profilePictureDao.findByUser(user);
-        System.out.println("current picture: ");
-        System.out.println(mapper.writeValueAsString(currentPicture));
         if(currentPicture != null) {
-            System.out.println("inside if statement to delete current picture");
             profilePictureDao.delete(currentPicture);
         }
         picture.setUser(user);
-        System.out.println("picture to save:");
-        System.out.println(mapper.writeValueAsString(picture));
         profilePictureDao.save(picture);
         return picture;
     }
