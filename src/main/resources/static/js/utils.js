@@ -181,6 +181,11 @@ export const Get = {
     async filestackKey() {
         let keys = await fetch(`${Utils.url()}keys`).then(res => res.json());
         return keys.filestackKey;
+    },
+
+    async profilePicture() {
+        let picture = await fetch(`${Utils.url()}user/picture`).then(res => res.json());
+        return picture;
     }
 }
 
