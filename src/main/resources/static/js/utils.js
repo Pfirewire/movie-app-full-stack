@@ -193,9 +193,11 @@ export const Post = {
     async profilePicture(file, token) {
         console.log("inside profilePicture. file: ");
         console.log(file);
+        console.log(token);
         let postOptions = {
             method: 'POST',
             headers: {
+                'Content-Type' : 'application/json',
                 'X-CSRF-TOKEN' : token
             },
             body: JSON.stringify(file)

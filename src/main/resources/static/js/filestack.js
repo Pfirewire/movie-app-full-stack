@@ -24,7 +24,7 @@ $(async function() {
             },
             onFileUploadFinished: async function(file) {
                 console.log(file);
-                let uploadedPicture = await Post.profilePicture(file, this.csrfToken).then(res => res);
+                let uploadedPicture = await Post.profilePicture(file, FileStack.csrfToken).then(res => res);
                 console.log(uploadedPicture);
             }
         },
