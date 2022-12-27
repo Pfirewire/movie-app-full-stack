@@ -190,8 +190,17 @@ export const Get = {
 }
 
 export const Post = {
-    async profilePicture(file) {
-        return await fetch(`${Utils.url()}user/picture`, file).then(res => res.json());
+    async profilePicture(file, token) {
+        console.log("inside profilePicture. file: ");
+        console.log(file);
+        let postOptions = {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN' : token
+            },
+            body: JSON.stringify(file)
+        }
+        return await fetch(`${Utils.url()}user/picture`, postOptions).then(res => res.json());
     }
 }
 

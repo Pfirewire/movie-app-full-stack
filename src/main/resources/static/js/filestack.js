@@ -24,11 +24,12 @@ $(async function() {
             },
             onFileUploadFinished: async function(file) {
                 console.log(file);
-                let uploadedPicture = await Post.profilePicture(file).then(res => res);
+                let uploadedPicture = await Post.profilePicture(file, this.csrfToken).then(res => res);
                 console.log(uploadedPicture);
             }
         },
-        filestackKey: await Get.filestackKey().then(res => res)
+        filestackKey: await Get.filestackKey().then(res => res),
+        csrfToken: $("meta[name='_csrf']").attr("content")
     };
 
     const Events = {
