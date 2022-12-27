@@ -189,6 +189,12 @@ export const Get = {
     }
 }
 
+export const Post = {
+    async profilePicture(file) {
+        return await fetch(`${Utils.url()}user/picture`, file).then(res => res.json());
+    }
+}
+
 // Utilities Object and Methods
 export const Utils = {
     // Convert methods

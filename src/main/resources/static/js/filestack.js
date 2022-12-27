@@ -1,6 +1,7 @@
 // JS file to handle the filestack API service
 
 import { Get } from "./utils.js";
+import { Post } from "./utils.js";
 
 $(async function() {
     console.log("Inside filestack.js");
@@ -22,7 +23,8 @@ $(async function() {
             },
             onFileUploadFinished: async function(file) {
                 console.log(file);
-
+                let uploadedPicture = await Post.profilePicture(file).then(res => res);
+                console.log(uploadedPicture);
             }
         },
         filestackKey: await Get.filestackKey().then(res => res)
