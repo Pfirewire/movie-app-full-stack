@@ -8,11 +8,12 @@ $(async function() {
 
 
     const FileStack = {
-        initialize() {
+        async initialize() {
             console.log("inside initialize");
-            const client = filestack.init(this.filestackKey);
+            this.client = await filestack.init(this.filestackKey);
             Events.initialize();
         },
+        client: null,
         options: {
             fromSources: ["local_file_system", "url"],
             accept: ["image/*"],
@@ -33,7 +34,7 @@ $(async function() {
     const Events = {
         initialize() {
             $(document).on("click", "#upload-profile-picture", function() {
-                client.picker(FileStack.options).open();
+                FileStack.client.picker(FileStack.options).open();
             });
         }
     }
