@@ -20,7 +20,8 @@ $(async function() {
             transformations: {
                 crop: false,
                 circle: true,
-                rotate: false
+                rotate: false,
+                force: true
             },
             onFileUploadFinished: async function(file) {
                 console.log(file);
