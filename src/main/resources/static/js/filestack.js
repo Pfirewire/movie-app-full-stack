@@ -23,10 +23,14 @@ $(async function() {
                 rotate: false,
                 force: true
             },
+            imageMax: [240, 240],
             onFileUploadFinished: async function(file) {
                 console.log(file);
                 let uploadedPicture = await Post.profilePicture(file, FileStack.csrfToken).then(res => res);
                 console.log(uploadedPicture);
+                $("#pic-div").append(`
+                    <img src="${uploadedPicture.url}">
+                `);
             }
         },
         filestackKey: await Get.filestackKey().then(res => res),
