@@ -3,6 +3,13 @@ $(function() {
     const SiteBar = {
         initialize() {
             Events.initialize();
+
+        }
+    };
+
+    const Print = {
+        async profilePicture() {
+            // Prints user profile picture on sitebar
         }
     };
 
