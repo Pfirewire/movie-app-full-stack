@@ -1,15 +1,19 @@
+import { Get } from "./utils.js";
+
 $(function() {
 
     const SiteBar = {
         initialize() {
             Events.initialize();
-
+            Print.profilePicture();
         }
     };
 
     const Print = {
         async profilePicture() {
             // Prints user profile picture on sitebar
+            let picture = await Get.profilePicture();
+            console.log(picture);
         }
     };
 
