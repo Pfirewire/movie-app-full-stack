@@ -12,8 +12,12 @@ $(function() {
     const Print = {
         async profilePicture() {
             // Prints user profile picture on sitebar
-            let picture = await Get.profilePicture();
-            console.log(picture);
+            let picture = await Get.profilePicture().then(res => res);
+            if(picture === null) {
+                console.log("User anonymous")
+            } else {
+                console.log(picture);
+            }
         }
     };
 

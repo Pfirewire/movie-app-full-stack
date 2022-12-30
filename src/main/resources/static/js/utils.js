@@ -184,7 +184,15 @@ export const Get = {
     },
 
     async profilePicture() {
-        let picture = await fetch(`${Utils.url()}user/picture`).then(res => res.json());
+        let picture = await fetch(`${Utils.url()}user/picture`).then(res => {
+            console.log(res);
+            if(res === null) {
+                return null;
+            } else {
+                return res.json();
+            }
+        });
+        console.log(picture);
         return picture;
     }
 }

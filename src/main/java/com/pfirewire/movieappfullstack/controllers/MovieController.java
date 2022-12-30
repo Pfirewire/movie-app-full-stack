@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pfirewire.movieappfullstack.models.Genre;
 import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.MovieList;
@@ -50,7 +51,7 @@ public class MovieController {
     }
 
     @PostMapping("/movie/{listId}/add")
-    public Movie addMovie(@RequestBody Movie movie, @PathVariable Long listId) {
+    public Movie addMovie(@RequestBody Movie movie, @PathVariable Long listId) throws JsonProcessingException {
         // Add movie to database if not already present, otherwise set equal to object in database
         System.out.println("Inside addMovie");
         if(!movieDao.existsByTmdbId(movie.getTmdbId())){
@@ -80,7 +81,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/movie/{movieId}/{listId}/delete")
-    public void deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) {
+    public void deleteMovie(@PathVariable Long movieId, @PathVariable Long listId) throws JsonProcessingException {
         User user = Utils.currentUser();
         Movie movie = movieDao.getById(movieId);
         MovieList list = listDao.getById(listId);

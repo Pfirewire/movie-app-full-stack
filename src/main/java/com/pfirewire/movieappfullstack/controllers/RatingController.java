@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.Rating;
 import com.pfirewire.movieappfullstack.models.User;
@@ -24,7 +25,7 @@ public class RatingController {
     }
 
     @GetMapping("/rating/{movieId}")
-    public Rating getRating(@PathVariable Long movieId) {
+    public Rating getRating(@PathVariable Long movieId) throws JsonProcessingException {
         User user = Utils.currentUser();
         Movie movie = movieDao.getById(movieId);
         Rating rating = ratingDao.findByUserAndMovie(user, movie);
@@ -48,7 +49,7 @@ public class RatingController {
     }
 
     @PostMapping("/rating/{movieId}")
-    public String addRating (@RequestBody Rating rating, @PathVariable Long movieId) {
+    public String addRating (@RequestBody Rating rating, @PathVariable Long movieId) throws JsonProcessingException {
         User user = Utils.currentUser();
         rating.setUser(user);
         rating.setMovie(movieDao.getById(movieId));
@@ -57,7 +58,7 @@ public class RatingController {
     }
 
     @PatchMapping("/rating/{movieId}")
-    public String editRating(@RequestBody Rating newRating, @PathVariable Long movieId) {
+    public String editRating(@RequestBody Rating newRating, @PathVariable Long movieId) throws JsonProcessingException {
         User user = Utils.currentUser();
         Rating oldRating = ratingDao.findByUserAndMovie(user, movieDao.getById(movieId));
         oldRating.setValue(newRating.getValue());

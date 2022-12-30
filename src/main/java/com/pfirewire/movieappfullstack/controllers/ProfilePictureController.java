@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pfirewire.movieappfullstack.models.ProfilePicture;
 import com.pfirewire.movieappfullstack.models.User;
 import com.pfirewire.movieappfullstack.repositories.ProfilePictureRepository;
@@ -23,7 +24,7 @@ public class ProfilePictureController {
     }
 
     @GetMapping("/user/picture")
-    public ProfilePicture getProfilePicture() {
+    public ProfilePicture getProfilePicture() throws JsonProcessingException {
         if(Utils.currentUser() == null) {
             return null;
         } else {
@@ -32,7 +33,7 @@ public class ProfilePictureController {
     }
 
     @PostMapping("/user/picture")
-    public ProfilePicture setProfilePicture(@RequestBody ProfilePicture picture) {
+    public ProfilePicture setProfilePicture(@RequestBody ProfilePicture picture) throws JsonProcessingException {
         User user = userDao.findById(Utils.currentUser().getId()).get();
         ProfilePicture currentPicture = profilePictureDao.findByUser(user);
         if(currentPicture != null) {

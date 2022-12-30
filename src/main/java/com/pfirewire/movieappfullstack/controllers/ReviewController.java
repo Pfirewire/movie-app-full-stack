@@ -1,5 +1,6 @@
 package com.pfirewire.movieappfullstack.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pfirewire.movieappfullstack.models.Movie;
 import com.pfirewire.movieappfullstack.models.Review;
 import com.pfirewire.movieappfullstack.models.User;
@@ -49,7 +50,7 @@ public class ReviewController {
     }
 
     @GetMapping("/review/{movieId}")
-    public String reviewForm (@PathVariable Long movieId, Model model) {
+    public String reviewForm (@PathVariable Long movieId, Model model) throws JsonProcessingException {
         User user = Utils.currentUser();
         Movie movie = movieDao.getById(movieId);
         Review review = reviewDao.findByUserAndMovie(user, movie);
@@ -66,7 +67,7 @@ public class ReviewController {
     }
 
     @PostMapping("/review/{movieId}")
-    public String addReview (@ModelAttribute Review review, @PathVariable Long movieId, Model model) {
+    public String addReview (@ModelAttribute Review review, @PathVariable Long movieId, Model model) throws JsonProcessingException {
         User user = Utils.currentUser();
         Movie movie = movieDao.getById(movieId);
         review.setUser(user);
@@ -79,7 +80,7 @@ public class ReviewController {
     }
 
     @PostMapping("/review/{movieId}/edit")
-    public String editReview(@ModelAttribute Review newReview, @PathVariable Long movieId, Model model) {
+    public String editReview(@ModelAttribute Review newReview, @PathVariable Long movieId, Model model) throws JsonProcessingException {
         User user = Utils.currentUser();
         Movie movie = movieDao.getById(movieId);
         Review oldReview = reviewDao.findByUserAndMovie(user, movie);
@@ -101,7 +102,7 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/user")
-    public @ResponseBody Set<Review> getUserMyReviews(Model model) {
+    public @ResponseBody Set<Review> getUserMyReviews(Model model) throws JsonProcessingException {
         User user = Utils.currentUser();
         return reviewDao.findAllByUser(user);
     }
