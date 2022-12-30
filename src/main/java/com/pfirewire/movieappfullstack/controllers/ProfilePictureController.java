@@ -24,7 +24,11 @@ public class ProfilePictureController {
 
     @GetMapping("/user/picture")
     public ProfilePicture getProfilePicture() {
-        return profilePictureDao.findByUser(userDao.findById(Utils.currentUser().getId()).get());
+        if(Utils.currentUser() == null) {
+            return null;
+        } else {
+            return profilePictureDao.findByUser(userDao.findById(Utils.currentUser().getId()).get());
+        }
     }
 
     @PostMapping("/user/picture")
