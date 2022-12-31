@@ -26,7 +26,7 @@ public class ProfilePictureController {
     @GetMapping("/user/picture")
     public ProfilePicture getProfilePicture() throws JsonProcessingException {
         if(Utils.currentUser() == null) {
-            return null;
+            return new ProfilePicture(-1L);
         } else {
             return profilePictureDao.findByUser(userDao.findById(Utils.currentUser().getId()).get());
         }
