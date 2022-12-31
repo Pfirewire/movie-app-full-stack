@@ -14,10 +14,12 @@ $(function() {
             // Prints user profile picture on sitebar
             let picture = await Get.profilePicture().then(res => res);
             if(picture.id === -1) {
-                console.log("User anonymous")
-
+                console.log("User anonymous");
             } else {
                 console.log(picture);
+                $("#navbar-profile-image").parent().empty().append(`
+                    <img id="navbar-profile-image" src="${picture.url}" style="max-height: 1.75em; max-width: 1.75em;">
+                `);
             }
         }
     };
