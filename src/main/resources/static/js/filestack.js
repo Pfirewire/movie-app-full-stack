@@ -31,6 +31,9 @@ $(async function() {
                 $("#pic-div").append(`
                     <img src="${uploadedPicture.url}">
                 `);
+                $("#navbar-profile-image").parent().empty().append(`
+                    <img id="navbar-profile-image" src="${uploadedPicture.url}" style="max-height: 1.75em; max-width: 1.75em;">
+                `);
             }
         },
         filestackKey: await Get.filestackKey().then(res => res),
