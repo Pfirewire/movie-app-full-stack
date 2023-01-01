@@ -27,6 +27,8 @@ public class GenreController {
         this.movieListDao = movieListDao;
     }
 
+
+    // Returns all genres in table
     @GetMapping("/genre/all")
     public Set<Genre> getAllGenres() {
         List<Genre> genreList = genreDao.findAll();
@@ -35,6 +37,8 @@ public class GenreController {
         return genres;
     }
 
+
+    // Returns all genres present in specific movie list, identified by id in url path
     @GetMapping("/genre/{listId}/all")
     public Set<Genre> getAllGenresByListId(@PathVariable Long listId) {
         MovieList list = movieListDao.findById(listId).get();
@@ -51,12 +55,16 @@ public class GenreController {
         return genres;
     }
 
+
+    // Returns all genres in specific movie, identified by id in url path
     @GetMapping("/genre/{movieId}")
     public Set<Genre> getGenreByMovieId(@PathVariable Long movieId) {
         Set<Genre> genres = genreDao.findAllByMovies(movieDao.findById(movieId).get());
         return genres;
     }
 
+
+    // Returns all movies that have specific genre, identified by id in url path
     @GetMapping("/genre/movies/{genreId}")
     public Set<Movie> getMoviesByGenres(@PathVariable Long genreId) {
         Set<Movie> movies = movieDao.findAllByGenres(genreDao.findById(genreId).get());
