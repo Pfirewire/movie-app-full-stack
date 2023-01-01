@@ -19,9 +19,12 @@ public class SchedulerConfiguration {
         this.passwordResetDao = passwordResetDao;
     }
 
+    // Schedule set for midnight every night
     @Scheduled(cron = "0 0 0 * * ?")
-//    @Scheduled(fixedRate = 10000)
     public void clearPasswordResetTable() {
+
+        // Method gets all PasswordReset objects from table and deletes all that are expired
+
         System.out.println("Scheduled event. Clearing password reset tokens");
         List<PasswordReset> pwTokens = passwordResetDao.findAll();
         List<PasswordReset> pwTokensToDelete = new ArrayList<>();
