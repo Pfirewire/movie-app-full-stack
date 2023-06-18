@@ -56,7 +56,8 @@ public class SecurityConfiguration {
                         "/index",
                         "/reviews",
                         "/review/all/view",
-                        "/pwreset"
+                        "/pwreset",
+                        "/keys.js"
                 )
                 .permitAll()
         ;

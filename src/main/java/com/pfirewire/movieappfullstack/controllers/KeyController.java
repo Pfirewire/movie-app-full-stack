@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"https://pfirewire.com", "https://www.pfirewire.com"})
 public class KeyController {
 
     @Autowired
@@ -17,12 +16,10 @@ public class KeyController {
     public String getKeys() {
 //        return keys;
         return String.format("""
-                const keys = {
-                    unsplashKey: "%s,
-                    filestackKey: %s,
-                    tmdbKey: %s,
-                }
-        """, keys.getUnsplashKey(), keys.getFilestackKey(), keys.getTmdbKey());
+                const UNSPLASH_KEY = "%s";
+                const FILESTACK_KEY = "%s";
+                const TMDB_KEY = "%s";
+        """, keys.getUNSPLASH_KEY(), keys.getFILESTACK_KEY(), keys.getTMDB_KEY());
     }
 }
 

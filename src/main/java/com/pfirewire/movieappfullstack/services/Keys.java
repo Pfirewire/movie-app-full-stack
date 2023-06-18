@@ -9,37 +9,37 @@ public class Keys {
 
 
     @Value("${tmdbKey}")
-    private String tmdbKey;
+    private String TMDB_KEY;
 
     @Value("${unsplashKey}")
-    private String unsplashKey;
+    private String UNSPLASH_KEY;
 
     @Value("${filestackKey}")
-    private String filestackKey;
+    private String FILESTACK_KEY;
 
     public Keys() {}
 
-    public String getTmdbKey() {
-        return tmdbKey;
+    public String getTMDB_KEY() {
+        return TMDB_KEY;
     }
 
-    public void setTmdbKey(String tmdbKey) {
-        this.tmdbKey = tmdbKey;
+    public void setTMDB_KEY(String TMDB_KEY) {
+        this.TMDB_KEY = TMDB_KEY;
     }
 
-    public String getUnsplashKey() {
-        return unsplashKey;
+    public String getUNSPLASH_KEY() {
+        return UNSPLASH_KEY;
     }
 
-    public void setUnsplashKey(String unsplashKey) {
-        this.unsplashKey = unsplashKey;
+    public void setUNSPLASH_KEY(String UNSPLASH_KEY) {
+        this.UNSPLASH_KEY = UNSPLASH_KEY;
     }
 
-    public String getFilestackKey() {
-        return filestackKey;
+    public String getFILESTACK_KEY() {
+        return FILESTACK_KEY;
     }
 
-    public void setFilestackKey(String filestackKey) {
-        this.filestackKey = filestackKey;
+    public void setFILESTACK_KEY(String FILESTACK_KEY) {
+        this.FILESTACK_KEY = FILESTACK_KEY;
     }
 }

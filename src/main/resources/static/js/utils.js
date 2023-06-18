@@ -42,8 +42,7 @@ export const Get = {
         // uses TMDB id
         // returns data inside a promise
         try {
-            let tmdbKey = await Get.tmdbKey(Utils.url());
-            let response = await fetch(`${tmdbUrl}${id}${tmdbKey}`);
+            let response = await fetch(`${tmdbUrl}${id}${TMDB_KEY}`);
             let data = await response.json();
             return data;
         } catch(err) {
@@ -55,8 +54,7 @@ export const Get = {
         // inputs string with movie title
         // returns data array inside a promise
         try {
-            let tmdbKey = await Get.tmdbKey(Utils.url());
-            let response = await fetch(`${tmdbUrl}${tmdbKey}&query=${title}`);
+            let response = await fetch(`${tmdbUrl}${TMDB_KEY}&query=${title}`);
             let data = await response.json();
             return data;
         } catch(err) {
@@ -89,8 +87,7 @@ export const Get = {
     },
     // gets trending movie list
     async trendingMovies(trendingUrl) {
-        let tmdbKey = await Get.tmdbKey(Utils.url());
-        let response = await fetch(`${trendingUrl}${tmdbKey}`);
+        let response = await fetch(`${trendingUrl}${TMDB_KEY}`);
         let data = await response.json();
         return data.results;
     },

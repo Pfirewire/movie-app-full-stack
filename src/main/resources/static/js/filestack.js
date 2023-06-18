@@ -10,7 +10,7 @@ $(async function() {
     const FileStack = {
         async initialize() {
             console.log("inside initialize");
-            this.client = await filestack.init(this.filestackKey);
+            this.client = await filestack.init(FILESTACK_KEY);
             Events.initialize();
         },
         client: null,
@@ -36,7 +36,6 @@ $(async function() {
                 `);
             }
         },
-        filestackKey: await Get.filestackKey().then(res => res),
         csrfToken: $("meta[name='_csrf']").attr("content")
     };
 

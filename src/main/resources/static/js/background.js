@@ -4,8 +4,7 @@ $(function() {
 
     const Background = {
         async initialize() {
-            let unsplashKey = await Get.unsplashKey();
-            let photo = await Get.backgroundImage(unsplashKey);
+            let photo = await Get.backgroundImage(UNSPLASH_KEY);
             $('head').append(`
                 <style>
                     body:before{
