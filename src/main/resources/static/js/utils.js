@@ -61,24 +61,12 @@ export const Get = {
             console.log(err);
         }
     },
-    // gets api key
-    async tmdbKey() {
-        let response = await fetch(`${Utils.url()}keys`);
-        let data = await response.json();
-        return data.tmdbKey;
-    },
     // gets movie list
     async movieList() {
         let response = await fetch(`${Utils.url()}list`);
         let data = await response.json();
         return data.id;
     },
-    // gets api key
-    // async backRoomKey() {
-    //     let response = await fetch(`${MovieApp.GlobalURLs.backendURLPath}keys`);
-    //     let data = await response.json();
-    //     return data.backRoomKey;
-    // },
     // gets movie rating from id
     async movieRating(id) {
         let response = await fetch(`${Utils.url()}rating/${id}`);
@@ -168,16 +156,6 @@ export const Get = {
     async backgroundImage(key) {
         let photo = await fetch(`https://api.unsplash.com/photos/random/?client_id=${key}&collections=10544471&orientation=landscape`).then(res => res.json());
         return photo;
-    },
-
-    async unsplashKey() {
-        let keys = await fetch(`${Utils.url()}keys`).then(res => res.json());
-        return keys.unsplashKey;
-    },
-
-    async filestackKey() {
-        let keys = await fetch(`${Utils.url()}keys`).then(res => res.json());
-        return keys.filestackKey;
     },
 
     async profilePicture() {
